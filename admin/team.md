@@ -14,6 +14,7 @@ https://p7chang.github.io/CSE110-Lab1/
 ### Ruiping
 https://ruiping-fang.github.io/cse110/
 ### Ryan I.
+https://ryan-izad.github.io/LabWeek1/
 ### Ryan L.
 https://ryanliulwy.github.io/CSE110-Lab1/
 ### Sean
