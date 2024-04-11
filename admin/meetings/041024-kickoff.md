@@ -1,5 +1,5 @@
 # Kickoff Meeting - 4/10/24
-CSE Basement, 4:00pm - pm
+In-person, CSE Basement, 4:00pm - pm
 
 ## Members Present
 - [x] Jacob
@@ -22,12 +22,13 @@ CSE Basement, 4:00pm - pm
 
 ## Logistics
 - Name introductions complete! (for the members present)
-- Filled out a when2meet in order to gauge general availability for future meetings
-- Created team GitHub Organization and repository
-- Sent message in slack for members not present to plan team-bonding activity date
+- We filled out a when2meet in order to gauge general availability for future meetings
+- We created the team GitHub Organization and repository
+- Will send a message in slack for members not present to plan a team-bonding activity date
+- We're not exactly sure what we want to do for our project yet, but hopefully we'll get a better idea after lecture on 4/11
 
 ## Team page discussion
-- Want a wave logo, blue color
+- We decided we wanted a wave logo, with a generally blue color as our team brand
   - Inspired by our location in San Diego, and ocean motif is generally nice
 - Potential names brainstorming:
   - Team Blue
@@ -58,3 +59,12 @@ CSE Basement, 4:00pm - pm
 - Explain team values and goals
 
 ## Meeting Summary
+- Introduced team members
+- Created initial team GitHub repo
+- Decided team name + brand
+- Discussed team video details
+
+**To-Do:**
+1. Individual members should record their clips for the video
+2. Set up a team-boding time (probably will be online)
+3. Decide project idea (maybe after next lecture)
