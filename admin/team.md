@@ -1,4 +1,4 @@
-### Surfside Software
+# Surfside Software
 
 ## Team Values
 
