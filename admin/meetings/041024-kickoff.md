@@ -2,19 +2,22 @@
 CSE Basement, 4:00pm - pm
 
 ## Members Present
-- Sean
-- Jacob
-- Peter
-- Melissa
-- Ruiping
-- Pedro
-- Sihan
-- Ryan L.
+- [x] Jacob
+- [x] Melissa
+- [x] Pedro
+- [x] Peter
+- [x] Ruiping
+- [ ] Ryan I.
+- [x] Ryan L.
+- [x] Sean
+- [x] Sihan
+- [ ] Sunho
+- [ ] Trent
 
 ## Agenda
 - [x] Introductions
 - [x] Logistics
-- [x] Team page creation
+- [x] Team page discussion
 - [x] Team video brainstorming
 
 ## Logistics
@@ -23,7 +26,7 @@ CSE Basement, 4:00pm - pm
 - Created team GitHub Organization and repository
 - Sent message in slack for members not present to plan team-bonding activity date
 
-## Team page creation
+## Team page discussion
 - Want a wave logo, blue color
   - Inspired by our location in San Diego, and ocean motif is generally nice
 - Potential names brainstorming:
