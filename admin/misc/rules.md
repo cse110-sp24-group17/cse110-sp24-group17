@@ -16,7 +16,6 @@ Members:
 - Sean
 - Sihan
 - Sunho
-- Trent
 
 ## Contract
 
