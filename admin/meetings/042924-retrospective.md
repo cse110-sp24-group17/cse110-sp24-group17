@@ -1,5 +1,5 @@
 ### Team 17 - Seaside Software
-# Warmup Sprint Meeting - 4/29/24
+# Warmup Retrospective Meeting - 4/29/24
 Online, Zoom, 8:40pm - 9:00pm
 
 Notetaker: Pedro
