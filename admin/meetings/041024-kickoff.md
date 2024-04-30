@@ -1,4 +1,4 @@
-### Team 17 - Seaside Software
+### Team 17 - Surfside Software
 # Kickoff Meeting - 4/10/24
 In-person, CSE Basement, 4:00pm - 5:30pm
 
