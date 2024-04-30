@@ -1,6 +1,6 @@
 ### Team 17 - Seaside Software
 # Warmup Sprint Meeting - 4/29/24
-Online, Zoom, 8:00pm - pm
+Online, Zoom, 8:00pm - 8:40pm
 
 Notetaker: Ryan L.
 
