@@ -1,4 +1,4 @@
-### Team 17 - Seaside Software
+### Team 17 - Surfside Software
 # Warmup Retrospective Meeting - 4/29/24
 Online, Zoom, 8:40pm - 9:00pm
 
