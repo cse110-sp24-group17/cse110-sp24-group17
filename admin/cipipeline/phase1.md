@@ -10,6 +10,7 @@
 - Currently, JSDoc is used semi-manually to generate documentation using the jsdoc command during development. This could potentially be automated into the pipeline so that the documentation page could be automatically generated when pushing.
 - The current example of unit tesst implemented is only for demonstration purpose since we don't really have any code to test yet, more tests will be continuously implemented during the development process and the format of the pipeline may be adjusted accordingly.
 - We will add e2e and pixel testing later on when we have more content to work with.
+- Other tests such as code coverage report may be added depending on how the project goes.
 
 ### Research/notes for future plans:
 ### 1. Linting and Code Style Enforcement
