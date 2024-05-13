@@ -15,7 +15,7 @@ export function dummy(a, b) {
  * 
  * @param {int} a first number
  * @param {int} b second number
- * @returns {int} Result of subtractions
+ * @returns {int} result of subtractions
  */
 function dummy2(a, b) {
     redundant = a + b;
