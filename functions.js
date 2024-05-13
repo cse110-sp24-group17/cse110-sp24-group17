@@ -6,6 +6,6 @@
  * @param {int} b second number
  * @returns {int} the sum
  */
-function dummy(a, b) {
+export function dummy(a, b) {
     return a + b;
 }
