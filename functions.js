@@ -4,7 +4,7 @@
  * 
  * @param {int} a first number
  * @param {int} b second number
- * @returns {int} the sum
+ * @returns {int} result of addition
  */
 export function dummy(a, b) {
     return a + b;
