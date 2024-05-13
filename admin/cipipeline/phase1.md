@@ -1,5 +1,17 @@
 # CI/CD Pipeline
 
+### Current Status:
+#### Implemented:
+- Currently, we enforce code quality and checks for potential issues automatically when pushing/merging pull requests using Codacy.
+- Code quality via human review is done by making sure we make our changes to a different branch before pushing to main, and that we always open a pull request for reviews and see the results of automated tests.
+- We have set up a very basic unit test template done using Jest, the set of tests is to be expanded.
+- We will also use JSDoc to automate documentation generation during development.
+#### Planned:
+- Currently, JSDoc is used semi-manually to generate documentation using the jsdoc command during development. This could potentially be automated into the pipeline so that the documentation page could be automatically generated when pushing.
+- The current example of unit tesst implemented is only for demonstration purpose since we don't really have any code to test yet, more tests will be continuously implemented during the development process and the format of the pipeline may be adjusted accordingly.
+- We will add e2e and pixel testing later on when we have more content to work with.
+
+### Research/notes for future plans:
 ### 1. Linting and Code Style Enforcement
 - Code style enforcement/check: Tools available (e.g. CSharpier) to both check and correct code locally, or check code style in CI pipelines. May need to choose specific tools depending on the language we use (javascript).
 - "Linting is concerned with code quality, potential issues, and adherence to coding standards and best practices. Linters use predefined rules or configurations to identify and report code issues, such as unused variables, potential bugs, non-standard coding practices, etc."
