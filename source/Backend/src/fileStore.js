@@ -1,10 +1,10 @@
 // fileStore.js
 
 class FileStoreProvider {
-    constructor() {}
+    constructor(localStorage) {this.localStorage = localStorage}
 
     save(data) {
-        localStorage.setItem("filestore", data);
+        this.localStorage.setItem("filestore", data);
     }
 
     load() {
@@ -118,5 +118,7 @@ class FileStore {
     }
 }
 
-// Exporting modules
-module.exports = { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry };
+export { FileStore, FileStoreProvider };
+
+// // Exporting modules
+// module.exports = { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry };

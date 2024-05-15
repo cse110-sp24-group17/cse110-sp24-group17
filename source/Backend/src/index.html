@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FileStoreProvider Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="fileStore.js"></script>
+    <title>File Store</title>
 </head>
 <body>
-  <!-- Include the JavaScript files with updated paths -->
-  <script src="src/fileStore.js"></script>
-  <script src="src/filestore.test.js"></script>
+    <h1>File Store</h1>
+    <button id="save">Save File Store</button>
+    <button id="load">Load File Store</button>
+    <script type="module">
+      import { FileStore, FileStoreProvider } from "./filestore.js"
+        // Creating an instance of FileStore and FileStoreProvider
+        const fileStoreProvider = new FileStoreProvider(window.localStorage);
+        const fileStore = new FileStore(fileStoreProvider);
+
+        // Function to save the File Store to local storage
+        function saveToFileStore() {
+            fileStore.sync();
+            alert('File Store saved to local storage.');
+        }
+
+        // Function to load the File Store from local storage
+        function loadFromFileStore() {
+            fileStore.load();
+            alert('File Store loaded from local storage.');
+        }
+        
+        window.onload = () => {
+            document.getElementById("load").addEventListener("click", () => {
+                loadFromFileStore();
+            })
+            document.getElementById("save").addEventListener("click", () => {
+                saveToFileStore();
+            })
+        }
+    </script>
 </body>
 </html>
