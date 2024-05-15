@@ -16,7 +16,7 @@ describe('FileStore System', () => {
                 return this.storage[key] || null;
             }
         };
-        store = new FileStore(new FileStoreProvider());
+        store = new FileStore(new FileStoreProvider(global.localStorage));
     });
 
     test('should create a text file and directory', () => {
