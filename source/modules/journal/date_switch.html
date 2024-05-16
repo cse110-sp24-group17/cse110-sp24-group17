@@ -1,4 +1,82 @@
-<div>
-    <a href="http://google.com">hello world i'm new component</a>
-    <select><option>sadfsaf</option><option>adsfdsfa</option></select>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Journal View</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="calendar_component.js"></script>
+    <script type="module" src="date_switch.js"></script>
+  </head>
+  <body>
+    <div id="switch-section">
+      <button id="prev-date-btn">Prev Date</button>
+      <button id="open-calendar-btn">Open Calendar</button>
+      <button id="next-date-btn">Next Date</button>
+    </div>
+    <markdown-editor id="markdown-editor" filename=""></markdown-editor>
+    <div id="calendar-tab" class="tab-hidden">
+      <calendar-component id="calendar" date="">
+        <div class="heading">
+          <div class="heading_bar"></div>
+          <div class="heading_content">
+            <div class="heading_title" id="cur_month">April, 2024</div>
+            <div class="heading_comp">
+              <div class="weather"><img src="cloud.png" /></div>
+              <div class="calendar_buttons">
+                <div class="prev_button button" id="prev_month">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 31 36"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      id="Polygon 4"
+                      d="M29.25 17.567C29.5833 17.7594 29.5833 18.2406 29.25 18.433L2.25 34.0215C1.91666 34.2139 1.5 33.9734 1.5 33.5885L1.5 2.41154C1.5 2.02664 1.91666 1.78608 2.25 1.97853L29.25 17.567Z"
+                      fill="#FFA800"
+                      fill-opacity="0.32"
+                      stroke="#FFA800"
+                      stroke-width="3"
+                    />
+                  </svg>
+                </div>
+                <div class="button" id="next_month">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 31 36"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      id="Polygon 4"
+                      d="M29.25 17.567C29.5833 17.7594 29.5833 18.2406 29.25 18.433L2.25 34.0215C1.91666 34.2139 1.5 33.9734 1.5 33.5885L1.5 2.41154C1.5 2.02664 1.91666 1.78608 2.25 1.97853L29.25 17.567Z"
+                      fill="#FFA800"
+                      fill-opacity="0.32"
+                      stroke="#FFA800"
+                      stroke-width="3"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="calendar_content">
+          <div class="calendar_weekday">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="calendar_days" id="calendar_days"></div>
+        </div>
+      </calendar-component>
+    </div>
+  </body>
+</html>
