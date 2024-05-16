@@ -1,0 +1,260 @@
+body {
+  font-family: sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  margin-top: 2.5rem; /* 40px */
+  width: 50rem; /* 800px */
+  gap: 1.25rem; /* 20px */
+}
+
+@media (max-width: 800px) {
+  html {
+    font-size: 13px;
+  }
+
+  .container {
+    max-width: 25rem; /* 400px */
+    flex-direction: column;
+  }
+}
+
+.calendar {
+  flex: 1;
+}
+
+.editor {
+  flex: 1;
+}
+
+.heading_bar {
+  background: #f3ab3c;
+  width: 0.25rem; /* 4px */
+  margin-right: 0.5rem; /* 8px */
+}
+
+.weather {
+  width: 2.5rem; /* 40px */
+  height: 1.875rem; /* 30px */
+  margin-left: 2.1875rem; /* 35px */
+}
+
+.weather img {
+  max-width: 100%;
+  height: 1.875rem; /* 30px */
+}
+
+.add_button {
+  font-weight: 900;
+}
+
+.heading {
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 300;
+  margin-bottom: 0.9375rem; /* 15px */
+}
+
+.button {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+}
+
+.heading_title {
+}
+
+.heading_content {
+  display: flex;
+  flex: 1;
+  padding: 0.3125rem 0; /* 5px 0 */
+}
+
+.heading_comp {
+  display: flex;
+  flex: 1;
+  margin-right: 0.625rem; /* 10px */
+}
+
+.calendar_buttons {
+  display: flex;
+  margin-left: auto;
+  height: 2.1875rem; /* 35px */
+  margin-right: 1.25rem; /* 20px */
+}
+
+.calendar_content {
+  padding-right: 1.25rem; /* 20px */
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.calendar_weekday {
+  display: flex;
+  user-select: none;
+  justify-content: space-between;
+}
+.calendar_weekday div {
+  text-align: center;
+  padding: 0.625rem; /* 10px */
+  width: 2.5rem; /* 40px */
+}
+
+.calendar_buttons img {
+  max-width: 100%;
+  height: 2.1875rem; /* 35px */
+}
+
+.calendar_row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar_row div {
+  user-select: none;
+  cursor: pointer;
+  width: 2.5rem; /* 40px */
+  padding: 0.625rem 0.3125rem; /* 10px 5px */
+  margin: 0.1875rem 0.25rem; /* 3px 4px */
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.calendar_row div:hover {
+  background: #ffd580;
+  transition: 0.2s;
+}
+
+.calendar_grayed {
+  color: lightgray;
+}
+
+.calendar_today {
+  border: solid orange;
+}
+
+.calendar_selected {
+  background: #fbe4b4;
+}
+
+.prev_button {
+  transform: rotate(180deg);
+  margin-right: 1.25rem; /* 20px */
+}
+
+.add_button {
+  margin-left: auto;
+  margin-right: -0.625rem; /* -10px */
+  position: relative;
+}
+
+.holiday {
+  border: solid #f3ab3c;
+  padding: 0.4375rem 0.625rem; /* 7px 10px */
+  border-width: 0.1875rem; /* 3px */
+  border-radius: 0.1875rem; /* 3px */
+  margin-bottom: 0.9375rem; /* 15px */
+}
+
+.holiday_title {
+  font-size: 1.01rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem; /* 4px */
+}
+
+.holiday_place {
+  color: #f3ab3c;
+  font-weight: 500;
+}
+
+.nobold {
+  font-weight: 300;
+}
+
+.holiday_list {
+  display: block;
+}
+
+.holiday_time {
+  font-weight: 600;
+}
+
+.dailylog {
+  padding-left: 1.25rem; /* 20px */
+  font-weight: 300;
+  font-size: 1.05rem;
+}
+
+.dailylog li {
+  margin-bottom: 0.3125rem; /* 5px */
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li:before {
+  content: "\25cf";
+  font-size: 0.5rem; /* 8px */
+  padding-right: 0.625rem; /* 10px */
+}
+
+.button_plus {
+  position: absolute;
+  width: 1.6875rem; /* 27px */
+  height: 1.6875rem; /* 27px */
+  background: #fbe4b4;
+  cursor: pointer;
+  right: 50%;
+}
+
+.button_plus:after {
+  content: "";
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: 0.1875rem; /* 3px */
+  width: 70%;
+  background: #f3ab3c;
+  top: 50%;
+  left: 50%;
+}
+
+.button_plus:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f3ab3c;
+  height: 70%;
+  width: 0.1875rem; /* 3px */
+}
+
+.button_plus:hover:before,
+.button_plus:hover:after {
+  background: #fff;
+  transition: 0.2s;
+}
+
+.button_plus:hover {
+  background-color: #f3ab3c;
+  transition: 0.2s;
+}
+
+.quote {
+  padding: 0 0.625rem; /* 10px */
+  font-style: italic;
+}
+
+.tab-hidden {
+  visibility: hidden;
+}
