@@ -13,10 +13,13 @@ class FileExplorerComponent extends HTMLElement {
     init() {
         const fileEntry = App.get_file_store();
         console.log(fileEntry.root.getChildren());
+
         const fileElement = this.shadowRoot.getElementById('file');
         const newEle = document.createElement('div');
         newEle.innerText = "I'm file";
-        fileElement.appendChild(newEle);
+        for (fileEntry in getChildren()) {
+        fileElement.appendChild(convertToDOM(fileEntry));
+        }
     }
 }
 
