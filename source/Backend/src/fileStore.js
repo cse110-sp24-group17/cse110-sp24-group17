@@ -18,11 +18,11 @@ class FileEntry {
         this.parent = parent;
     }
 
-    getPath() {
-        return this.parent ? `${this.parent.getPath()}/${this.name}` : this.name;
+    get_path() {
+        return this.parent ? `${this.parent.get_path()}/${this.name}` : this.name;
     }
 
-    getType() {
+    get_type() {
         return 'file';
     }
 }
@@ -33,24 +33,24 @@ class DirectoryFileEntry extends FileEntry {
         this.children = {};
     }
 
-    getType() {
+    get_type() {
         return 'directory';
     }
 
-    addChildFile(file) {
+    add_child_file(file) {
         this.children[file.name] = file;
         file.parent = this;
     }
 
-    getChildFile(name) {
+    get_child_file(name) {
         return this.children[name] || null;
     }
 
-    removeChildFile(file) {
+    remove_child_file(file) {
         delete this.children[file.name];
     }
 
-    getChildren() {
+    get_children() {
         return Object.values(this.children);
     }
 }
@@ -61,15 +61,15 @@ class TextFileEntry extends FileEntry {
         this.content = content;
     }
 
-    getType() {
+    get_type() {
         return 'text';
     }
 
-    getContent() {
+    get_content() {
         return this.content;
     }
 
-    setContent(content) {
+    set_content(content) {
         this.content = content;
     }
 }
@@ -84,7 +84,7 @@ class FileStore {
         const serialize = (entry) => {
             const obj = {
                 name: entry.name,
-                type: entry.getType(),
+                type: entry.get_type(),
                 content: entry.content || '',
                 children: entry.children ? Object.values(entry.children).map(serialize) : undefined
             };
@@ -96,8 +96,8 @@ class FileStore {
     _loadFromJSON(json) {
         const deserialize = (obj, parent = null) => {
             const entry = obj.type === 'directory' ? new DirectoryFileEntry(obj.name, parent) : new TextFileEntry(obj.name, obj.content, parent);
-            if (entry.getType() === 'directory' && obj.children) {
-                obj.children.forEach(childObj => entry.addChildFile(deserialize(childObj, entry)));
+            if (entry.get_type() === 'directory' && obj.children) {
+                obj.children.forEach(childObj => entry.add_child_file(deserialize(childObj, entry)));
             }
             return entry;
         };
@@ -119,6 +119,3 @@ class FileStore {
 }
 
 export { FileStore, FileStoreProvider, FileEntry, DirectoryFileEntry, TextFileEntry };
-
-// // Exporting modules
-// module.exports = { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry };
