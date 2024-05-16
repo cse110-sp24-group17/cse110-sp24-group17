@@ -23,43 +23,43 @@ describe('FileStore System', () => {
     test('should create a text file and directory', () => {
         const dir = new DirectoryFileEntry('dir');
         const file = new TextFileEntry('file.txt', 'data');
-        dir.addChildFile(file);
-        store.root.addChildFile(dir);
+        dir.add_child_file(file);
+        store.root.add_child_file(dir);
 
-        expect(store.root.getChildFile('dir')).toBe(dir);
-        expect(dir.getChildFile('file.txt')).toBe(file);
+        expect(store.root.get_child_file('dir')).toBe(dir);
+        expect(dir.get_child_file('file.txt')).toBe(file);
     });
 
     test('should set and get content of a text file', () => {
         const file = new TextFileEntry('file.txt', 'initial');
-        file.setContent('updated');
-        expect(file.getContent()).toBe('updated');
+        file.set_content('updated');
+        expect(file.get_content()).toBe('updated');
     });
 
     test('should remove a child file', () => {
         const dir = new DirectoryFileEntry('dir');
         const file = new TextFileEntry('file.txt', 'data');
-        dir.addChildFile(file);
-        expect(dir.getChildFile('file.txt')).toBe(file);
-        dir.removeChildFile(file);
-        expect(dir.getChildFile('file.txt')).toBe(null);
+        dir.add_child_file(file);
+        expect(dir.get_child_file('file.txt')).toBe(file);
+        dir.remove_child_file(file);
+        expect(dir.get_child_file('file.txt')).toBe(null);
     });
 
     test('should save and load the file system', () => {
         const dir = new DirectoryFileEntry('dir');
         const file = new TextFileEntry('file.txt', 'data');
-        dir.addChildFile(file);
-        store.root.addChildFile(dir);
+        dir.add_child_file(file);
+        store.root.add_child_file(dir);
 
         store.sync(); // Save state to local storage
 
         const newStore = new FileStore(new FileStoreProvider());
         newStore.load(); // Load state from local storage
 
-        const loadedDir = newStore.root.getChildFile('dir');
-        const loadedFile = loadedDir.getChildFile('file.txt');
+        const loadedDir = newStore.root.get_child_file('dir');
+        const loadedFile = loadedDir.get_child_file('file.txt');
 
         expect(loadedDir).toBeDefined();
-        expect(loadedFile.getContent()).toBe('data');
+        expect(loadedFile.get_content()).toBe('data');
     });
 });
