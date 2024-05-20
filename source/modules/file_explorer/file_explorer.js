@@ -1,5 +1,4 @@
 import App from "../models/app.js"
-import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from './source/Backend/src/fileStore.js';
 
 class FileExplorerComponent extends HTMLElement {
     constructor() {
