@@ -1,4 +1,5 @@
 import App from "../models/app.js"
+import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from './source/Backend/src/fileStore.js';
 
 class FileExplorerComponent extends HTMLElement {
     constructor() {
@@ -18,10 +19,12 @@ class FileExplorerComponent extends HTMLElement {
         const fileElement = this.shadowRoot.getElementById('file');
         console.log('File Element:', fileElement);
 
+        const newEle = document.createElement('div');
+        newEle.innerText = "I'm file";
+        fileElement.appendChild(newEle);
+
         if (fileElement) {
-            const newEle = document.createElement('div');
-            newEle.innerText = "I'm file";
-            fileElement.appendChild(newEle);
+            
 
             const children = fileEntry.root.getChildren();
             for (const child of children) {
