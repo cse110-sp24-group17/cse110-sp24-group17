@@ -11,11 +11,6 @@ class FileExplorerComponent extends HTMLElement {
     }
 
     init() {
-       /* const fileEntry = App.get_file_store();
-        console.log(fileEntry.root.getChildren());
-
-        const fileElement = this.shadowRoot.getElementById('file');*/
-
         const fileEntry = App.get_file_store();
         console.log('File Entry:', fileEntry);
         console.log('Root Children:', fileEntry.root.getChildren());
@@ -27,7 +22,6 @@ class FileExplorerComponent extends HTMLElement {
             const newEle = document.createElement('div');
             newEle.innerText = "I'm file";
             fileElement.appendChild(newEle);
-            console.log('Appended placeholder element');
 
             const children = fileEntry.root.getChildren();
             for (const child of children) {
@@ -36,7 +30,7 @@ class FileExplorerComponent extends HTMLElement {
                 childElement.innerText = child.get_name();
 
                 if (child.get_type() === 'directory') {
-                    childElement.classList.add('folder');
+                    childElement.classList.add('directory');
                 } else {
                     childElement.classList.add('file');
                 }
