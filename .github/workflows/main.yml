@@ -11,6 +11,8 @@ jobs: # the things being executed
         run: npm install
       - name: Unit Test
         run: npm test ./__tests__/unit.test.js # the actual testing line
+      - name: Default Storage Test
+        run: npm test ./source/Backend/src/filestore.test.js # This should run the tests in filestore.js
       #- name: Codacy Analysis CLI #Codacy standard test
       #  uses: codacy/codacy-analysis-cli-action@v4.4.0
       #- name: generate JSDoc page
