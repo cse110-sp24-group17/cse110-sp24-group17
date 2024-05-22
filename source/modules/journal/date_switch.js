@@ -27,7 +27,9 @@ const preMonth = document.getElementById("prev_month");
 const nextMonth = document.getElementById("next_month");
 
 const onDatePicked = (date) => {
-  console.log(date);
+  currentDate = new Date(date); // Update currentDate with the selected date
+  openCalendarBtn.textContent = currentDate.toDateString(); // Update the button text
+  calendarTab.classList.add("tab-hidden"); // Hide the calendar tab
 };
 
 const calendarCom = new CalendarComponent(
