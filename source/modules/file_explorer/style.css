@@ -30,4 +30,22 @@ body{
     background-color: #f0f0f0;
 }
 
+#file-container {
+    display: grid;
+    width:30%;
+    height: 100vh;
+  }
+
+  file{
+    background-color: #b95757;
+    text-align: center; 
+  }
+  folder{
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    padding: 20px;
+    background-color: #e35656;
+    }
+
 
