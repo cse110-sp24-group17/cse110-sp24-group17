@@ -1,6 +1,6 @@
 // filestore.test.js
 
-import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from 'fileStore.js'; //= require('./fileStore');
+import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from './fileStore.js'; //= require('./fileStore');
 
 describe('FileStore System', () => {
     let store;
