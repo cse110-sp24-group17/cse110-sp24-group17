@@ -32,9 +32,9 @@ class FileExplorerComponent extends HTMLElement {
             for (const child of children) {
                 const childElement = document.createElement('div');
                 childElement.className = 'file-entry';
-                childElement.innerText = child.get_name();
+                childElement.innerText = child.name;
 
-                if (child.get_type() === 'directory') {
+                if (child.getType() === 'directory') {
                     childElement.classList.add('directory');
                 } else {
                     childElement.classList.add('file');
