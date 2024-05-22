@@ -1,6 +1,6 @@
 // filestore.test.js
 
-const { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } = require('./fileStore');
+export { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry }; //= require('./fileStore');
 
 describe('FileStore System', () => {
     let store;
