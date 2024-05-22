@@ -18,6 +18,10 @@ class FileEntry {
         this.parent = parent;
     }
 
+    get_name() {
+        return this.name;
+    }
+
     get_path() {
         return this.parent ? `${this.parent.get_path()}/${this.name}` : this.name;
     }
@@ -44,6 +48,10 @@ class DirectoryFileEntry extends FileEntry {
 
     get_child_file(name) {
         return this.children[name] || null;
+    }
+
+    get_child_files() {
+        return this.children;
     }
 
     remove_child_file(file) {
@@ -79,6 +87,8 @@ class FileStore {
         this.provider = provider;
         this.root = new DirectoryFileEntry('root');
     }
+
+  
 
     _saveToJSON() {
         const serialize = (entry) => {
