@@ -1,4 +1,7 @@
-import App from "../models/app.js"
+//import App from "../models/app.js"
+
+
+//window.addEventListener("DOMContentLoaded", init);
 
 class FileExplorerComponent extends HTMLElement {
     constructor() {
