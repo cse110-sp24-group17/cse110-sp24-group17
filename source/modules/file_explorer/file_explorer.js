@@ -14,7 +14,7 @@ class FileExplorerComponent extends HTMLElement {
     }
 
     init() {
-        const fileEntry = App.get_file_store();
+       /* const fileEntry = App.get_file_store();
         console.log('File Entry:', fileEntry);
         console.log('Root Children:', fileEntry.root.getChildren());
 
@@ -27,7 +27,6 @@ class FileExplorerComponent extends HTMLElement {
 
         if (fileElement) {
             
-
             const children = fileEntry.root.getChildren();
             for (const child of children) {
                 const childElement = document.createElement('div');
@@ -46,7 +45,39 @@ class FileExplorerComponent extends HTMLElement {
         } else {
             console.error('Element with ID "file" not found');
         }
+        */
 
+
+        const fileEntry = App.get_file_store();
+        const rootElement = this.shadowRoot.getElementById('file');
+        rootElement.innerHTML = ''; // Clear previous contents
+
+        const treeRoot = fileEntry.root
+
+        const loadTree = (element, node) => {
+            if (node.getType() === 'directory') {
+                const children = node.getChildren();
+                if(children.length == 0){
+                    return;
+                }
+            
+                children.forEach(child => {
+                    let childElement;
+                    if (child.getType() === 'directory') {
+                        childElement = this.render_directory_to_dom(child);
+                    } else if (child.getType() === 'text') {
+                        childElement = this.render_text_file_to_dom(child);
+                    } else {
+                        throw new Error('Unknown file type');
+                    }
+                    element.appendChild(childElement);
+                    
+                    loadTree(childElement, child);
+                });
+            }
+        }
+
+        loadTree(rootElement, treeRoot);
         
 
 
@@ -65,12 +96,20 @@ class FileExplorerComponent extends HTMLElement {
     render_text_file_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
-        fileElement.innerText = file.get_name(); // assign file name
+        fileElement.innerText = file.name; // assign file name
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
         return fileElement;
     }
 
-    render() {
+    render_directory_to_dom(file) {
+        const fileElement = document.createElement('div'); //create div element
+        fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
+        fileElement.innerText = file.name; // assign file name
+        fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
+        return fileElement;
+    }
+
+    /*render() {
         const fileEntry = App.get_file_store();
         const rootElement = this.shadowRoot.getElementById('file');
         rootElement.innerHTML = ''; // Clear previous contents
@@ -87,7 +126,7 @@ class FileExplorerComponent extends HTMLElement {
             }
             rootElement.appendChild(childElement);
         });
-    }
+    }*/
 
     enter_delete_mode() {
         this.deleteMode = true;
