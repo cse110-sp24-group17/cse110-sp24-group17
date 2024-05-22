@@ -220,6 +220,7 @@ Subclass of FileEntry for representing directory.
 Subclass of FileEntry for representing text file.
 - `get_content() -> string`: Returns the content of the file entry.
 - `set_content(content: string) -> void`: Sets the content of the file entry.
+- `get_type() -> string`: Returns the type of file.
 
 For simplicity, the data encoding will always be UTF-8 plain text encoding. (i.e. it's just javascript String) When binary data is stored, we are simply going to use base64 to encode that into ASCII data and store it. But, base64 encoding will be done by the user of the FileEntry API; FileEntry only knows to deal with plain text string data.
 
