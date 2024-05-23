@@ -378,7 +378,7 @@ class FileStore {
     }
 }
 
-// export { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry };
+export { FileStore, FileStoreProvider, FileEntry, DirectoryFileEntry, TextFileEntry };
 
 // // Exporting modules
  module.exports = { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry };
