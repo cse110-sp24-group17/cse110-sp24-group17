@@ -7,13 +7,15 @@ class FileExplorerComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.hiddenFiles = [];
+
         fetch('./modules/file_explorer/file_explorer.html').then(x => x.text()).then(x => {
             this.shadowRoot.innerHTML = x;
-            this.init();
+            this.render();
         })
     }
 
-    init() {
+    render() {
        /* const fileEntry = App.get_file_store();
         console.log('File Entry:', fileEntry);
         console.log('Root Children:', fileEntry.root.getChildren());
@@ -47,13 +49,14 @@ class FileExplorerComponent extends HTMLElement {
         }
         */
 
-
+   
         const fileEntry = App.get_file_store();
         const rootElement = this.shadowRoot.getElementById('file');
         rootElement.innerHTML = ''; // Clear previous contents
 
         const treeRoot = fileEntry.root
 
+        
         const loadTree = (element, node) => {
             if (node.getType() === 'directory') {
                 const children = node.getChildren();
@@ -63,6 +66,8 @@ class FileExplorerComponent extends HTMLElement {
             
                 children.forEach(child => {
                     let childElement;
+
+
                     if (child.getType() === 'directory') {
                         childElement = this.render_directory_to_dom(child);
                     } else if (child.getType() === 'text') {
@@ -72,7 +77,11 @@ class FileExplorerComponent extends HTMLElement {
                     }
                     element.appendChild(childElement);
                     
-                    loadTree(childElement, child);
+
+                    if(!this.hiddenFiles.includes(child)){
+                        loadTree(childElement, child);
+                    }
+                
                 });
             }
         }
@@ -104,8 +113,10 @@ class FileExplorerComponent extends HTMLElement {
     render_directory_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
-        fileElement.innerText = file.name; // assign file name
-        fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
+        const textElement = document.createElement('div'); //create div element
+        textElement.innerText = file.name; // assign file name
+        textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
+        fileElement.appendChild(textElement);
         return fileElement;
     }
 
@@ -163,6 +174,15 @@ class FileExplorerComponent extends HTMLElement {
     }
 
     handle_directory_click(directory) {
+        console.log(directory);
+
+        if(this.hiddenFiles.includes(directory)){
+            this.hiddenFiles = this.hiddenFiles.filter(item => item !== directory);
+            this.render();
+            return;
+        }
+        this.hiddenFiles.push(directory);
+        this.render();
         if (this.deleteMode) {
             // Logic to delete the directory
         } else {
