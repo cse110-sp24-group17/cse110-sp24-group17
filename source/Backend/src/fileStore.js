@@ -309,8 +309,9 @@ class FileStore {
     get_file(path) {
         const segments = path.split('/');
         let current = this.root;
-
+    
         for (const segment of segments) {
+            if (segment === '') continue; // Skip empty segments (e.g., leading slash)
             if (current instanceof DirectoryFileEntry) {
                 current = current.get_child_file(segment);
                 if (!current) {
@@ -322,6 +323,7 @@ class FileStore {
         }
         return current;
     }
+    
 
     /**
      * List every file within the entire file system.
