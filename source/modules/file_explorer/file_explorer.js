@@ -1,5 +1,10 @@
 import App from "../models/app.js"
 
+
+/**
+* Creates the list of folders/files in file_explorer.html.
+* @constructor
+*/
 class FileExplorerComponent extends HTMLElement {
     constructor() {
         super();
@@ -53,7 +58,11 @@ class FileExplorerComponent extends HTMLElement {
 
         const treeRoot = fileEntry.root
 
-        
+        /**
+        * Displays the elements by appending children recursively.
+        * @param {HTMLElement} element - The HTML element representing the root
+        * @param {any} node - The highest level entry
+        */
         const loadTree = (element, node) => {
             if (node.getType() === 'directory') {
                 const children = node.getChildren();
@@ -98,7 +107,11 @@ class FileExplorerComponent extends HTMLElement {
         get_current_open_file() -> TextFileEntry?: Return the currently opened file.
         set_current_open_file(file: TextFileEntry) -> void: Set the currently opened file. Set filename attribute of markdown-editor to switch the file.*/
     }
-
+   /**
+    * Creates a text-file entry element.
+    * @param {any} file - the entry from fileStore
+    * @returns the text-file element
+    */
     render_text_file_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
@@ -107,6 +120,11 @@ class FileExplorerComponent extends HTMLElement {
         return fileElement;
     }
 
+   /**
+    * Creates a directory entry element
+    * @param {any} file - the folder from fileStore
+    * @returns the directory element
+    */
     render_directory_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
@@ -136,26 +154,48 @@ class FileExplorerComponent extends HTMLElement {
         });
     }*/
 
+    /**
+    * Sets delete mode to true which means clicking on file deletes it.
+    */
     enter_delete_mode() {
         this.deleteMode = true;
     }
 
+
+   /**
+    * Sets delete mode to false which means clicking on file opens it.
+    */
     exit_delete_mode() {
         this.deleteMode = false;
     }
 
+   /**
+    * Open create file dialog that will create file at destination path.
+    * @param {string} path - the destination path for the file
+    */
     open_create_file_dialog(path) {
         // Logic to open the create file dialog
     }
 
+   /**
+    * Close create file dialog.
+    */
     close_create_file_dialog() {
         // Logic to close the create file dialog
     }
 
+    /**
+    * Returns the file currently open.
+    * @returns TextFileEntry? - the currently opened file
+    */
     get_current_open_file() {
         return this.currentOpenFile;
     }
 
+   /**
+    * Set the currently opened file
+    * @param {*} file
+    */
     set_current_open_file(file) {
         this.currentOpenFile = file;
         const markdownEditor = document.querySelector('markdown-editor');
