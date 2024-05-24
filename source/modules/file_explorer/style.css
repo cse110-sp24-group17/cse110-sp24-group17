@@ -35,19 +35,34 @@ body{
     height: 100vh;      
     background-color: #f0f0f0;
     font-family: 'nunito', Arial, Helvetica, sans-serif;
+
+    padding-top: 10px;
 }
 
-.text-file {
-    display: block;
-    margin-left: 10px;
-    padding: 5px 0px 5px 0px;
-
+.file_display_header{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
 }
 
-.directory{
+.directory, .text-file{
     display: block;
     margin-left: 10px;
-    padding: 5px 0px 5px 0px;
+    padding: 5px 5px 5px 5px; 
     
+}
+
+.directory-name{
+    display: block;
+    padding: 5px 5px 5px 5px; 
+    font-weight: bold;
+}
+
+.directory-name:hover{
+    background-color: lightgray;
+}
+
+.text-file:hover{
+    background-color: lightgray;
 }
 
