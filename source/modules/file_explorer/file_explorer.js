@@ -14,10 +14,29 @@ class FileExplorerComponent extends HTMLElement {
         fetch('./modules/file_explorer/file_explorer.html').then(x => x.text()).then(x => {
             this.shadowRoot.innerHTML = x;
             this.hideChildren(App.get_file_store().root); // Hide all except the top level nodes
-            this.render();
-            
-            console.log('hiddenFiles:', this.hiddenFiles);
+            this.render(); // Render the file explorer
+
+            let newButton = this.shadowRoot.getElementById('file_display_header_button_new');
+            newButton.addEventListener('click', () => {
+                alert('Create new file!');
+                console.log('Create new file!');
+                //this.open_create_file_dialog();
+            });
+
+            let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete');
+            deleteButton.addEventListener('click', () => {
+                if (this.deleteMode) {
+                    this.exit_delete_mode();
+                } else {
+                    this.enter_delete_mode();
+                }
+            });
         })
+
+
+
+        
+
     }
 
     getAllNodes(node, nodes = []) {
@@ -42,6 +61,8 @@ class FileExplorerComponent extends HTMLElement {
 
    
     }
+
+    
 
     render() {
        /* const fileEntry = App.get_file_store();
@@ -120,20 +141,7 @@ class FileExplorerComponent extends HTMLElement {
 
         loadTree(rootElement, treeRoot);
         
-        let newButton = this.shadowRoot.getElementById('file_display_header_button_new');
-        newButton.addEventListener('click', () => {
-            alert('Create new file!');
-            console.log('Create new file!');
-        });
-
-        let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete');
-        deleteButton.addEventListener('click', () => {
-            if (this.deleteMode) {
-                this.exit_delete_mode();
-            } else {
-                this.enter_delete_mode();
-            }
-        });
+        
 
         
     }
