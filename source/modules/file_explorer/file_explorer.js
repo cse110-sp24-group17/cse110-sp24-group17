@@ -13,8 +13,34 @@ class FileExplorerComponent extends HTMLElement {
 
         fetch('./modules/file_explorer/file_explorer.html').then(x => x.text()).then(x => {
             this.shadowRoot.innerHTML = x;
+            this.hideChildren(App.get_file_store().root); // Hide all except the top level nodes
             this.render();
+            
+            console.log('hiddenFiles:', this.hiddenFiles);
         })
+    }
+
+    getAllNodes(node, nodes = []) {
+        nodes.push(node);
+        if (node.getType() === 'directory') {
+            const children = node.getChildren();
+            children.forEach(child => {
+                this.getAllNodes(child, nodes);
+            });
+        }
+        return nodes;
+    }
+
+    // Hide all except the top level nodes
+    hideChildren(root) {
+        let nodes = [];
+        this.getAllNodes(root, nodes);
+
+        nodes.forEach(node => {
+            this.hiddenFiles.push(node);
+        });
+
+   
     }
 
     render() {
@@ -94,19 +120,25 @@ class FileExplorerComponent extends HTMLElement {
 
         loadTree(rootElement, treeRoot);
         
+        let newButton = this.shadowRoot.getElementById('file_display_header_button_new');
+        newButton.addEventListener('click', () => {
+            alert('Create new file!');
+            console.log('Create new file!');
+        });
 
+        let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete');
+        deleteButton.addEventListener('click', () => {
+            if (this.deleteMode) {
+                this.exit_delete_mode();
+            } else {
+                this.enter_delete_mode();
+            }
+        });
 
-        /*render_file_to_dom(file: FileEntry) -> DOMElement: Render file entry into DOM element.
-        render_directory_to_dom(directory_file: DirectoryFileEntry) -> DOMElement: Render directory file entry into DOM element.
-        render_text_file_to_dom(file: TextFileEntry) -> DOMElement:Render text file entry into DOM element.
-        render() -> void: Redraw the filer explorer part by using render_file_to_dom.
-        enter_delete_mode() -> void Enter "delete mode" where clicking file on explorer tab will delete the file.
-        exit_delete_mode() -> void Exit "delete mode" where clicking file on explorer tab will delete the file.
-        open_create_file_dialog(path: string) -> void: Open create file dialog that will create file at destination path.
-        close_create_file_dialog() -> void: Close create file dialog.
-        get_current_open_file() -> TextFileEntry?: Return the currently opened file.
-        set_current_open_file(file: TextFileEntry) -> void: Set the currently opened file. Set filename attribute of markdown-editor to switch the file.*/
+        
     }
+
+
    /**
     * Creates a text-file entry element.
     * @param {any} file - the entry from fileStore
@@ -129,30 +161,16 @@ class FileExplorerComponent extends HTMLElement {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
         const textElement = document.createElement('div'); //create div element
+
         textElement.innerText = file.name; // assign file name
+        textElement.className = 'directory-name'; //assign class 'directory-name'
+
         textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
         fileElement.appendChild(textElement);
         return fileElement;
     }
 
-    /*render() {
-        const fileEntry = App.get_file_store();
-        const rootElement = this.shadowRoot.getElementById('file');
-        rootElement.innerHTML = ''; // Clear previous contents
-
-        const children = fileEntry.root.getChildren();
-        children.forEach(child => {
-            let childElement;
-            if (child.type === 'directory') {
-                childElement = this.render_directory_to_dom(child);
-            } else if (child.type === 'text') {
-                childElement = this.render_text_file_to_dom(child);
-            } else {
-                childElement = this.render_file_to_dom(child);
-            }
-            rootElement.appendChild(childElement);
-        });
-    }*/
+   
 
     /**
     * Sets delete mode to true which means clicking on file deletes it.
