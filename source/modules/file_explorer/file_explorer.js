@@ -1,3 +1,4 @@
+import { TextFileEntry, DirectoryFileEntry} from "../../Backend/src/fileStore.js";
 import App from "../models/app.js"
 
 
@@ -10,17 +11,56 @@ class FileExplorerComponent extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.hiddenFiles = [];
+        this.deleteMode = false;
 
         fetch('./modules/file_explorer/file_explorer.html').then(x => x.text()).then(x => {
             this.shadowRoot.innerHTML = x;
             this.hideChildren(App.get_file_store().root); // Hide all except the top level nodes
+            this.currentOpenFolder = App.get_file_store().root;
             this.render(); // Render the file explorer
 
-            let newButton = this.shadowRoot.getElementById('file_display_header_button_new');
-            newButton.addEventListener('click', () => {
-                alert('Create new file!');
-                console.log('Create new file!');
-                //this.open_create_file_dialog();
+            let newFileButton = this.shadowRoot.getElementById('file_display_header_button_new');
+            /**
+             * Creates a new file in the current directory
+             */
+            newFileButton.addEventListener('click', () => {
+                let formName = this.shadowRoot.getElementById("add-file");
+                formName.hidden = false;
+
+                /**
+                 * Adds a child file to the current open folder after a name is submitted
+                 * @param {SubmitEvent} event - event created by pushing submit
+                 */
+                formName.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    let inputValue = this.shadowRoot.getElementById("new-file-name").value;
+                    const newEntry = new TextFileEntry(inputValue + ".txt","");
+                    this.get_current_open_folder().addChildFile(newEntry);
+                    formName.hidden = true;
+                    this.render();                    
+                });
+            });
+
+            let newFolderButton = this.shadowRoot.getElementById('folder_display_header_button_new');
+            /**
+             * Creates a new folder in the current directory
+             */
+            newFolderButton.addEventListener('click', () => {
+                let formName = this.shadowRoot.getElementById("add-folder");
+                formName.hidden = false;
+
+                /**
+                 * Adds a child folder to the current open folder after a name is submitted
+                 * @param {SubmitEvent} event - event created by pushing submit
+                 */
+                formName.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    let inputValue = this.shadowRoot.getElementById("new-folder-name").value;
+                    const newEntry = new DirectoryFileEntry(inputValue,"");
+                    this.get_current_open_folder().addChildFile(newEntry);
+                    formName.hidden = true;
+                    this.render();                    
+                });
             });
 
             let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete');
@@ -156,6 +196,7 @@ class FileExplorerComponent extends HTMLElement {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
         fileElement.innerText = file.name; // assign file name
+        fileElement.id = file.getPath();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
         return fileElement;
     }
@@ -172,7 +213,7 @@ class FileExplorerComponent extends HTMLElement {
 
         textElement.innerText = file.name; // assign file name
         textElement.className = 'directory-name'; //assign class 'directory-name'
-
+        textElement.id = file.getPath(); 
         textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
         fileElement.appendChild(textElement);
         return fileElement;
@@ -224,14 +265,34 @@ class FileExplorerComponent extends HTMLElement {
     */
     set_current_open_file(file) {
         this.currentOpenFile = file;
-        const markdownEditor = document.querySelector('markdown-editor');
-        markdownEditor.setAttribute('filename', file.get_name());
+        /*const markdownEditor = document.getElementsByClassName('markdown-editor')[0];
+        markdownEditor.innerHTML = file.content;
+        markdownEditor.id = file.name;
+        document.getElementsByTagName("body")[0].appendChild(markdownEditor);*/
+
+    }
+
+    /**
+    * Returns the folder currently open.
+    * @returns FolderFileEntry? - the currently opened file
+    */
+    get_current_open_folder() {
+        return this.currentOpenFolder;
+    }
+
+    /**
+    * Set the currently opened folder
+    * @param {*} file
+    */
+    set_current_open_folder(folder) {
+        this.currentOpenFolder = folder;
     }
 
     handle_file_click(file) {
         if (this.deleteMode) {
             // Logic to delete the file
-        } else {
+        } 
+        else {
             this.set_current_open_file(file);
         }
     }
@@ -241,6 +302,7 @@ class FileExplorerComponent extends HTMLElement {
 
         if(this.hiddenFiles.includes(directory)){
             this.hiddenFiles = this.hiddenFiles.filter(item => item !== directory);
+            this.set_current_open_folder(directory)
             this.render();
             return;
         }
@@ -249,7 +311,7 @@ class FileExplorerComponent extends HTMLElement {
         if (this.deleteMode) {
             // Logic to delete the directory
         } else {
-            // Logic to open the directory
+    
         }
     }
 
