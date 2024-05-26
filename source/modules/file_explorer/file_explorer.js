@@ -67,8 +67,10 @@ class FileExplorerComponent extends HTMLElement {
             deleteButton.addEventListener('click', () => {
                 if (this.deleteMode) {
                     this.exit_delete_mode();
+                    deleteButton.innerHTML = "Delete:Off"
                 } else {
                     this.enter_delete_mode();
+                    deleteButton.innerHTML = "Delete:On"
                 }
             });
         })
@@ -225,7 +227,7 @@ class FileExplorerComponent extends HTMLElement {
     * Sets delete mode to true which means clicking on file deletes it.
     */
     enter_delete_mode() {
-        this.deleteMode = true;
+;        this.deleteMode = true;
     }
 
 
@@ -290,7 +292,8 @@ class FileExplorerComponent extends HTMLElement {
 
     handle_file_click(file) {
         if (this.deleteMode) {
-            // Logic to delete the file
+            file.parent.removeChildFile(file)
+            this.render();
         } 
         else {
             this.set_current_open_file(file);
@@ -300,6 +303,14 @@ class FileExplorerComponent extends HTMLElement {
     handle_directory_click(directory) {
         console.log(directory);
 
+        if (this.deleteMode) {
+            directory.parent.removeChildFile(directory);
+            this.render();
+            return;
+        } else {
+    
+        }
+
         if(this.hiddenFiles.includes(directory)){
             this.hiddenFiles = this.hiddenFiles.filter(item => item !== directory);
             this.set_current_open_folder(directory)
@@ -308,11 +319,6 @@ class FileExplorerComponent extends HTMLElement {
         }
         this.hiddenFiles.push(directory);
         this.render();
-        if (this.deleteMode) {
-            // Logic to delete the directory
-        } else {
-    
-        }
     }
 
 
