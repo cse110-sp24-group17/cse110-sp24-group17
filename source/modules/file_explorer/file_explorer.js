@@ -31,9 +31,17 @@ class FileExplorerComponent extends HTMLElement {
                  * Adds a child file to the current open folder after a name is submitted
                  * @param {SubmitEvent} event - event created by pushing submit
                  */
+
+
                 formName.addEventListener('submit', (event) => {
                     event.preventDefault();
                     let inputValue = this.shadowRoot.getElementById("new-file-name").value;
+
+                    if (inputValue == "") { // If the input is empty, dont add anything.
+                        formName.hidden = true;
+                        return;
+                    }
+
                     const newEntry = new TextFileEntry(inputValue + ".txt","");
                     this.get_current_open_folder().addChildFile(newEntry);
                     formName.hidden = true;
@@ -56,6 +64,10 @@ class FileExplorerComponent extends HTMLElement {
                 formName.addEventListener('submit', (event) => {
                     event.preventDefault();
                     let inputValue = this.shadowRoot.getElementById("new-folder-name").value;
+                    if (inputValue == "") { // If the input is empty, dont add anything.
+                        formName.hidden = true;
+                        return;
+                    }
                     const newEntry = new DirectoryFileEntry(inputValue,"");
                     this.get_current_open_folder().addChildFile(newEntry);
                     formName.hidden = true;
