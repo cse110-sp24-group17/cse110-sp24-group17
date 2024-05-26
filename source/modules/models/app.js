@@ -9,7 +9,7 @@ class App {
     dir.addChildFile(file);
     const dir2 = new DirectoryFileEntry('dir2');
     dir.addChildFile(dir2);
-    const file2 = new TextFileEntry('inner.txt', 'data');
+    const file2 = new TextFileEntry('inner.txt', 'data2');
     dir2.addChildFile(file2);
     this.store.root.addChildFile(dir);
   }
