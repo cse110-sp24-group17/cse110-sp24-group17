@@ -1,4 +1,4 @@
-const { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry, FileEntry } = require('./fileStore.js');
+const { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry, FileEntry } from './fileStore.js';
 
 describe('FileStore System', () => {
     let store;
