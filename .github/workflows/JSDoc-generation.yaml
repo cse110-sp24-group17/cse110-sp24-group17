@@ -1,0 +1,30 @@
+name: JSDoc generation
+
+on: [push] # the Github Action will activate "on" the event that you "push" to the repo
+
+jobs: # the things being executed
+  tests: # the name of your status check, will become important when you do branch protection
+    runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
+    steps:
+      - uses: actions/checkout@v4 # using version 4 of Actions
+      - name: Install Dependencies
+        run: npm install
+      - name: Install JSDoc
+        run: npm install -g jsdoc
+      - name: Set permissions for output directory
+        run: chmod -R 777 ./jsdoc-filestore
+      - name: Build JSDoc for filestore
+        run: jsdoc ./source/modules/models -d ./jsdoc/jsdoc-filestore
+      - name: Build JSDoc for file_explorer
+        run: jsdoc ./source/modules/file_explorer -d ./jsdoc/jsdoc-file_explorer
+      - name: Build JSDoc for journal
+        run: jsdoc ./source/modules/journal -d ./jsdoc/jsdoc-journal
+      - name: Create Pull Request for update JSDoc
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-jsdoc
+          title: Update JSDoc documentation
+          body: |
+            This pull request updates the JSDoc documentation.
+          commit-message: Update JSDoc documentation

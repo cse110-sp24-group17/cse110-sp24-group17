@@ -11,29 +11,7 @@ jobs: # the things being executed
         run: npm install
       - name: Install JSDoc
         run: npm install -g jsdoc
-      - name: Set permissions for output directory
-        run: chmod -R 777 ./jsdoc-filestore
       - name: Unit Test
         run: npm test ./__tests__/unit.test.js # the actual testing line
       - name: Default Storage Test
         run: npm test ./source/modules/models/filestore.test.js # This should run the tests in filestore.js
-      - name: Build JSDoc for filestore
-        run: jsdoc ./source/modules/models/fileStore.js -d ./jsdoc-filestore
-      - name: Create Pull Request for update JSDoc
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update-jsdoc
-          title: Update JSDoc documentation
-          body: |
-            This pull request updates the JSDoc documentation.
-          commit-message: Update JSDoc documentation
-      #  uses: andstor/jsdoc-action@v1
-      #  with:
-      #    source_dir: ./source/modules/models
-      #    recurse: true
-      #    output_dir: ./jsdoc-filestoreTest
-      #- name: Codacy Analysis CLI #Codacy standard test
-      #  uses: codacy/codacy-analysis-cli-action@v4.4.0
-      #- name: generate JSDoc page
-      #  run: jsdoc functions.js
