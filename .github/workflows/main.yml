@@ -16,11 +16,12 @@ jobs: # the things being executed
       - name: Default Storage Test
         run: npm test ./source/modules/models/filestore.test.js # This should run the tests in filestore.js
       - name: Build JSDoc for filestore
-        uses: andstor/jsdoc-action@v1
-        with:
-          source_dir: ./source/modules/models
-          recurse: true
-          output_dir: ./jsdoc-filestoreTest
+        run: jsdoc ./source/modules/models/fileStore.js -d ./jsdoc-filestore
+      #  uses: andstor/jsdoc-action@v1
+      #  with:
+      #    source_dir: ./source/modules/models
+      #    recurse: true
+      #    output_dir: ./jsdoc-filestoreTest
       #- name: Codacy Analysis CLI #Codacy standard test
       #  uses: codacy/codacy-analysis-cli-action@v4.4.0
       #- name: generate JSDoc page
