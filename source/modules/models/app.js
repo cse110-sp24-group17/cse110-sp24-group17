@@ -1,12 +1,12 @@
-import {FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from "../../Backend/src/fileStore.js";
+import {FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from "./fileStore.js";
 
 class App {
   constructor() {
     this.store = new FileStore(new FileStoreProvider(window.localStorage));
     const dir = new DirectoryFileEntry('dir');
     const file = new TextFileEntry('file.txt', 'data');
-    dir.addChildFile(file);
-    this.store.root.addChildFile(dir);
+    dir.add_child_file(file);
+    this.store.root.add_child_file(dir);
   }
 
   get_file_store() {
