@@ -24,7 +24,7 @@ jobs: # the things being executed
             git config --global user.email "p7chang@ucsd.edu"
             git config --global user.name "Peter Chang"
             git add jsdoc-filestore
-            jsdoc ./source/modules/models/fileStore.js -d ./jsdoc-filestoregit commit -m "Add new file via GitHub Actions"
+            git commit -m "Add new file via GitHub Actions"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
