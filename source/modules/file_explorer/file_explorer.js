@@ -175,9 +175,9 @@ class FileExplorerComponent extends HTMLElement {
     * @returns the text-file element
     */
     render_text_file_to_dom(file) {
-        const fileElement = document.createElement('div'); //create div element
-        
+        const fileElement = document.createElement('div'); //create div element 
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
+        fileElement.draggable = true;
 
         if(file == this.currentOpenFile){
             fileElement.classList.add('selected');
@@ -186,6 +186,13 @@ class FileExplorerComponent extends HTMLElement {
         fileElement.innerText = file.get_name(); // assign file name
         fileElement.id = file.get_path();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
+
+        fileElement.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData("text/plain", file.get_path());
+            event.dataTransfer.effectAllowed = "move";
+        });
+
+
         return fileElement;
     }
 
@@ -203,6 +210,19 @@ class FileExplorerComponent extends HTMLElement {
         textElement.className = 'directory-name'; //assign class 'directory-name'
         textElement.id = file.get_path(); 
         textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
+
+        textElement.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        textElement.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedFile = event.dataTransfer.getData("text/plain");
+            move_file(draggedFile, file);
+            this.render();
+        });
+
         fileElement.appendChild(textElement);
         return fileElement;
     }
