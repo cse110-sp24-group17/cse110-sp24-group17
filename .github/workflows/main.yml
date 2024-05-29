@@ -19,18 +19,13 @@ jobs: # the things being executed
         run: npm test ./source/modules/models/filestore.test.js # This should run the tests in filestore.js
       - name: Build JSDoc for filestore
         run: jsdoc ./source/modules/models/fileStore.js -d ./jsdoc-filestore
-      - name: commit changes
+      - name: Commit changes of JSDoc
         run: |
-            git config --global user.email "p7chang@ucsd.edu"
-            git config --global user.name "Peter Chang"
-            git add jsdoc-filestore
-            git commit -m "Add new file via GitHub Actions"
-      - name: Push to protected branch
-        uses: CasperWA/push-protected@v2
-        with:
-          token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-          branch: main
-          unprotect_reviews: true
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@users.noreply.github.com"
+          git add .
+          git commit -m "Update JSDoc documentation"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
       #  uses: andstor/jsdoc-action@v1
       #  with:
       #    source_dir: ./source/modules/models
