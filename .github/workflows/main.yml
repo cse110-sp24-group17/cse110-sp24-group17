@@ -16,7 +16,7 @@ jobs: # the things being executed
       - name: Build JSDoc for filestore
         uses: andstor/jsdoc-action@v1
         with:
-          source_dir: ./Backend/src
+          source_dir: ./source/Backend/src
           recurse: true
           output_dir: ./jsdoc-filestore
       #- name: Codacy Analysis CLI #Codacy standard test
