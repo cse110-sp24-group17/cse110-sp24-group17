@@ -163,7 +163,7 @@ class FileExplorerComponent extends HTMLElement {
 
         loadTree(rootElement, treeRoot);
         
-        
+        App.get_file_store().sync();
 
         
     }
