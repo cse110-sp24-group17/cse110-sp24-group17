@@ -11,8 +11,8 @@ jobs: # the things being executed
         run: npm install
       - name: Install JSDoc
         run: npm install -g jsdoc
-      - name: Set permissions for output directory
-        run: chmod -R 777 ./jsdoc-filestore
+      #- name: Set permissions for output directory
+       # run: chmod -R 777 ./jsdoc
       - name: Build JSDoc for filestore
         run: jsdoc ./source/modules/models -d ./jsdoc/jsdoc-filestore
       - name: Build JSDoc for file_explorer
