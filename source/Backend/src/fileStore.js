@@ -378,6 +378,30 @@ class FileStore {
         search(this.root);
         return results;
     }
+
+    /**
+     * Move a file from its current location to a new directory.
+     * @param {FileEntry} sourceFile - The file to move.
+     * @param {DirectoryFileEntry} destinationDirectory - The destination directory.
+     * @returns {boolean} True if the file was moved successfully, false otherwise.
+     */
+        move_file(sourceFile, destinationDirectory) {
+            if (!sourceFile || !sourceFile.parent) {
+                return false; // Source file doesn't exist or is the root directory
+            }
+    
+            if (!destinationDirectory || destinationDirectory.get_type() !== 'directory') {
+                return false; // Destination directory doesn't exist or is not a directory
+            }
+    
+            // Remove the source file from its current parent
+            sourceFile.parent.remove_child_file(sourceFile);
+    
+            // Add the source file to the destination directory
+            destinationDirectory.add_child_file(sourceFile);
+    
+            return true;
+        }
 }
 
 //export { FileStore, FileStoreProvider, FileEntry, DirectoryFileEntry, TextFileEntry };

@@ -92,4 +92,25 @@ describe('FileStore System', () => {
         expect(results2).toContain(file2);
         expect(results2).not.toContain(file1);
     });
+
+    test('FileStore move_file', () => {
+        // Create initial directories and files
+        const sourceDir = store.create_directory('source');
+        const destDir = store.create_directory('dest');
+        const file = store.create_file('source/file.txt');
+
+        expect(sourceDir).toBeDefined();
+        expect(destDir).toBeDefined();
+        expect(file).toBeDefined();
+
+        // Move the file from 'source' to 'dest'
+        const moved = store.move_file(file, destDir);
+
+        // Check if the move was successful
+        expect(moved).toBe(true);
+        expect(store.get_file('source/file.txt')).toBeNull();
+        expect(store.get_file('dest/file.txt')).toBeDefined();
+        expect(store.get_file('dest/file.txt').get_name()).toBe('file.txt');
+        expect(store.get_file('dest/file.txt').parent).toBe(destDir);
+    });
 });
