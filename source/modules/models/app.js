@@ -6,12 +6,12 @@ class App {
     const dir = new DirectoryFileEntry('dir');
     const file = new TextFileEntry('file.txt', 'data');
 
-    dir.addChildFile(file);
+    dir.add_child_file(file);
     const dir2 = new DirectoryFileEntry('dir2');
-    dir.addChildFile(dir2);
+    dir.add_child_file(dir2);
     const file2 = new TextFileEntry('inner.txt', 'data2');
-    dir2.addChildFile(file2);
-    this.store.root.addChildFile(dir);
+    dir2.add_child_file(file2);
+    this.store.root.add_child_file(dir);
   }
   /*
     dir

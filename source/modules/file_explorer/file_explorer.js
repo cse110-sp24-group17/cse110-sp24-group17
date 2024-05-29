@@ -1,4 +1,4 @@
-import { TextFileEntry, DirectoryFileEntry} from "../../Backend/src/fileStore.js";
+import { TextFileEntry, DirectoryFileEntry} from "../models/fileStore.js";
 import App from "../models/app.js"
 
 
@@ -17,6 +17,7 @@ class FileExplorerComponent extends HTMLElement {
             this.shadowRoot.innerHTML = x;
             this.hideChildren(App.get_file_store().root); // Hide all except the top level nodes
             this.currentOpenFolder = App.get_file_store().root;
+            this.currentOpenFile = null;
             this.render(); // Render the file explorer
 
             let newFileButton = this.shadowRoot.getElementById('file_display_header_button_new');
@@ -43,7 +44,7 @@ class FileExplorerComponent extends HTMLElement {
                     }
 
                     const newEntry = new TextFileEntry(inputValue + ".txt","");
-                    this.get_current_open_folder().addChildFile(newEntry);
+                    App.get_file_store().root.add_child_file(newEntry);
                     formName.hidden = true;
                     this.render();                    
                 });
@@ -69,7 +70,7 @@ class FileExplorerComponent extends HTMLElement {
                         return;
                     }
                     const newEntry = new DirectoryFileEntry(inputValue,"");
-                    this.get_current_open_folder().addChildFile(newEntry);
+                    App.get_file_store().root.add_child_file(newEntry);
                     formName.hidden = true;
                     this.render();                    
                 });
@@ -95,8 +96,8 @@ class FileExplorerComponent extends HTMLElement {
 
     getAllNodes(node, nodes = []) {
         nodes.push(node);
-        if (node.getType() === 'directory') {
-            const children = node.getChildren();
+        if (node.get_type() === 'directory') {
+            const children = node.get_children();
             children.forEach(child => {
                 this.getAllNodes(child, nodes);
             });
@@ -119,40 +120,7 @@ class FileExplorerComponent extends HTMLElement {
     
 
     render() {
-       /* const fileEntry = App.get_file_store();
-        console.log('File Entry:', fileEntry);
-        console.log('Root Children:', fileEntry.root.getChildren());
-
-        const fileElement = this.shadowRoot.getElementById('file');
-        console.log('File Element:', fileElement);
-
-        const newEle = document.createElement('div');
-        newEle.innerText = "I'm file";
-        fileElement.appendChild(newEle);
-
-        if (fileElement) {
-            
-            const children = fileEntry.root.getChildren();
-            for (const child of children) {
-                const childElement = document.createElement('div');
-                childElement.className = 'file-entry';
-                childElement.innerText = child.name;
-
-                if (child.getType() === 'directory') {
-                    childElement.classList.add('directory');
-                } else {
-                    childElement.classList.add('file');
-                }
-
-                console.log('Child Element:', childElement);
-                fileElement.appendChild(childElement);
-            }
-        } else {
-            console.error('Element with ID "file" not found');
-        }
-        */
-
-   
+       
         const fileEntry = App.get_file_store();
         const rootElement = this.shadowRoot.getElementById('file');
         rootElement.innerHTML = ''; // Clear previous contents
@@ -165,8 +133,8 @@ class FileExplorerComponent extends HTMLElement {
         * @param {any} node - The highest level entry
         */
         const loadTree = (element, node) => {
-            if (node.getType() === 'directory') {
-                const children = node.getChildren();
+            if (node.get_type() === 'directory') {
+                const children = node.get_children();
                 if(children.length == 0){
                     return;
                 }
@@ -175,9 +143,9 @@ class FileExplorerComponent extends HTMLElement {
                     let childElement;
 
 
-                    if (child.getType() === 'directory') {
+                    if (child.get_type() === 'directory') {
                         childElement = this.render_directory_to_dom(child);
-                    } else if (child.getType() === 'text') {
+                    } else if (child.get_type() === 'text') {
                         childElement = this.render_text_file_to_dom(child);
                     } else {
                         throw new Error('Unknown file type');
@@ -209,8 +177,8 @@ class FileExplorerComponent extends HTMLElement {
     render_text_file_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
-        fileElement.innerText = file.name; // assign file name
-        fileElement.id = file.getPath();
+        fileElement.innerText = file.get_name(); // assign file name
+        fileElement.id = file.get_path();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
         return fileElement;
     }
@@ -225,9 +193,9 @@ class FileExplorerComponent extends HTMLElement {
         fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
         const textElement = document.createElement('div'); //create div element
 
-        textElement.innerText = file.name; // assign file name
+        textElement.innerText = file.get_name(); // assign file name
         textElement.className = 'directory-name'; //assign class 'directory-name'
-        textElement.id = file.getPath(); 
+        textElement.id = file.get_path(); 
         textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
         fileElement.appendChild(textElement);
         return fileElement;
@@ -304,7 +272,7 @@ class FileExplorerComponent extends HTMLElement {
 
     handle_file_click(file) {
         if (this.deleteMode) {
-            file.parent.removeChildFile(file)
+            file.parent.remove_child_file(file)
             this.render();
         } 
         else {
@@ -316,7 +284,7 @@ class FileExplorerComponent extends HTMLElement {
         console.log(directory);
 
         if (this.deleteMode) {
-            directory.parent.removeChildFile(directory);
+            directory.parent.remove_child_file(directory);
             this.render();
             return;
         } else {
