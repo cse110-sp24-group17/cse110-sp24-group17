@@ -66,3 +66,11 @@ body{
     background-color: lightgray;
 }
 
+.selected{
+    background-color: red;
+}
+
+.selected:hover{
+    background-color: darkred;
+}
+

@@ -176,7 +176,13 @@ class FileExplorerComponent extends HTMLElement {
     */
     render_text_file_to_dom(file) {
         const fileElement = document.createElement('div'); //create div element
+        
         fileElement.className = 'file-entry text-file'; //assign two classes -> 'file-entry' and 'text-file'
+
+        if(file == this.currentOpenFile){
+            fileElement.classList.add('selected');
+        }
+        
         fileElement.innerText = file.get_name(); // assign file name
         fileElement.id = file.get_path();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
@@ -277,6 +283,7 @@ class FileExplorerComponent extends HTMLElement {
         } 
         else {
             this.set_current_open_file(file);
+            this.render();
         }
     }
 
