@@ -141,7 +141,7 @@ class TextFileEntry extends FileEntry {
     }
 
     /**
-     * Get the type of the file entry.
+     * Get type of the file entry.
      * @returns {string} The type of the file entry ('text').
      */
     get_type() {
