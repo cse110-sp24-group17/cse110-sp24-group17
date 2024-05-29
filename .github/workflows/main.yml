@@ -20,7 +20,7 @@ jobs: # the things being executed
         with:
           source_dir: ./source/modules/models
           recurse: true
-          output_dir: ./jsdoc-filestore
+          output_dir: ./jsdoc-filestoreTest
       #- name: Codacy Analysis CLI #Codacy standard test
       #  uses: codacy/codacy-analysis-cli-action@v4.4.0
       #- name: generate JSDoc page
