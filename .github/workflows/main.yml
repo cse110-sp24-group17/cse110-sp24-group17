@@ -9,6 +9,7 @@ jobs: # the things being executed
       - uses: actions/checkout@v4 # using version 4 of Actions
       - name: Install Dependencies
         run: npm install
+      - name: Install JSDoc
         run: npm install -g jsdoc
       - name: Unit Test
         run: npm test ./__tests__/unit.test.js # the actual testing line
