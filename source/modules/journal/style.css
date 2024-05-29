@@ -1,8 +1,72 @@
+
+.nav_bar {
+  width: 120px;       
+  height: 100vh;     
+  position: fixed;   
+  top: 0;             
+  left: 0;            
+  background-color:  darkgray;
+}
+.nav_bar_journal{
+  width: 50px;       
+  height: 50px;     
+  position: inline-block;
+  padding: 10px 10px 10px 10px;
+  margin-left: 15px;
+  margin-top: 10px;
+  background-color:  cyan;
+}
+
+.nav_bar_file_explorer{
+  width: 50px;       
+  height: 50px;     
+  position: inline-block;  
+  padding: 10px 10px 10px 10px;
+  margin-left: 15px;
+  margin-top: 10px;
+  background-color:  cyan;
+}
+.content{
+ 
+  margin-left: 120px;
+  background-color: #ffffff; 
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100vw;
+  /*background-color: aqua;*/
+  
+}
+#calendar-tab {
+  width: 500px; /* Set a smaller width */
+  font-size: 0.7rem; /* Reduce the font size */
+}
+#sidebar {
+  width: 200px; /* Set the width of the sidebar */
+  height: 100vh; /* Full height */
+  position: fixed; 
+  left: 0;
+  top: 0;
+  background-color: #f3ab3c; 
+  padding: 1rem; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+}
+#markdown-editor {
+  border: #f3ab3c;
+  border-style: solid;
+  height: 500px;
+  width: 500px;
+}
+#journal-page {
+  margin-left: 300px;
+}
 body {
   font-family: sans-serif;
 }
 
 main {
+  margin-left: 200px; /* Same width as the sidebar */
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
