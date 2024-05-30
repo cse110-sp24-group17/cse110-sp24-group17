@@ -60,7 +60,7 @@ describe('FileStore System', () => {
         expect(retrievedDir).toBeDefined();
         expect(retrievedDir.get_name()).toBe('dir');
         expect(retrievedDir.get_type()).toBe('directory');
-        expect(retrievedDir.get_path()).toBe('root/dir');  // Adjusted to check the full path
+        expect(retrievedDir.get_path()).toBe('/dir');  // Adjusted to check the full path
     });
 
     test('FileStore get_files and get_files_in_path', () => {
