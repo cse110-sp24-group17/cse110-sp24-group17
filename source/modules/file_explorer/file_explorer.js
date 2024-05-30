@@ -206,10 +206,18 @@ class FileExplorerComponent extends HTMLElement {
         fileElement.className = 'file-entry directory'; //assign two classes -> 'file-entry' and 'text-file'
         const textElement = document.createElement('div'); //create div element
 
+
         textElement.innerText = file.get_name(); // assign file name
         textElement.className = 'directory-name'; //assign class 'directory-name'
+        textElement.draggable = true;
+
         textElement.id = file.get_path(); 
         textElement.addEventListener('click', () => this.handle_directory_click(file)); // When the div is clicked, call function to implement render functionality
+
+        textElement.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData("text/plain", file.get_path());
+            event.dataTransfer.effectAllowed = "move";
+        });
 
         textElement.addEventListener('dragover', (event) => {
             event.preventDefault();
@@ -218,8 +226,11 @@ class FileExplorerComponent extends HTMLElement {
 
         textElement.addEventListener('drop', (event) => {
             event.preventDefault();
-            const draggedFile = event.dataTransfer.getData("text/plain");
-            move_file(draggedFile, file);
+            const draggedFilePath = event.dataTransfer.getData("text/plain");
+            console.log(draggedFilePath);
+            const draggedFile = App.get_file_store().get_file(draggedFilePath);
+            console.log(draggedFile);
+            App.get_file_store().move_file(draggedFile, file);
             this.render();
         });
 

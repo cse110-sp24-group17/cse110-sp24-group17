@@ -174,7 +174,7 @@ class FileStore {
      */
     constructor(provider) {
         this.provider = provider;
-        this.root = new DirectoryFileEntry('root');
+        this.root = new DirectoryFileEntry('');
     }
 
   
@@ -298,6 +298,7 @@ class FileStore {
         const file = this.get_file(path);
         if (file && file.parent) {
             file.parent.remove_child_file(file);
+            file.parent = null;
         }
     }
 
@@ -392,6 +393,10 @@ class FileStore {
 
         if (!destinationDirectory || destinationDirectory.get_type() !== 'directory') {
             return false; // Destination directory doesn't exist or is not a directory
+        }
+
+        if(sourceFile === destinationDirectory) {
+            return false; // Source and destination are the same
         }
 
         // Remove the source file from its current parent
