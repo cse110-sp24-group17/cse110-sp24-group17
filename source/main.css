@@ -78,7 +78,6 @@ body {
 
 #infoIcon, #searchIcon{
     margin-top: 15px;
-    fill: #FFD15A;
 }
 
 .sampleTab {
@@ -175,3 +174,4 @@ body {
     justify-content: center;
     align-items: center;
 }
+
