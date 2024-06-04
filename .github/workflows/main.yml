@@ -13,6 +13,15 @@ jobs: # the things being executed
         run: npm install -g jsdoc
       - name: Run tests with coverage report generation
         run: npm test -- --coverage
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # or
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: coverage/lcov.info
+          # or a comma-separated list for multiple reports
+          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
       #- name: Unit Test
       #  run: npm test ./__tests__/unit.test.js # the actual testing line
       #- name: Default Storage Test
