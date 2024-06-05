@@ -28,7 +28,7 @@ class FileExplorerComponent extends HTMLElement {
             this.currentOpenFile = null; // Set the current open file to null
             this.render(); // Render the file explorer
 
-            let newFileButton = this.shadowRoot.getElementById('file_display_header_button_new');
+            let newFileButton = this.shadowRoot.getElementById('addFile');
 
             /**
              * Creates a new file in the current directory
@@ -58,7 +58,7 @@ class FileExplorerComponent extends HTMLElement {
                 });
             });
 
-            let newFolderButton = this.shadowRoot.getElementById('folder_display_header_button_new');
+            let newFolderButton = this.shadowRoot.getElementById('addFolder');
 
             /**
              * Creates a new folder in the current directory
@@ -86,7 +86,7 @@ class FileExplorerComponent extends HTMLElement {
                 });
             });
 
-            let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete'); // Get the delete button
+            let deleteButton = this.shadowRoot.getElementById('trashIcon'); // Get the delete button
 
             /**
              * Toggles delete mode on and off
@@ -215,7 +215,16 @@ class FileExplorerComponent extends HTMLElement {
         fileElement.innerText = file.get_name(); // assign file name
         fileElement.id = file.get_path();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
-
+        fileElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        fileElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
         // Drag functionality
         fileElement.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData("text/plain", file.get_path());
@@ -260,11 +269,69 @@ class FileExplorerComponent extends HTMLElement {
         textElement.addEventListener('drop', (event) => {
             event.preventDefault();
             const draggedFilePath = event.dataTransfer.getData("text/plain");
-            console.log(draggedFilePath);
+            console.log("sus", draggedFilePath);
             const draggedFile = App.get_file_store().get_file(draggedFilePath);
             console.log(draggedFile);
             App.get_file_store().move_file(draggedFile, file); // Move the file to the new location. Called from fileStore.
             this.render();
+        });
+
+        textElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        textElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
+
+        fileElement.appendChild(textElement);
+        return fileElement;
+    }
+
+
+
+    render_root_div_to_dom() {
+        const fileElement = document.createElement('div'); //create div element
+        fileElement.className = 'root'; //assign two classes -> 'file-entry' and 'text-file'
+        const textElement = document.createElement('div'); //create div element
+
+
+        // Drag over functionality
+        fileElement.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        // Drop functionality
+        fileElement.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedFilePath = event.dataTransfer.getData("text/plain");
+            console.log(draggedFilePath);
+            const draggedFile = App.get_file_store().get_file(draggedFilePath);
+            console.log(draggedFile);
+
+
+            // Remove the source file from the source directory
+            draggedFile.parent.remove_child_file(draggedFile);
+
+            // Add the source file to the root
+            App.get_file_store().root.add_child_file(draggedFile);
+            
+            this.render();
+        });
+
+        textElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        textElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
         });
 
         fileElement.appendChild(textElement);

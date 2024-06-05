@@ -1,22 +1,15 @@
 <link rel="stylesheet" href="./modules/file_explorer/style.css">
 
-<div class="nav_bar">
-  <div class="nav_bar_journal">
-    <a href="./journal.html">Journal</a>
-  </div>
-  <div class="nav_bar_file_explorer">
-    <a href="./files.html">Files</a>
-  </div>
-</div>
+<!-- Swiping Animation Stuff -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<!----------------------------->
 
-<div class="content">
   <div id="file_display">
     <div class="file_display_header">
-      <div class="file_display_header_title">Projects</div>
       <div class="file_display_header_button">
-        <button id="file_display_header_button_new">New File</button>
+       <!-- <button id="file_display_header_button_new">New File</button>
         <button id="folder_display_header_button_new">New Folder</button>
-        <button id="file_display_header_button_delete">Delete:Off</button>
+        <button id="file_display_header_button_delete">Delete:Off</button> -->
         <form id="add-file" hidden="true">
           <input id="new-file-name" type="text" name="fname"></input>
           <input type="submit" value="Submit"></input>
@@ -29,4 +22,3 @@
     </div>
     <div id="file"></div>
   </div>
-</div>
