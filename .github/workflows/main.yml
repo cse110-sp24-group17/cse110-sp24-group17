@@ -22,7 +22,3 @@ jobs: # the things being executed
           coverage-reports: coverage/lcov.info
           # or a comma-separated list for multiple reports
           # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
-      #- name: Unit Test
-      #  run: npm test ./__tests__/unit.test.js # the actual testing line
-      #- name: Default Storage Test
-      #  run: npm test ./source/modules/models/filestore.test.js # This should run the tests in filestore.js
