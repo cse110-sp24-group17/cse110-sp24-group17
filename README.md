@@ -6,7 +6,4 @@
 
 [Coverage Report](https://app.codacy.com/gh/cse110-sp24-group17/cse110-sp24-group17/coverage/dashboard)
 
-### JSDocs ###
-[filestore](https://cse110-sp24-group17.github.io/cse110-sp24-group17/jsdoc/jsdoc-filestore/index.html)
-
-[file_explorer](https://cse110-sp24-group17.github.io/cse110-sp24-group17/jsdoc/jsdoc-file_explorer/index.html)
+[JSDocs](https://cse110-sp24-group17.github.io/cse110-sp24-group17/jsdoc/index.html)

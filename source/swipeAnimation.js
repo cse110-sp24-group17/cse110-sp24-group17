@@ -1,8 +1,8 @@
 var swiper = new Swiper('.Slider-container', {
-    effect: 'cards',
-    grabCursor: true,
-    centerdSlides: true,
-    loop: true,
-    longSwipes: false,
-    speed: 700,
-  });
+  effect: 'cards',
+  grabCursor: true,
+  centerdSlides: true,
+  loop: true,
+  longSwipes: true,
+  speed: 700,
+});
