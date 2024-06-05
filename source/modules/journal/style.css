@@ -190,7 +190,8 @@ html {
 }
 
 .calendar_row div:hover {
-  background: #ffd580;
+  background-color: #FFC300;
+  filter: brightness(0.95);
   transition: 0.2s;
 }
 
@@ -203,7 +204,7 @@ html {
 }
 
 .calendar_selected {
-  background: #fbe4b4;
+  background-color: #FFC300;
 }
 
 .prev_button {
