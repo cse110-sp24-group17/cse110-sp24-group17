@@ -1,6 +1,8 @@
 import {
     dummy
   } from '../functions.js';
+
+  
   
   // A dummy test to import a function from functions.js and testing it
   test('1+3=4', () => {
