@@ -1,6 +1,9 @@
 name: JSDoc generation
 
-on: [push] # the Github Action will activate "on" the event that you "push" to the repo
+on:
+  push:
+    branches:
+      - main  # Specifies that the workflow will only run on pushes to main
 
 jobs: # the things being executed
   tests: # the name of your status check, will become important when you do branch protection
