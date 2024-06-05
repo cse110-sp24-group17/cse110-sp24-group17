@@ -1,3 +1,5 @@
+import App from './modules/models/app.js';
+
 var swiper = new Swiper('.Slider-container', {
   effect: 'cards',
   grabCursor: true,
@@ -20,5 +22,14 @@ window.addEventListener('load', function () {
   ele.onFileOpen = (file) => {
     markdown_editor.file = file;
   };
+
+  const calendar = document.getElementById('calendar');
+  calendar.onDatePicked = (date) => {
+    let file = App.store.get_file(date.toDateString() + '.md');
+    if (!file) {
+      file = App.store.create_file(date.toDateString() + '.md');
+    }
+    markdown_editor.file = file;
+  }
 });
 

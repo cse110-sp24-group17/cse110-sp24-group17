@@ -15,6 +15,7 @@
     <script type="module" src="./modules/markdown_editor/markdown_editor.js"></script>
     <script type="module" src="./modules/markdown_editor/code_highlighter.js"></script>
     <script type="module" src="./modules/journal/calendar.js"></script>
+    <script type="module" src="swipeAnimation.js"></script>
 
 </head>
 <body>
@@ -50,7 +51,7 @@
                 <div class="swiper-slide" id="JournalView">
                     <div class="tabTitle">Daily Journal</div>
                     <div id="Calendar">
-                        <calendar-component></calendar-component>
+                        <calendar-component id="calendar"></calendar-component>
                     </div>
                     <div class="scratchPad">
                         <div class="UseMeAsAScratchPad" style="color: rgba(0, 0, 0, 0.50); font-size: 15px; font-family: Nunito; font-weight: 700; word-wrap: break-word">Use me as a scratch pad...</div>
@@ -101,7 +102,6 @@
 
     <!-- Swiping Animation Stuff -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="swipeAnimation.js"></script>
     <!----------------------------->
 </body>
 </html>
