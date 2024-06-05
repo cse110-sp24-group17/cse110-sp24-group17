@@ -1,9 +1,18 @@
-import { ParagraphNode, TextInlineNode, lower_to_dom, parse_inline_expression, parse_markdown } from "../models/mdast.js";
+import { EditorProtocol, ParagraphNode, TextInlineNode, lower_to_dom, parse_inline_expression, parse_markdown } from "../models/mdast.js";
 import App from "../models/app.js";
 
-const replaceLog = (log) => {
-  log = log.replace('\u200B', '*');
-  return log;
+class MarkdownEditorProtocol extends EditorProtocol {
+  constructor() {
+    super();
+  }
+
+  get_content(filename) {
+    const file = App.store.get_file(filename);
+    if (file) {
+      return file.get_content();
+    }
+    return undefined;
+  }
 }
 
 class MarkdownEditorComponent extends HTMLElement {
@@ -171,7 +180,8 @@ class MarkdownEditorComponent extends HTMLElement {
 
   parse(parent, text, syntax) {
     const node = parse_markdown(text);
-    lower_to_dom(parent, node, syntax);
+    const protocol = new MarkdownEditorProtocol();
+    lower_to_dom(parent, node, protocol, syntax);
   }
 
   setup() {
