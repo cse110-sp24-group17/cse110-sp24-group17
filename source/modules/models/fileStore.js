@@ -386,9 +386,29 @@ class FileStore {
     }
 
     /**
-     * Sort the file entries in the file tree so that directories are listed before text files.
+     * Sort the file entries in the file tree so that directories are listed before text files, and sort in natural order, should be called on render. 
      */
     sort_files() {
+        const naturalCompare = (a, b) => {
+            const ax = [], bx = [];
+
+            a.replace(/(\d+)|(\D+)/g, (_, $1, $2) => {
+                ax.push([$1 || Infinity, $2 || ""]);
+            });
+            b.replace(/(\d+)|(\D+)/g, (_, $1, $2) => {
+                bx.push([$1 || Infinity, $2 || ""]);
+            });
+
+            while (ax.length && bx.length) {
+                const an = ax.shift();
+                const bn = bx.shift();
+                const nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+                if (nn) return nn;
+            }
+
+            return ax.length - bx.length;
+        };
+
         const sortEntries = (entry) => {
             if (entry instanceof DirectoryFileEntry) {
                 // Sort the children of the directory
@@ -400,13 +420,13 @@ class FileStore {
                     if (a.get_type() !== 'directory' && b.get_type() === 'directory') {
                         return 1;
                     }
-                    return a.get_name().localeCompare(b.get_name());
+                    return naturalCompare(a.get_name(), b.get_name());
                 });
 
                 // Reassign the sorted children to the directory
                 entry.children = {};
                 children.forEach(child => {
-                    entry.children[child.name] = child;
+                    entry.children[child.get_name()] = child;
                     sortEntries(child); // Recursively sort the children
                 });
             }
