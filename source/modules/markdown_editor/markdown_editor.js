@@ -14,23 +14,64 @@ class MarkdownEditorComponent extends HTMLElement {
           display: flex;
           height: 100%;
           width: 100%;
+          padding:10px;
         }
         .markdown-section {
           flex: 1;
           overflow: hidden;
           height: 100%;
         }
+
         #editor {
           display: block;
           width: 100%;
           height: 100%;
           overflow: auto;
           white-space: pre;
+          font-size: 1.5em;
         }
+
+        #editor:focus {
+          outline: none;
+        }
+
         #preview {
           width: 100%;
           height: 100%;
+          font-size: 1.5em;
           overflow: auto;
+        }
+
+        #preview h1 {
+          font-size: 2em;
+        }
+        #preview h2 {
+          font-size: 1.5em;
+        }
+        #preview h3 {
+          font-size: 1.17em;
+        }
+        #preview h4 {
+          font-size: 1em;
+        }
+        #preview h5 {
+          font-size: 0.83em;
+        }
+        #preview h6 {
+          font-size: 0.67em;
+        }
+        #preview p {
+          margin: 0;
+        }
+        #preview ul {
+          padding-left: 20px;
+        }
+        #preview ul li {
+          list-style-type: disc;
+        }
+        #preview img {
+          max-width: 90%;
+          height: auto;
         }
       </style>
       <div class="markdown-container">
@@ -150,6 +191,15 @@ class MarkdownEditorComponent extends HTMLElement {
       App.store.sync();
     });
 
+    window.gotoMarkdown = (path) => {
+      const file = App.store.get_file(path);
+      if (file) {
+        this.file = file;
+      }
+    }
+
+    this.setupDragAndDrop(editor);
+
     // editor.addEventListener("keydown", (e) => {
     //   if (e.which === 13) {
     //     e.preventDefault();
@@ -206,6 +256,28 @@ class MarkdownEditorComponent extends HTMLElement {
     //     // editor.innerText = text;
     //   }
     // });
+  }
+  
+  setupDragAndDrop(editor) {
+    editor.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+
+    editor.addEventListener("drop", (event) => {
+      event.preventDefault();
+      const files = event.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const content = e.target.result;
+          const img = App.store.create_file(file.name);
+          img.set_content(content);
+          document.execCommand("insertText", false, "![image](" + img.get_path() + ")");
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   }
 }
 

@@ -25,9 +25,12 @@ window.addEventListener('load', function () {
 
   const calendar = document.getElementById('calendar');
   calendar.onDatePicked = (date) => {
-    let file = App.store.get_file(date.toDateString() + '.md');
+    if (!App.get_file_store().get_file("journals")) {
+      App.get_file_store().create_directory("journals");
+    }
+    let file = App.get_file_store().get_file("journals/"+date.toDateString() + '.md');
     if (!file) {
-      file = App.store.create_file(date.toDateString() + '.md');
+      file = App.get_file_store().create_file("journals/"+date.toDateString() + '.md');
     }
     markdown_editor.file = file;
   }

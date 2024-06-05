@@ -21,6 +21,8 @@
  * @module mdast
  */
 
+import App from '../models/app.js';
+
 class BlockNode {
   constructor() {
     this.children = [];
@@ -257,6 +259,43 @@ export class LinkInlineNode extends InlineNode {
   }
 }
 
+export class ImageInlineNode extends InlineNode {
+  constructor(parent, children, url) {
+    super(parent);
+    this.children = children;
+    this.url = url;
+  }
+
+  get_raw_content() {
+    let res = '![';
+    for (const child of this.children) {
+      res += child.get_raw_content();
+    }
+    res += '](' + this.url + ')';
+    return res;
+  }
+
+  get_type() {
+    return 'link';
+  }
+
+  lower_to_dom(syntax) {
+    const node = document.createElement('span');
+    if (syntax)
+      node.appendChild(create_span_element('!['));
+    const node2 = document.createElement('img');
+    const file = App.get_file_store().get_file(this.url);
+    if (file) {
+      node2.src = file.get_content();
+    }
+    node.appendChild(node2);
+    if (syntax)
+      node.appendChild(create_span_element(`](${this.url})`));
+    return node;
+  }
+}
+
+
 export class BlockLinkInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
     super(parent, ['[[',']]'], children);
@@ -267,12 +306,15 @@ export class BlockLinkInlineNode extends DecorationInlineNode {
   }
 
   lower_to_dom(syntax) {
-    const node = document.createElement('span');
-    node.appendChild(create_span_element('[['));
+    const node = document.createElement('a');
+    node.href = '#';
     for (const child of this.children) {
       node.appendChild(child.lower_to_dom(syntax));
     }
-    node.appendChild(create_span_element(']]'));
+    node.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.gotoMarkdown(this.children[0].get_raw_content());
+    });
     return node;
   }
 }
@@ -358,6 +400,16 @@ export function parse_inline_expression(parent, text) {
         const secondLast = stack[stack.length-2][0];
         if (secondLast.get_type() === 'bracket' 
           && last.children.length === 1 && last.children[0].get_type() === 'text') {
+          if (stack.length >= 3) {
+            const thirdLast = stack[stack.length-3][0];
+            if (thirdLast.get_type() === 'text' && thirdLast.text[thirdLast.text.length-1] === '!') {
+              thirdLast.text = thirdLast.text.substring(0, thirdLast.text.length-1);
+              stack.pop();
+              stack.pop();
+              stack.push([new ImageInlineNode(parent, secondLast.children, last.children[0].get_raw_content()), false]);
+              continue;
+            }
+          } 
           stack.pop();
           stack.pop();
           stack.push([new LinkInlineNode(parent, secondLast.children, last.children[0].get_raw_content()), false]);
