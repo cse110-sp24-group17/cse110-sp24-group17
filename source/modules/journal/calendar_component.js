@@ -49,7 +49,9 @@ export default class CalendarComponent {
     this.render();
   }
 
-  // renders the component
+  /**
+   * Renders the calendar component to the DOM.
+   */
   render() {
     this.curMonthElement.textContent =
       monthIndexToString(this.curMonth) + ", " + this.curYear;
@@ -87,7 +89,9 @@ export default class CalendarComponent {
     }
   }
 
-  // fill "date grid" which will be displayed on the screen
+  /**
+   * Fills the date grid for the current month view.
+   */
   fillDateGrid() {
     this.days = new Array(42).fill(null);
     let counter = 1;
@@ -113,7 +117,9 @@ export default class CalendarComponent {
     }
   }
 
-  // switch to previous month
+  /**
+   * switch to the previous month.
+   */
   prevMonth() {
     this.curMonth--;
     if (this.curMonth == -1) {
