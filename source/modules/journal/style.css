@@ -167,8 +167,9 @@ main {
 }
 .calendar_weekday div {
   text-align: center;
-  padding: 0.3rem; 
+  padding: 0.26rem; 
   width: 2.5rem; /* 40px */
+  margin-left: 0.3rem;
 }
 
 .calendar_buttons img {
@@ -185,8 +186,9 @@ main {
   user-select: none;
   cursor: pointer;
   width: 2.5rem; /* 40px */
-  padding: 0.625rem 0.3125rem; /* 10px 5px */
-  margin: 0.1875rem 0.25rem; /* 3px 4px */
+  padding: 0.6rem 0.3125rem;
+  margin: 0.25rem 0.1rem;
+  margin-left: 0.6rem;
   text-align: center;
   font-weight: 700;
   font-size: 1.1rem;
