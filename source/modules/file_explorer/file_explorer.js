@@ -1,3 +1,5 @@
+import { defineCE, fixture } from '@open-wc/testing-helpers';
+
 import { TextFileEntry, DirectoryFileEntry} from "../models/fileStore.js";
 import App from "../models/app.js"
 
@@ -6,7 +8,7 @@ import App from "../models/app.js"
 * Creates the list of folders/files in file_explorer.html.
 * @constructor
 */
-class FileExplorerComponent extends HTMLElement {
+export class FileExplorerComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
@@ -347,3 +349,8 @@ class FileExplorerComponent extends HTMLElement {
 }
 
 customElements.define('file-explorer', FileExplorerComponent);
+
+
+/*export {FileExplorerComponent}*/ /*, hideChildren, render_text_file_to_dom, render_directory_to_dom, 
+    enter_delete_mode, exit_delete_mode, open_create_file_dialog, close_create_file_dialog,
+    get_current_open_file, get_current_open_folder, set_current_open_folder, handle_file_click,handle_directory_click};*/

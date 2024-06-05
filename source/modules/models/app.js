@@ -2,8 +2,13 @@ import {FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from "
 
 class App {
   constructor() {
-    this.store = new FileStore(new FileStoreProvider(window.localStorage));
-    this.store.load();
+    try{
+      this.store = new FileStore(new FileStoreProvider(window.localStorage));
+      this.store.load();
+    }
+   catch {
+    
+   }
     // const dir = new DirectoryFileEntry('dir');
     // const file = new TextFileEntry('file.txt', 'data');
 

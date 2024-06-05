@@ -2,6 +2,7 @@ import {
     dummy
   } from '../functions.js';
 
+
   
   
   // A dummy test to import a function from functions.js and testing it
@@ -14,3 +15,5 @@ import {
   test('3+0=3', () => {
     expect(dummy(3, 0)).toBe(3);
   });
+
+
