@@ -34,5 +34,16 @@ window.addEventListener('load', function () {
     }
     markdown_editor.file = file;
   }
+  const textarea = this.document.getElementById('scratchPadInput');
+  textarea.addEventListener('input', () => {
+    const content = textarea.value;
+    if (content) {
+      let file = App.get_file_store().get_file('scratch.txt');
+      if (!file) {
+        file = App.get_file_store().create_file('scratch.txt');
+      }
+      //Todo: modify file's content
+    }
+  });
 });
 
