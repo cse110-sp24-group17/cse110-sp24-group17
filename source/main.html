@@ -4,6 +4,7 @@
     <title>App Name Here</title>
     <link rel="icon" href="assets/Appicon.png">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="/source/modules/journal/style.css">
 
     <!-- Swiping Animation Stuff -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
@@ -13,6 +14,7 @@
     <script type="module" src="./modules/file_explorer/file_explorer.js"></script>
     <script type="module" src="./modules/markdown_editor/markdown_editor.js"></script>
     <script type="module" src="./modules/markdown_editor/code_highlighter.js"></script>
+    <script type="module" src="./modules/journal/calendar.js"></script>
 
 </head>
 <body>
@@ -47,7 +49,9 @@
                 </div>
                 <div class="swiper-slide" id="JournalView">
                     <div class="tabTitle">Daily Journal</div>
-                    <div class="Calendar"> Calendar Here</div>
+                    <div id="Calendar">
+                        <calendar-component></calendar-component>
+                    </div>
                     <div class="scratchPad">
                         <div class="UseMeAsAScratchPad" style="color: rgba(0, 0, 0, 0.50); font-size: 15px; font-family: Nunito; font-weight: 700; word-wrap: break-word">Use me as a scratch pad...</div>
                     </div>
