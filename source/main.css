@@ -1,186 +1,190 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 body {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background-color: #FFD15A;
-    font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #ffd15a;
+  font-family: "Nunito", sans-serif;
 }
 
 #main {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
 }
-
 
 #FeatureSide {
-    position: relative;
-    padding: 60px;
-    width: 300px;
-    height: 100vh;
-    top: -60px;
+  position: relative;
+  padding: 60px;
+  width: 300px;
+  height: 100vh;
+  top: -60px;
 }
 
-
 #ContentSide {
-    position: relative;
-    width: calc(100vw - 300px);
-    height: 100vh;
+  position: relative;
+  width: calc(100vw - 300px);
+  height: 100vh;
 }
 
 .ContentWindow {
-    width: 98%; 
-    min-height: 98%;
-    background: linear-gradient(119deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%); 
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20); 
-    border-radius: 25px; 
-    backdrop-filter: blur(40px);
+  width: 98%;
+  min-height: 98%;
+  background: linear-gradient(
+    119deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+  backdrop-filter: blur(40px);
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) 60px;
-    grid-template-rows: 60px 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;  
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 60px;
+  grid-template-rows: 60px 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
-.tabContainer { 
-    grid-area: 1 / 1 / 2 / 3; 
-    padding-left: 15px;
-    padding-top: 15px;
+.tabContainer {
+  grid-area: 1 / 1 / 2 / 3;
+  padding-left: 15px;
+  padding-top: 15px;
 
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 
-    
-
-    overflow: auto;
+  overflow: auto;
 }
 
 .sampleTab {
-    width: max-content;
-    height: 35px;
-    flex-shrink: 0;
-    border-radius: 25px;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.20);
-    background: white;
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
-    margin-right: 5px;
-    
-    text-align: left;
-    display: flex;
-    align-items: center;
+  width: max-content;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 25px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white;
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  margin-right: 5px;
 
-    flex-grow: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+
+  flex-grow: 1;
 }
 
-.tabTitles{
-    font-size: 16px;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-right: 15px;
+.tabTitles {
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.closeIcon{
-    padding-right: 15px;
-    margin-left: auto;
+.closeIcon {
+  padding-right: 15px;
+  margin-left: auto;
 }
 
-.markdownContainer { 
-    grid-area: 2 / 1 / 3 / 3; 
-    border-radius: 25px;
-    border: 1px solid rgba(0, 0, 0, 0.20);
-    background: white;
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
-    margin-bottom: 15px;
-    margin-left: 15px;
+.markdownContainer {
+  grid-area: 2 / 1 / 3 / 3;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white;
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  margin-left: 15px;
 }
-.sideBarMenu { 
-    grid-area: 1 / 3 / 3 / 4; 
-    display: flex;
-    justify-content: top;
-    align-items: center;
-    flex-direction: column;
-}
-
-#infoIcon, #searchIcon{
-    margin-top: 15px;
+.sideBarMenu {
+  grid-area: 1 / 3 / 3 / 4;
+  display: flex;
+  justify-content: top;
+  align-items: center;
+  flex-direction: column;
 }
 
-#JournalView{
-    position: relative;
-
+#infoIcon,
+#searchIcon {
+  margin-top: 15px;
 }
 
-#ProjectView{
-    position: relative;
-    display: flex;
-    justify-content: top;
-    flex-direction: column;
+#JournalView {
+  position: relative;
 }
 
-#JournalView, #ProjectView {
-    height: 90%;
-
-    border-radius: 25px;
-    background: linear-gradient(169deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%);
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(20px);
+#ProjectView {
+  position: relative;
+  display: flex;
+  justify-content: top;
+  flex-direction: column;
 }
 
-.tabTitle{
-    padding: 15px;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold
+#JournalView,
+#ProjectView {
+  height: 90%;
+
+  border-radius: 25px;
+  background: linear-gradient(
+    169deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
 }
 
-#Calendar{
+.tabTitle {
+  padding: 15px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+#Calendar {
   padding: 10px;
 }
 
-#scratchPadInput{
-    margin-top: 15px;
-    margin-left: 15px;
-    width: 270px;
-    height: 260px;
-    background-color: #FFEFB7;
-    color: rgba(0, 0, 0, 0.50); 
-    font-size: 15px; 
-    font-family: Nunito; 
-    font-weight: 700; 
-    word-wrap: "break-word";
-    border: none;
+#scratchPadInput {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 270px;
+  height: 260px;
+  background-color: #ffefb7;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 15px;
+  font-family: Nunito;
+  font-weight: 700;
+  word-wrap: break-word; /* Removed the quotes around break-word */
+  border: none;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15); /* Example shadow */
 }
 
-.toolbar{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    margin-left: 50px;
-    margin-right: 50px;
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
-.directoryContainer{
-    margin-top: 15px;
-    width: 100%;
-    height: 100%;
-    /* background-color: white; */
+.directoryContainer {
+  margin-top: 15px;
+  width: 100%;
+  height: 100%;
+  /* background-color: white; */
 }
 
-#trashIcon{
-    margin: 15px;
+#trashIcon {
+  margin: 15px;
 }
 
-.swiper_wrapper{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.swiper_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
