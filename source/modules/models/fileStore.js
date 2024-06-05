@@ -384,6 +384,36 @@ class FileStore {
 
         return true;
     }
+
+    /**
+     * Sort the file entries in the file tree so that directories are listed before text files.
+     */
+    sort_files() {
+        const sortEntries = (entry) => {
+            if (entry instanceof DirectoryFileEntry) {
+                // Sort the children of the directory
+                const children = Object.values(entry.children);
+                children.sort((a, b) => {
+                    if (a.get_type() === 'directory' && b.get_type() !== 'directory') {
+                        return -1;
+                    }
+                    if (a.get_type() !== 'directory' && b.get_type() === 'directory') {
+                        return 1;
+                    }
+                    return a.get_name().localeCompare(b.get_name());
+                });
+
+                // Reassign the sorted children to the directory
+                entry.children = {};
+                children.forEach(child => {
+                    entry.children[child.name] = child;
+                    sortEntries(child); // Recursively sort the children
+                });
+            }
+        };
+
+        sortEntries(this.root);
+    }
 }
 
 export { FileStore, FileStoreProvider, FileEntry, DirectoryFileEntry, TextFileEntry };
