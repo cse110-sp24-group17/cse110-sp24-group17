@@ -143,12 +143,18 @@ body {
   padding: 10px;
 }
 
-.scratchPad{
+#scratchPadInput{
     margin-top: 15px;
     margin-left: 15px;
     width: 270px;
     height: 260px;
     background-color: #FFEFB7;
+    color: rgba(0, 0, 0, 0.50); 
+    font-size: 15px; 
+    font-family: Nunito; 
+    font-weight: 700; 
+    word-wrap: "break-word";
+    border: none;
 }
 
 .toolbar{
