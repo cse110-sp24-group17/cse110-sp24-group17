@@ -49,7 +49,16 @@
  * @module mdast
  */
 
-import App from '../models/app.js';
+
+export class EditorProtocol {
+  constructor() {
+    this.dom = document.createElement('div');
+  }
+
+  get_content(filename)  {
+    throw new Error("Unimplemented get content");
+  }
+}
 
 class BlockNode {
   constructor() {
@@ -64,7 +73,7 @@ class BlockNode {
     throw new Error("Unimplemented type");
   }
 
-  lower_to_dom(cursor_contained) {
+  lower_to_dom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
@@ -96,7 +105,7 @@ export class InlineNode {
     throw new Error("Unimplemented type");
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
@@ -121,7 +130,7 @@ export class TextInlineNode extends InlineNode {
     return 'text';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('span');
     node.textContent = this.text;
     return node;
@@ -148,12 +157,12 @@ export class DecorationInlineNode extends InlineNode {
     return 'bold';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('b');
     if (syntax)
       node.appendChild(create_span_element(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     if (syntax)
       node.appendChild(create_span_element(this.paren[1]));
@@ -169,13 +178,13 @@ export class BracketInlineNode extends DecorationInlineNode {
     return 'bracket';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('span');
     const left = document.createElement('span');
     left.textContent = '[';
     node.appendChild(left);
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     const right = document.createElement('span');
     right.textContent = ']';
@@ -192,12 +201,12 @@ export class BoldInlineNode extends DecorationInlineNode {
     return 'bold';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('b');
     if (syntax)
       node.appendChild(create_span_element(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     if (syntax)
       node.appendChild(create_span_element(this.paren[1]));
@@ -214,12 +223,12 @@ export class ItalicInlineNode extends DecorationInlineNode {
     return 'italic';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('i');
     if (syntax)
       node.appendChild(create_span_element(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     if (syntax)
       node.appendChild(create_span_element(this.paren[1]));
@@ -235,13 +244,13 @@ export class ParenInlineNode extends DecorationInlineNode {
     return 'paren';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocl, syntax) {
     const node = document.createElement('span');
     const left = document.createElement('span');
     left.textContent = '(';
     node.appendChild(left);
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocl, syntax));
     }
     const right = document.createElement('span');
     right.textContent = ')';
@@ -270,7 +279,7 @@ export class LinkInlineNode extends InlineNode {
     return 'link';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('span');
     node.href = this.url;
     if (syntax)
@@ -278,7 +287,7 @@ export class LinkInlineNode extends InlineNode {
     const node2 = document.createElement('a');
     node2.href = this.url;
     for (const child of this.children) {
-      node2.appendChild(child.lower_to_dom(syntax));
+      node2.appendChild(child.lower_to_dom(protocol, syntax));
     }
     node.appendChild(node2);
     if (syntax)
@@ -307,14 +316,14 @@ export class ImageInlineNode extends InlineNode {
     return 'link';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('span');
     if (syntax)
       node.appendChild(create_span_element('!['));
     const node2 = document.createElement('img');
-    const file = App.get_file_store().get_file(this.url);
-    if (file) {
-      node2.src = file.get_content();
+    const content = protocol.get_content(this.url);
+    if (content) {
+      node2.src = content;
     }
     node.appendChild(node2);
     if (syntax)
@@ -333,11 +342,11 @@ export class BlockLinkInlineNode extends DecorationInlineNode {
     return 'block_link';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('a');
     node.href = '#';
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     node.addEventListener('click', (e) => {
       e.preventDefault();
@@ -463,7 +472,7 @@ export class EmptyLineNode extends BlockNode {
     return '\n';
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     if (syntax) {
       const ret = create_fake_br();
       return ret;
@@ -488,11 +497,11 @@ export class HeaderNode extends BlockNode {
     return res;
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('h' + this.level);
     for (let i=0; i&lt;this.children.length; i++) {
       const child = this.children[i];
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     return node;
   }
@@ -508,7 +517,7 @@ export class CodeBlockNode extends BlockNode {
     return content;
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('code-highlighter');
     node.code = this.content;
     return node;
@@ -530,7 +539,7 @@ export class ParagraphNode extends BlockNode {
     return res;
   }
 
-  lower_to_dom(syntax, last) {
+  lower_to_dom(protocol, syntax) {
     const node = document.createElement('div');
     // if (this.get_raw_content() === '') {
     //   node.appendChild(document.createElement('br'));
@@ -538,7 +547,7 @@ export class ParagraphNode extends BlockNode {
     // }
     for (let i=0; i&lt;this.children.length; i++) {
       const child = this.children[i];
-      node.appendChild(child.lower_to_dom(syntax));
+      node.appendChild(child.lower_to_dom(protocol, syntax));
     }
     // if (!last) {
     //   node.appendChild(document.createElement('br'));
@@ -580,7 +589,6 @@ export function parse_markdown(text) {
   for (const line of lines) {
     if (line === "```") {
       if (inCodeBlock) {
-        console.log(curCodeBlock);
         blocks.push(new CodeBlockNode(curCodeBlock));
         curCodeBlock = '';
       } 
@@ -599,14 +607,13 @@ export function parse_markdown(text) {
       blocks.push(parse_block(line));
     });
   }
-  console.log(blocks);
   return blocks;
 }
 
-export function lower_to_dom(parent, blocks, syntax) {
+export function lower_to_dom(parent, blocks, protocol, syntax) {
   for (let i=0; i&lt;blocks.length; i++) {
     const block = blocks[i];
-    parent.appendChild(block.lower_to_dom(syntax, i === blocks.length - 1));
+    parent.appendChild(block.lower_to_dom(protocol, syntax, i === blocks.length - 1));
   }
 }
 
@@ -626,7 +633,7 @@ export function lower_to_dom(parent, blocks, syntax) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Jun 05 2024 22:07:24 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Jun 05 2024 23:44:02 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
