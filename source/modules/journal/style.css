@@ -76,15 +76,13 @@ main {
   gap: 1.25rem; /* 20px */
 }
 
-@media (max-width: 800px) {
-  html {
-    font-size: 13px;
-  }
+html {
+  font-size: 13px;
+}
 
-  .container {
-    max-width: 25rem; /* 400px */
-    flex-direction: column;
-  }
+.container {
+  max-width: 25rem; /* 400px */
+  flex-direction: column;
 }
 
 .calendar {
@@ -125,8 +123,8 @@ main {
 
 .button {
   cursor: pointer;
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
 }
 
 .heading_title {
