@@ -358,29 +358,6 @@ class FileStore {
     }
 
     /**
-     * Search for files whose names or contents contain the specified keyword.
-     * @param {string} keyword - The keyword to search for.
-     * @returns {FileEntry[]} An array of matching file entries.
-     */
-    search_files(keyword) {
-        const results = [];
-
-        const search = (entry) => {
-            if (entry.get_name().includes(keyword) || (entry instanceof TextFileEntry && entry.get_content().includes(keyword))) {
-                results.push(entry);
-            }
-            if (entry instanceof DirectoryFileEntry) {
-                for (const child of entry.get_children()) {
-                    search(child);
-                }
-            }
-        };
-
-        search(this.root);
-        return results;
-    }
-
-    /**
      * Move a file from its current location to a new directory.
      * @param {FileEntry} sourceFile - The file to move.
      * @param {DirectoryFileEntry} destinationDirectory - The destination directory.
