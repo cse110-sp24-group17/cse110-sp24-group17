@@ -78,7 +78,7 @@ describe('FileStore System', () => {
     });
 
     test('FileStore search_files', () => {
-        const dir = store.create_directory('dir');
+        store.create_directory('dir');
         const file1 = store.create_file('dir/file1.txt');
         file1.set_content('This is a test file.');
         const file2 = store.create_file('dir/file2.txt');
