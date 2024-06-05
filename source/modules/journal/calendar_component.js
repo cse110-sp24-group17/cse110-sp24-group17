@@ -1,10 +1,32 @@
-import { isSameDay, getDaysOfMonth, monthIndexToString, weekdayOfFirstDay } from './date_util.js'
+import {
+  isSameDay,
+  getDaysOfMonth,
+  monthIndexToString,
+  weekdayOfFirstDay,
+} from "./date_util.js";
 
 // CalendarComponent is a convenient calendar widget component
 // that lets user pick date and run "onDatePicked" callback function
 // when user picked the date
+/**
+ * CalendarComponent is a calendar widget component that lets users pick a date and execute a callback function.
+ */
 export default class CalendarComponent {
-  constructor(curMonthElement, contentElement, prevButtonElement, nextButtonElement, onDatePicked) {
+  /**
+   * Creates an instance of CalendarComponent.
+   * @param {HTMLElement} curMonthElement - The HTML element displaying the current month.
+   * @param {HTMLElement} contentElement - The HTML element that will contain the calendar grid.
+   * @param {HTMLElement} prevButtonElement - The button to navigate to the previous month.
+   * @param {HTMLElement} nextButtonElement - The button to navigate to the next month.
+   * @param {Function} onDatePicked - The callback function to run when a date is picked.
+   */
+  constructor(
+    curMonthElement,
+    contentElement,
+    prevButtonElement,
+    nextButtonElement,
+    onDatePicked
+  ) {
     this.curMonthElement = curMonthElement;
     this.contentElement = contentElement;
     this.onDatePicked = onDatePicked;
@@ -17,10 +39,10 @@ export default class CalendarComponent {
     this.today = new Date();
     this.curYear = this.today.getFullYear();
     this.curMonth = this.today.getMonth();
-    this.prevMonthElement.addEventListener('click', () => {
+    this.prevMonthElement.addEventListener("click", () => {
       this.prevMonth();
     });
-    this.nextMonthElement.addEventListener('click', () => {
+    this.nextMonthElement.addEventListener("click", () => {
       this.nextMonth();
     });
     this.selectedDay = null;
@@ -29,25 +51,26 @@ export default class CalendarComponent {
 
   // renders the component
   render() {
-    this.curMonthElement.textContent = monthIndexToString(this.curMonth) + ", " + this.curYear
+    this.curMonthElement.textContent =
+      monthIndexToString(this.curMonth) + ", " + this.curYear;
     this.contentElement.replaceChildren();
     this.fillDateGrid();
-    
+
     const create_row = (days) => {
-      const row = document.createElement('div');
-      row.classList.add('calendar_row');
+      const row = document.createElement("div");
+      row.classList.add("calendar_row");
       days.forEach((day) => {
-        const col = document.createElement('div');
+        const col = document.createElement("div");
         if (isSameDay(this.today, day)) {
-          col.classList.add('calendar_today');
+          col.classList.add("calendar_today");
         }
         if (this.selectedDay && isSameDay(this.selectedDay, day)) {
-          col.classList.add('calendar_selected');
+          col.classList.add("calendar_selected");
         }
         if (day.getMonth() != this.curMonth) {
-          col.classList.add('calendar_grayed');
+          col.classList.add("calendar_grayed");
         } else {
-          col.addEventListener('click', () => {
+          col.addEventListener("click", () => {
             this.selectedDay = day;
             this.onDatePicked(day);
             this.render();
@@ -60,32 +83,32 @@ export default class CalendarComponent {
     };
 
     for (let i = 0; i < this.days.length; i += 7) {
-      this.contentElement.appendChild(create_row(this.days.slice(i,i+7)));
+      this.contentElement.appendChild(create_row(this.days.slice(i, i + 7)));
     }
   }
 
   // fill "date grid" which will be displayed on the screen
   fillDateGrid() {
     this.days = new Array(42).fill(null);
-    let counter = 1
+    let counter = 1;
     let firstDay = weekdayOfFirstDay(this.curYear, this.curMonth);
     let flag = false;
-    let prevMonth = (this.curMonth+11) % 12; // 11 = -1 (mod 12)
-    let nextMonth = (this.curMonth+1) % 12;
-    for(let i = firstDay; i < this.days.length; i++) {
+    let prevMonth = (this.curMonth + 11) % 12; // 11 = -1 (mod 12)
+    let nextMonth = (this.curMonth + 1) % 12;
+    for (let i = firstDay; i < this.days.length; i++) {
       if (!flag) {
         this.days[i] = new Date(this.curYear, this.curMonth, counter++);
       } else {
         this.days[i] = new Date(this.curYear, nextMonth, counter++);
       }
-      if(counter > getDaysOfMonth(this.curYear,this.curMonth)){
+      if (counter > getDaysOfMonth(this.curYear, this.curMonth)) {
         counter = 1;
         flag = true;
       }
     }
     let count = getDaysOfMonth(this.curYear, prevMonth);
-    console.log(count)
-    for(let i = firstDay - 1; i >= 0; i--){
+    console.log(count);
+    for (let i = firstDay - 1; i >= 0; i--) {
       this.days[i] = new Date(this.curYear, prevMonth, count--);
     }
   }
@@ -93,9 +116,9 @@ export default class CalendarComponent {
   // switch to previous month
   prevMonth() {
     this.curMonth--;
-    if(this.curMonth == -1){
-        this.curYear--;
-        this.curMonth = 11
+    if (this.curMonth == -1) {
+      this.curYear--;
+      this.curMonth = 11;
     }
     this.selectedDay = null;
     this.render();
@@ -104,12 +127,11 @@ export default class CalendarComponent {
   // switch to next month
   nextMonth() {
     this.curMonth++;
-    if (this.curMonth == 12){
-        this.curYear++
-        this.curMonth = 0
+    if (this.curMonth == 12) {
+      this.curYear++;
+      this.curMonth = 0;
     }
-    this.selectedDay = null
+    this.selectedDay = null;
     this.render();
   }
 }
-
