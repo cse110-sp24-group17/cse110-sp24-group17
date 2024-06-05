@@ -284,11 +284,6 @@ class FileExplorerComponent extends HTMLElement {
     */
     set_current_open_file(file) {
         this.currentOpenFile = file;
-        /*const markdownEditor = document.getElementsByClassName('markdown-editor')[0];
-        markdownEditor.innerHTML = file.content;
-        markdownEditor.id = file.name;
-        document.getElementsByTagName("body")[0].appendChild(markdownEditor);*/
-
     }
 
     /**
@@ -307,6 +302,11 @@ class FileExplorerComponent extends HTMLElement {
         this.currentOpenFolder = folder;
     }
 
+
+    /**
+     * When a file is clicked, it is either openned or deleted depending on the mode
+     * @param {*} file - the file being picked 
+     */
     handle_file_click(file) {
         if (this.deleteMode) {
             file.parent.remove_child_file(file)
@@ -318,6 +318,10 @@ class FileExplorerComponent extends HTMLElement {
         }
     }
 
+     /**
+     * When a folder is clicked, it is either openned or deleted (including it's children) depending on the mode
+     * @param {*} directory - the directory being picked 
+     */
     handle_directory_click(directory) {
         console.log(directory);
 
