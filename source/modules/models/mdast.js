@@ -93,12 +93,7 @@ export class TextInlineNode extends InlineNode {
 
   lower_to_dom(syntax) {
     const node = document.createElement('span');
-    this.text.split('\n').forEach((line, index) => {
-      if (index !== 0) {
-        node.appendChild(create_fake_br());
-      }
-      node.appendChild(document.createTextNode(line));
-    });
+    node.textContent = this.text;
     return node;
   }
 }
@@ -455,15 +450,19 @@ export class ParagraphNode extends BlockNode {
     return res;
   }
 
-  lower_to_dom(syntax) {
+  lower_to_dom(syntax, last) {
     const node = document.createElement('div');
-    if (syntax) {
-      node.contentEditable = true;
-    }
+    // if (this.get_raw_content() === '') {
+    //   node.appendChild(document.createElement('br'));
+    //   return node;
+    // }
     for (let i=0; i<this.children.length; i++) {
       const child = this.children[i];
       node.appendChild(child.lower_to_dom(syntax));
     }
+    // if (!last) {
+    //   node.appendChild(document.createElement('br'));
+    // }
     return node;
   }
 }
@@ -525,8 +524,9 @@ export function parse_markdown(text) {
 }
 
 export function lower_to_dom(parent, blocks, syntax) {
-  for (const block of blocks) {
-    parent.appendChild(block.lower_to_dom(syntax));
+  for (let i=0; i<blocks.length; i++) {
+    const block = blocks[i];
+    parent.appendChild(block.lower_to_dom(syntax, i === blocks.length - 1));
   }
 }
 

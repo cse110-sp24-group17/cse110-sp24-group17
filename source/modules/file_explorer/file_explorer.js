@@ -381,6 +381,9 @@ class FileExplorerComponent extends HTMLElement {
     */
     set_current_open_file(file) {
         this.currentOpenFile = file;
+        if (this.onFileOpen) {
+            this.onFileOpen(file);
+        }
     }
 
     /**

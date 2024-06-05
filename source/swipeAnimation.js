@@ -15,4 +15,10 @@ window.addEventListener('load', function () {
   ele.onFileMouseLeave = () => {
     swiper.enable();
   };
+
+  const markdown_editor = document.getElementById('markdown-editor');
+  ele.onFileOpen = (file) => {
+    markdown_editor.file = file;
+  };
 });
+
