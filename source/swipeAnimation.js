@@ -34,5 +34,30 @@ window.addEventListener('load', function () {
     const filename = "journals/"+date.toDateString() + '.md';
     markdown_editor.filename = filename;
   }
-});
 
+  const textarea = this.document.getElementById("scratchPadInput");
+  let file = App.get_file_store().get_file("scratch.txt");
+  if (file) {
+    textarea.value = file.get_content();
+  }
+  textarea.addEventListener("input", () => {
+    const content = textarea.value;
+    if (content) {
+      let file = App.get_file_store().get_file("scratch.txt");
+      if (!file) {
+        file = App.get_file_store().create_file("scratch.txt");
+      }
+      textarea.addEventListener("input", () => {
+        const content = textarea.value;
+        if (content) {
+          let file = App.get_file_store().get_file("scratch.txt");
+          if (!file) {
+            file = App.get_file_store().create_file("scratch.txt");
+          }
+          file.set_content(content);
+          App.get_file_store().sync();
+        }
+      });
+    }
+  });
+});
