@@ -1,0 +1,30 @@
+name: JSDoc generation
+
+on:
+  push:
+    branches:
+      - E2E-pipeline-test  # Specifies that the workflow will only run on pushes to main
+
+jobs: # the things being executed
+  tests: # the name of your status check, will become important when you do branch protection
+    runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
+
+    services:
+      xvfb:
+        image: sebp/x11
+        options: --privileged
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Puppeteer tests
+      run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" node E2E.test.js
