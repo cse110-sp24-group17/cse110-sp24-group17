@@ -30,6 +30,7 @@ class FileExplorerComponent extends HTMLElement {
 
             let newFileButton = document.getElementById('addFile');
 
+
             /**
              * Creates a new file in the current directory
              * @param {ClickEvent} event - event created by clicking the button
@@ -285,6 +286,53 @@ class FileExplorerComponent extends HTMLElement {
             const draggedFile = App.get_file_store().get_file(draggedFilePath);
             console.log(draggedFile);
             App.get_file_store().move_file(draggedFile, file); // Move the file to the new location. Called from fileStore.
+            this.render();
+        });
+
+        textElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        textElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
+
+        fileElement.appendChild(textElement);
+        return fileElement;
+    }
+
+
+
+    render_root_div_to_dom() {
+        const fileElement = document.createElement('div'); //create div element
+        fileElement.className = 'root'; //assign two classes -> 'file-entry' and 'text-file'
+        const textElement = document.createElement('div'); //create div element
+
+
+        // Drag over functionality
+        fileElement.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        // Drop functionality
+        fileElement.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedFilePath = event.dataTransfer.getData("text/plain");
+            console.log(draggedFilePath);
+            const draggedFile = App.get_file_store().get_file(draggedFilePath);
+            console.log(draggedFile);
+
+
+            // Remove the source file from the source directory
+            draggedFile.parent.remove_child_file(draggedFile);
+
+            // Add the source file to the root
+            App.get_file_store().root.add_child_file(draggedFile);
+            
             this.render();
         });
 

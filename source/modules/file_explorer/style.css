@@ -4,7 +4,7 @@
 }
 
 
-#file_display {   
+#file_display {    
     position: relative; 
     height: 100%;   
     width: 100%;   
@@ -16,7 +16,6 @@
     font-weight: bold;
     padding: 10px 10px 10px 10px;
 }*/
-
 .text-file{
     position: relative;
     display: block;
@@ -26,6 +25,7 @@
     margin-top: 5px;
     border-radius: 10px;
 }
+
 
 .directory{
     position: relative;
@@ -69,4 +69,3 @@
 #add-file, #add-folder{
     margin-left: 45px;
 }
-
