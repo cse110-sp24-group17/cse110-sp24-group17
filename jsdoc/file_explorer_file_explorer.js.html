@@ -56,7 +56,7 @@ class FileExplorerComponent extends HTMLElement {
             this.currentOpenFile = null; // Set the current open file to null
             this.render(); // Render the file explorer
 
-            let newFileButton = this.shadowRoot.getElementById('file_display_header_button_new');
+            let newFileButton = document.getElementById('addFile');
 
             /**
              * Creates a new file in the current directory
@@ -86,7 +86,7 @@ class FileExplorerComponent extends HTMLElement {
                 });
             });
 
-            let newFolderButton = this.shadowRoot.getElementById('folder_display_header_button_new');
+            let newFolderButton = document.getElementById('addFolder');
 
             /**
              * Creates a new folder in the current directory
@@ -114,7 +114,7 @@ class FileExplorerComponent extends HTMLElement {
                 });
             });
 
-            let deleteButton = this.shadowRoot.getElementById('file_display_header_button_delete'); // Get the delete button
+            let deleteButton = document.getElementById('trashIcon'); // Get the delete button
 
             /**
              * Toggles delete mode on and off
@@ -123,12 +123,21 @@ class FileExplorerComponent extends HTMLElement {
             deleteButton.addEventListener('click', () => {
                 if (this.deleteMode) {
                     this.exit_delete_mode();
-                    deleteButton.innerHTML = "Delete:Off"
                 } else {
                     this.enter_delete_mode();
-                    deleteButton.innerHTML = "Delete:On"
                 }
             });
+        
+
+            /*deleteButton.addEventListener('drop', (event) => {
+                event.preventDefault();
+                const draggedFilePath = event.dataTransfer.getData("text/plain");
+                console.log("sus", draggedFilePath);
+                const draggedFile = App.get_file_store().get_file(draggedFilePath);
+                console.log(draggedFile);
+                draggedFile.parent.remove_child_file(draggedFile);
+                this.render();
+            });*/
         })
 
 
@@ -178,6 +187,7 @@ class FileExplorerComponent extends HTMLElement {
 
         const treeRoot = fileEntry.root // Get the root of the file store
 
+
         /**
         * Displays the elements by appending children recursively.
         * @param {HTMLElement} element - The HTML element representing the root.
@@ -218,6 +228,8 @@ class FileExplorerComponent extends HTMLElement {
             }
         }
 
+       let rootDiv = this.render_root_div_to_dom();
+        rootElement.appendChild(rootDiv);
         loadTree(rootElement, treeRoot); // Load the tree starting from the root
         
         App.get_file_store().sync(); // Sync the file store
@@ -243,7 +255,16 @@ class FileExplorerComponent extends HTMLElement {
         fileElement.innerText = file.get_name(); // assign file name
         fileElement.id = file.get_path();
         fileElement.addEventListener('click', () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
-
+        fileElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        fileElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
         // Drag functionality
         fileElement.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData("text/plain", file.get_path());
@@ -288,14 +309,70 @@ class FileExplorerComponent extends HTMLElement {
         textElement.addEventListener('drop', (event) => {
             event.preventDefault();
             const draggedFilePath = event.dataTransfer.getData("text/plain");
-            console.log(draggedFilePath);
+            console.log("sus", draggedFilePath);
             const draggedFile = App.get_file_store().get_file(draggedFilePath);
             console.log(draggedFile);
             App.get_file_store().move_file(draggedFile, file); // Move the file to the new location. Called from fileStore.
             this.render();
         });
 
+        textElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        textElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
+
         fileElement.appendChild(textElement);
+        return fileElement;
+    }
+
+
+
+    render_root_div_to_dom() {
+        const fileElement = document.createElement('div'); //create div element
+        fileElement.className = 'root'; 
+
+
+        // Drag over functionality
+        fileElement.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        // Drop functionality
+        fileElement.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedFilePath = event.dataTransfer.getData("text/plain");
+            console.log(draggedFilePath);
+            const draggedFile = App.get_file_store().get_file(draggedFilePath);
+            console.log(draggedFile);
+
+
+            // Remove the source file from the source directory
+            draggedFile.parent.remove_child_file(draggedFile);
+
+            // Add the source file to the root
+            App.get_file_store().root.add_child_file(draggedFile);
+
+            this.render();
+        });
+
+        fileElement.addEventListener('mouseenter', () => {
+            if (this.onFileMouseEnter) {
+                this.onFileMouseEnter(file);
+            }
+        });
+        fileElement.addEventListener('mouseleave', () => {
+            if (this.onFileMouseLeave) {
+                this.onFileMouseLeave(file);
+            }
+        });
+
         return fileElement;
     }
 
@@ -332,6 +409,9 @@ class FileExplorerComponent extends HTMLElement {
     */
     set_current_open_file(file) {
         this.currentOpenFile = file;
+        if (this.onFileOpen) {
+            this.onFileOpen(file);
+        }
     }
 
     /**
@@ -394,7 +474,8 @@ class FileExplorerComponent extends HTMLElement {
 
 }
 
-customElements.define('file-explorer', FileExplorerComponent);</code></pre>
+customElements.define('file-explorer', FileExplorerComponent);
+</code></pre>
         </article>
     </section>
 
@@ -404,13 +485,13 @@ customElements.define('file-explorer', FileExplorerComponent);</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DirectoryFileEntry.html">DirectoryFileEntry</a></li><li><a href="FileEntry.html">FileEntry</a></li><li><a href="FileExplorerComponent.html">FileExplorerComponent</a></li><li><a href="FileStore.html">FileStore</a></li><li><a href="FileStoreProvider.html">FileStoreProvider</a></li><li><a href="TextFileEntry.html">TextFileEntry</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mdast.html">mdast</a></li></ul><h3>Classes</h3><ul><li><a href="DirectoryFileEntry.html">DirectoryFileEntry</a></li><li><a href="FileEntry.html">FileEntry</a></li><li><a href="FileExplorerComponent.html">FileExplorerComponent</a></li><li><a href="FileStore.html">FileStore</a></li><li><a href="FileStoreProvider.html">FileStoreProvider</a></li><li><a href="TextFileEntry.html">TextFileEntry</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Jun 05 2024 03:06:30 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Jun 05 2024 23:44:02 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>

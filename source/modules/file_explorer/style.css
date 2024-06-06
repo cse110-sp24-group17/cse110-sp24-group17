@@ -52,11 +52,12 @@
 }
 
 .selected{
-    background-color: red;
+  background-color: #FFC300;
 }
 
 .selected:hover{
-    background-color: #FFC300;
+  filter: brightness(0.95);
+  background-color: #FFC300;
 }
 
 .root {

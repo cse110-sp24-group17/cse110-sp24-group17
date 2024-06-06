@@ -113,4 +113,25 @@ describe('FileStore System', () => {
         expect(store.get_file('dest/file.txt').get_name()).toBe('file.txt');
         expect(store.get_file('dest/file.txt').parent).toBe(destDir);
     });
+
+    test('FileStore sort_files natural order', () => {
+        const dir = store.create_directory('dir');
+        const subdir1 = store.create_directory('dir/subdir1');
+        const subdir2 = store.create_directory('dir/subdir2');
+        const file1 = store.create_file('dir/file1.txt');
+        const file2 = store.create_file('dir/file2.txt');
+        const file10 = store.create_file('dir/file10.txt');
+        const file20 = store.create_file('dir/file20.txt');
+    
+        store.sort_files();
+    
+        const filesInRoot = store.get_files_in_path('');
+        const filesInDir = store.get_files_in_path('dir');
+    
+        // Check sorting in root (should be: root -> dir)
+        expect(filesInRoot.map(file => file.get_name())).toEqual(['dir']);
+    
+        // Check sorting in 'dir' (should be: subdir1, subdir2, file1, file2, file10, file20)
+        expect(filesInDir.map(file => file.get_name())).toEqual(['subdir1', 'subdir2', 'file1.txt', 'file2.txt', 'file10.txt', 'file20.txt']);
+    });
 });

@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>App Name Here</title>
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json"/>
+
+    <title>WebScribe</title>
     <link rel="icon" href="assets/Appicon.png">
     <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" href="/source/modules/journal/style.css">
+    <link rel="stylesheet" href="./modules/journal/style.css">
 
     <!-- Swiping Animation Stuff -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
-    <!----------------------------->
 
     <script type="module" src="./modules/models/app.js"></script>
     <script type="module" src="./modules/file_explorer/file_explorer.js"></script>
+    <script type="module" src="./modules/markdown_editor/markdown_editor.js"></script>
+    <script type="module" src="./modules/markdown_editor/code_highlighter.js"></script>
     <script type="module" src="./modules/journal/calendar.js"></script>
-
+    <script type="module" src="swipeAnimation.js"></script>
 
 </head>
 <body>
-   
     <div id = "main">
         <div class= "swiper Slider-container" id="FeatureSide">
             <div class="swiper-wrapper">
@@ -49,7 +52,7 @@
                 <div class="swiper-slide" id="JournalView">
                     <div class="tabTitle">Daily Journal</div>
                     <div id="Calendar">
-                        <calendar-component></calendar-component>
+                        <calendar-component id="calendar"></calendar-component>
                     </div>
                     <div class="scratchPad">
                         <div class="UseMeAsAScratchPad" style="color: rgba(0, 0, 0, 0.50); font-size: 15px; font-family: Nunito; font-weight: 700; word-wrap: break-word">Use me as a scratch pad...</div>
@@ -80,7 +83,7 @@
                     </div>
                 </div>
                 <div class="markdownContainer">
-                    
+                    <markdown-editor id="markdown-editor"></markdown-editor>
                 </div>
                 <div class="sideBarMenu">
                     <svg id="infoIcon" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +103,6 @@
 
     <!-- Swiping Animation Stuff -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="swipeAnimation.js"></script>
     <!----------------------------->
 </body>
 </html>

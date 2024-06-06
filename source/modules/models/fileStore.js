@@ -384,6 +384,62 @@ class FileStore {
 
         return true;
     }
+
+    /**
+     * Sort the file entries in the file tree so that directories are listed before text files, and sort in natural order, should be called on render. 
+     */
+    sort_files() {
+        // Define a natural comparison function for sorting filenames 
+        const naturalCompare = (a, b) => {
+            //Split filenames into numeric and non-numeric segments
+            const ax = [], bx = [];
+            a.replace(/(\d+)|(\D+)/g, (_, $1, $2) => {
+                ax.push([$1 || Infinity, $2 || ""]);
+            });
+            b.replace(/(\d+)|(\D+)/g, (_, $1, $2) => {
+                bx.push([$1 || Infinity, $2 || ""]);
+            });
+
+            //Compare segments numerically and lexicographically 
+            while (ax.length && bx.length) {
+                const an = ax.shift();
+                const bn = bx.shift();
+                const nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+                if (nn) return nn;
+            }
+            
+            //Ensure remaining segments are processed
+            return ax.length - bx.length;
+        };
+
+        // Recursive funciton to sort file entries within directories
+        const sortEntries = (entry) => {
+            if (entry.get_type() === 'directory') {
+                // Sort the children of the directory
+                const children = Object.values(entry.children);
+                children.sort((a, b) => {
+                    //directories should come before files
+                    if (a.get_type() === 'directory' && b.get_type() !== 'directory') {
+                        return -1;
+                    }
+                    if (a.get_type() !== 'directory' && b.get_type() === 'directory') {
+                        return 1;
+                    }
+                    return naturalCompare(a.get_name(), b.get_name());
+                });
+
+                // Reassign the sorted children to the directory
+                entry.children = {};
+                children.forEach(child => {
+                    entry.children[child.get_name()] = child;
+                    // Recursively sort the children if they are directories
+                    sortEntries(child); 
+                });
+            }
+        };
+
+        sortEntries(this.root);
+    }
 }
 
 export { FileStore, FileStoreProvider, FileEntry, DirectoryFileEntry, TextFileEntry };

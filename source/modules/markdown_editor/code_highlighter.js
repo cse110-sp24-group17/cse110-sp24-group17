@@ -12,13 +12,12 @@ class CodeHighlighter extends HTMLElement {
           }
           #code {
             white-space: pre-wrap;
-            height: 200px;
           }
         </style>
         <div id="code"></div>
       `;
       this.codeElement = this.shadowRoot.getElementById('code');
-      this.highlightSyntax();
+      this.highlightSyntax('');
     }
   
     get code() {
@@ -26,8 +25,7 @@ class CodeHighlighter extends HTMLElement {
     }
 
     set code(value) {
-      this.codeElement.innerText = value;
-      this.highlightSyntax();
+      this.highlightSyntax(value);
     }
 
     escapeHtml(html) {
@@ -37,8 +35,7 @@ class CodeHighlighter extends HTMLElement {
       return div.innerHTML;
     }
 
-    highlightSyntax() {
-      var code = this.codeElement.innerText;
+    highlightSyntax(code) {
       var keywords = ['function', 'const', 'let', 'var', 'return'];
 
       code = this.escapeHtml(code);

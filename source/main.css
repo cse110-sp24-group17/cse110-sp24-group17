@@ -139,10 +139,8 @@ body {
     font-weight: bold
 }
 
-.Calendar{
-    width: 100%;
-    height: 270px;
-    background-color: white;
+#Calendar{
+  padding: 10px;
 }
 
 .scratchPad{
@@ -179,3 +177,4 @@ body {
     justify-content: center;
     align-items: center;
 }
+
