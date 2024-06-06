@@ -68,7 +68,7 @@ body {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.20);
     background: white;
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
+    box-shadow: 0px 4px 5px -1px rgba(0, 0, 0, 0.20);
     margin-right: 5px;
     
     text-align: left;
@@ -76,6 +76,7 @@ body {
     align-items: center;
 
     flex-grow: 1;
+    
 }
 
 .tabTitles{
@@ -175,6 +176,15 @@ body {
 
 #trashIcon{
     margin: 15px;
+    position:absolute;
+    bottom: 0;
+}
+
+#trashIconOpen{
+    margin: 15px;
+    position:absolute;
+    bottom: 0;
+    left: -4px;
 }
 
 .swiper_wrapper{
@@ -183,5 +193,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.delete-mode-on{
+    background-color: #FF5733;
+}
+
+.hidden{
+    display: none;
 }
 

@@ -18,6 +18,15 @@ class FileExplorerComponent extends HTMLElement {
         this.hiddenFiles = [];
         this.deleteMode = false;
 
+        window.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        window.addEventListener('drop', (event) => {
+            this.render();
+        });
+
         /**
          * Fetches the file explorer html and sets the shadow root to the html
          */
@@ -88,6 +97,7 @@ class FileExplorerComponent extends HTMLElement {
             });
 
             let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+            let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
 
             /**
              * Toggles delete mode on and off
@@ -100,17 +110,34 @@ class FileExplorerComponent extends HTMLElement {
                     this.enter_delete_mode();
                 }
             });
+
+
+            deleteButtonOpen.addEventListener('click', () => {
+                if (this.deleteMode) {
+                    this.exit_delete_mode();
+                } else {
+                    this.enter_delete_mode();
+                }
+            });
+
+
         
 
-            /*deleteButton.addEventListener('drop', (event) => {
+            deleteButtonOpen.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+            });
+
+            deleteButtonOpen.addEventListener('drop', (event) => {
                 event.preventDefault();
                 const draggedFilePath = event.dataTransfer.getData("text/plain");
-                console.log("sus", draggedFilePath);
                 const draggedFile = App.get_file_store().get_file(draggedFilePath);
                 console.log(draggedFile);
                 draggedFile.parent.remove_child_file(draggedFile);
                 this.render();
-            });*/
+            });
+
+            
         })
 
 
@@ -160,6 +187,14 @@ class FileExplorerComponent extends HTMLElement {
 
         const treeRoot = fileEntry.root // Get the root of the file store
 
+        let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+        let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
+
+            
+        if (deleteButton.classList.contains('hidden') && !this.deleteMode){
+            deleteButton.classList.remove('hidden');
+            deleteButtonOpen.classList.add('hidden');
+        }
 
         /**
         * Displays the elements by appending children recursively.
@@ -207,7 +242,6 @@ class FileExplorerComponent extends HTMLElement {
         
         App.get_file_store().sync(); // Sync the file store
 
-        
     }
 
 
@@ -240,9 +274,27 @@ class FileExplorerComponent extends HTMLElement {
         });
         // Drag functionality
         fileElement.addEventListener('dragstart', (event) => {
+            let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+            let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
+
+            deleteButton.classList.add('hidden');
+            deleteButtonOpen.classList.remove('hidden');
+
             event.dataTransfer.setData("text/plain", file.get_path());
             event.dataTransfer.effectAllowed = "move";
         });
+
+        fileElement.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        });
+
+        fileElement.addEventListener('drop', (event) => {
+            event.preventDefault();
+            console.log("DROP2");
+            this.render();
+        });
+
 
 
         return fileElement;
@@ -274,6 +326,12 @@ class FileExplorerComponent extends HTMLElement {
 
         // Drag over functionality
         textElement.addEventListener('dragover', (event) => {
+            let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+            let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
+
+            deleteButton.classList.add('hidden');
+            deleteButtonOpen.classList.remove('hidden');
+            
             event.preventDefault();
             event.dataTransfer.dropEffect = "move";
         });
@@ -286,6 +344,7 @@ class FileExplorerComponent extends HTMLElement {
             const draggedFile = App.get_file_store().get_file(draggedFilePath);
             console.log(draggedFile);
             App.get_file_store().move_file(draggedFile, file); // Move the file to the new location. Called from fileStore.
+
             this.render();
         });
 
@@ -382,16 +441,6 @@ class FileExplorerComponent extends HTMLElement {
             this.render();
         });
 
-        fileElement.addEventListener('mouseenter', () => {
-            if (this.onFileMouseEnter) {
-                this.onFileMouseEnter(file);
-            }
-        });
-        fileElement.addEventListener('mouseleave', () => {
-            if (this.onFileMouseLeave) {
-                this.onFileMouseLeave(file);
-            }
-        });
 
         return fileElement;
     }
@@ -403,6 +452,12 @@ class FileExplorerComponent extends HTMLElement {
     */
     enter_delete_mode() {
         this.deleteMode = true;
+        let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+        let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
+
+        deleteButtonOpen.classList.remove('hidden');
+        deleteButton.classList.add('hidden');
+ 
     }
 
 
@@ -411,6 +466,11 @@ class FileExplorerComponent extends HTMLElement {
     */
     exit_delete_mode() {
         this.deleteMode = false;
+        let deleteButton = document.getElementById('trashIcon'); // Get the delete button
+        let deleteButtonOpen = document.getElementById('trashIconOpen'); // Get the delete button
+
+        deleteButtonOpen.classList.add('hidden');
+        deleteButton.classList.remove('hidden');
     }
 
   
