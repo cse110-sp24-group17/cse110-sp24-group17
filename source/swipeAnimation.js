@@ -61,3 +61,26 @@ window.addEventListener('load', function () {
     }
   });
 });
+document.getElementById("default").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#FEF9EC');
+});
+document.getElementById("darkMode").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#606060');
+});
+document.getElementById("yellow").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#FFD15A');
+});
+document.getElementById("blue").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#5E94FF');
+});
+document.getElementById("purple").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#A695B1');
+
+});
+
+const colorIcons = document.getElementsByClassName("colorIcons");
+for (let i = 0; i < colorIcons.length; i++) {
+  colorIcons[i].addEventListener("mouseover", function() {
+      this.style.cursor = "pointer";
+  });
+}
