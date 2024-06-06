@@ -1,7 +1,8 @@
 {
   "devDependencies": {
     "jest": "^29.7.0",
-    "jsdoc": "^4.0.3"
+    "jsdoc": "^4.0.3",
+    "puppeteer": "^22.10.0"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
