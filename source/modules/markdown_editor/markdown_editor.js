@@ -4,6 +4,8 @@ import App from "../models/app.js";
 class MarkdownEditorProtocol extends EditorProtocol {
   constructor() {
     super();
+    this._filename = null;
+    this._loaded = false;
   }
 
   get_content(filename) {
@@ -95,15 +97,24 @@ class MarkdownEditorComponent extends HTMLElement {
     this.setup();
   }
 
-  get file() {
-    return this._file;
+  get filename() {
+    return this._filename;
   }
 
-  set file(value) {
-    this._file = value;
-    this.editor.innerText = this._file.get_content();
-    this.preview.innerHTML = '';
-    this.parse(this.preview, this._file.get_content(), false);
+  set filename(value) {
+    this._filename = value;
+    this._loaded = false;
+    const file = App.get_file_store().get_file(value);
+    if (file) {
+      this._loaded = true;
+      this.file = file;
+      this.editor.innerText = this.file.get_content();
+      this.preview.innerHTML = '';
+      this.parse(this.preview, this.file.get_content(), false);
+    } else {
+      this.editor.innerText = '';
+      this.preview.innerHTML = '';
+    }
   }
 
   getCursorPosition(parent, node, offset, stat) {
@@ -192,6 +203,10 @@ class MarkdownEditorComponent extends HTMLElement {
     this.preview = preview;
 
     editor.addEventListener("input", (e) => {
+      if (!this._loaded) {
+        this._loaded = true;
+        this.file = App.get_file_store().create_file(this._filename);
+      }
       let input = this.editor.innerText;
       // const pos = this.getCurPos(this.editor);
       // this.setInput(input, pos);
@@ -199,6 +214,9 @@ class MarkdownEditorComponent extends HTMLElement {
       this.parse(this.preview, input, false);
       this.file.set_content(input);
       App.store.sync();
+      if (this.onSave) {
+        this.onSave();
+      }
     });
 
     window.gotoMarkdown = (path) => {

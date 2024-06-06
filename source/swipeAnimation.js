@@ -19,8 +19,11 @@ window.addEventListener('load', function () {
   };
 
   const markdown_editor = document.getElementById('markdown-editor');
+  markdown_editor.onSave = () => {
+    ele.render();
+  }
   ele.onFileOpen = (file) => {
-    markdown_editor.file = file;
+    markdown_editor.filename = file.get_path();
   };
 
   const calendar = document.getElementById('calendar');
@@ -28,11 +31,8 @@ window.addEventListener('load', function () {
     if (!App.get_file_store().get_file("journals")) {
       App.get_file_store().create_directory("journals");
     }
-    let file = App.get_file_store().get_file("journals/"+date.toDateString() + '.md');
-    if (!file) {
-      file = App.get_file_store().create_file("journals/"+date.toDateString() + '.md');
-    }
-    markdown_editor.file = file;
+    const filename = "journals/"+date.toDateString() + '.md';
+    markdown_editor.filename = filename;
   }
 });
 
