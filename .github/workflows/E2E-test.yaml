@@ -8,12 +8,6 @@ on:
 jobs: # the things being executed
   tests: # the name of your status check, will become important when you do branch protection
     runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
-
-    services:
-      xvfb:
-        image: sebp/x11
-        options: --privileged
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,5 +20,8 @@ jobs: # the things being executed
       - name: Install dependencies
         run: npm install
 
+      - name: Install Xvfb
+      run: sudo apt-get install -y xvfb
+
       - name: Run Puppeteer tests
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" node E2E.test.js
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" node test.js
