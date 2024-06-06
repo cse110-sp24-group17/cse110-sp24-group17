@@ -15,16 +15,16 @@ jobs: # the things being executed
         options: --privileged
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run Puppeteer tests
-      run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" node E2E.test.js
+      - name: Run Puppeteer tests
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" node E2E.test.js
