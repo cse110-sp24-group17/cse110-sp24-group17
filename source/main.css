@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+:root {
+    --background-color: #FEF9EC; /* Define the variable */
+}
+
 body {
     overflow-x: hidden;
-    overflow-y: hidden;
-    background-color: #FFD15A;
+    /* overflow-y: hidden; */
+    background-color: var(--background-color);
     font-family: 'Nunito', sans-serif;
+    transition: background-color 0.7s ease;
 }
 
 #main {
@@ -108,7 +113,7 @@ body {
     flex-direction: column;
 }
 
-#infoIcon, #searchIcon{
+#infoIcon, #searchIcon, .colorIcons{
     margin-top: 15px;
 }
 
