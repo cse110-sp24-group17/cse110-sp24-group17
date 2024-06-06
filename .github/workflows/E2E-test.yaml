@@ -1,4 +1,4 @@
-name: JSDoc generation
+name: E2E Generation
 
 on:
   push:
