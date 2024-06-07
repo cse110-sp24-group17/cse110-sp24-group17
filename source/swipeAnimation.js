@@ -1,15 +1,15 @@
 import App from './modules/models/app.js';
 
-var swiper = new Swiper('.Slider-container', {
-  effect: 'cards',
-  grabCursor: true,
-  centerdSlides: true,
-  loop: true,
-  longSwipes: true,
-  speed: 700,
-});
-
 window.addEventListener('load', function () {
+  const swiper = new Swiper('.Slider-container', {
+    effect: 'cards',
+    grabCursor: true,
+    centerdSlides: true,
+    loop: true,
+    longSwipes: true,
+    speed: 700,
+  });
+  
   const ele = document.getElementById('file-explorer');
   ele.onFileMouseEnter = () => {
     swiper.disable();
@@ -17,6 +17,8 @@ window.addEventListener('load', function () {
   ele.onFileMouseLeave = () => {
     swiper.enable();
   };
+
+  
 
   const markdown_editor = document.getElementById('markdown-editor');
   markdown_editor.onSave = () => {
@@ -60,4 +62,36 @@ window.addEventListener('load', function () {
       });
     }
   });
+
+
+  /* Sound effects Logic */
+  let isMuted = false;
+  console.log('isMuted', isMuted);
+  // Function to toggle mute state
+  function toggleMute() {
+    isMuted = !isMuted;
+    const muteButton = document.getElementById('audioIcon');
+    if(isMuted) {
+        muteButton.src = 'assets/mute.svg';
+    } else {
+        muteButton.src = 'assets/audioOn.svg';
+    }
+    console.log('isMuted', isMuted);
+
+  }
+  document.getElementById('audioIcon').addEventListener('click', toggleMute);
+  
+  swiper.on('slideChangeTransitionStart', function () {
+    if (!isMuted) {
+        const cardShuffleSound = new Audio('assets/soundEffects/cardShuffle.mp3');
+        cardShuffleSound.volume = 0.40;
+        cardShuffleSound.play();
+    }
+});
+  
+    /* // General Click SoundEffect function
+    function playSoundEffect(audioFilePath) {
+      const clickSound = new Audio(audioFilePath);
+      clickSound.play();
+    } */
 });
