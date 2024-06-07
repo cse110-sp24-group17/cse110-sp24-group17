@@ -81,6 +81,8 @@ body {
     align-items: center;
 
     flex-grow: 1;
+
+    cursor: pointer;
     
 }
 
@@ -115,6 +117,7 @@ body {
 
 #infoIcon, #searchIcon, .colorIcons{
     margin-top: 15px;
+    cursor: pointer;
 }
 
 #JournalView{
@@ -142,7 +145,7 @@ body {
     padding: 15px;
     text-align: center;
     font-size: 25px;
-    font-weight: bold
+    font-weight: bold;
 }
 
 #Calendar{
@@ -154,14 +157,14 @@ body {
     margin-left: 15px;
     width: 270px;
     height: 260px;
-  background-color: #ffefb7;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 15px;
-  font-family: Nunito;
-  font-weight: 700;
-  word-wrap: break-word; /* Removed the quotes around break-word */
-  border: none;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15); /* Example shadow */
+    background-color: #ffefb7;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 15px;
+    font-family: Nunito;
+    font-weight: 700;
+    word-wrap: break-word; /* Removed the quotes around break-word */
+    border: none;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15); /* Example shadow */
 }
 
 .toolbar{
@@ -183,6 +186,8 @@ body {
     margin: 15px;
     position:absolute;
     bottom: 0;
+    
+    cursor:pointer;
 }
 
 #trashIconOpen{
@@ -208,3 +213,22 @@ body {
     display: none;
 }
 
+#audioIcon{
+    margin-bottom: 15px;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+}
+
+#addFile, #addFolder{
+    cursor: pointer;
+}
+
+#addFile{
+    
+    margin-left: 20px;
+}
+
+#addFolder{
+    margin-right: 20px;
+}
