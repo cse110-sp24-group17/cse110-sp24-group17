@@ -184,6 +184,7 @@ class FileExplorerComponent extends HTMLElement {
         const fileEntry = App.get_file_store();
         const rootElement = this.shadowRoot.getElementById('file');
         rootElement.innerHTML = ''; // Clear previous contents
+        App.get_file_store().sort_files(); // Sort the files in the file store
 
         const treeRoot = fileEntry.root // Get the root of the file store
 
