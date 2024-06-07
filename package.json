@@ -1,13 +1,16 @@
 {
   "devDependencies": {
     "jest": "^29.7.0",
-    "jsdoc": "^4.0.3"
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdoc": "^4.0.3",
+    "jsdom": "^24.1.0"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
   },
   "type": "module",
   "jest": {
+    "testEnvironment": "jsdom",
     "transform": {},
     "verbose": true
   }
