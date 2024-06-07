@@ -24,6 +24,15 @@
     <div id = "main">
         <div class= "swiper Slider-container" id="FeatureSide">
             <div class="swiper-wrapper">
+                <div class="swiper-slide" id="JournalView">
+                    <div class="tabTitle">Daily Journal</div>
+                    <div id="Calendar">
+                        <calendar-component id="calendar"></calendar-component>
+                    </div>
+                    <div class="scratchPad" >
+                        <textarea id="scratchPadInput" placeholder="Type your text here..."></textarea>
+                    </div>
+                </div>
                 <div class="swiper-slide" id="ProjectView">
                     <div class="tabTitle">Project Views</div>
                     <div class="toolbar">
@@ -65,15 +74,7 @@
                         </svg>
 
                 </div>
-                <div class="swiper-slide" id="JournalView">
-                    <div class="tabTitle">Daily Journal</div>
-                    <div id="Calendar">
-                        <calendar-component id="calendar"></calendar-component>
-                    </div>
-                    <div class="scratchPad" >
-                        <textarea id="scratchPadInput" placeholder="Type your text here..."></textarea>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div id="ContentSide">
@@ -120,6 +121,7 @@
                     <img class="colorIcons" id="blue"  src="assets/blue.svg" alt="blue color">
                     <img class="colorIcons" id="purple" src="assets/purple.svg" alt="purple color">
 
+                    <img id='audioIcon' src="assets/audioOn.svg" alt="speaker activated image">
                 </div>
             </div>
         </div>
