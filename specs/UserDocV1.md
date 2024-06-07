@@ -2,9 +2,16 @@
 
 Welcome to WebScribe! Our application provides a comprehensive platform for managing journals, editing markdown files, exploring files, and more. This guide will walk you through the various features and components of our app.
 
-![JournalViewImage]()
+# Progrssive Web App Downlaod Instructions
+
+![downloadButton](source/assets/pwaDownload.png)
+
+To download our web app, simply travel to our [Webscribe url](https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main.html) and click the download button to the right of the url.
+
 
 ## 1. Journal View
+
+![JournalViewImage](source/assets/journalDoc.png)
 
 The Journal View component allows you to view journal entries for specific dates. You can navigate between dates, open a calendar to select a date, and switch between different journal entries effortlessly.
 
@@ -13,9 +20,9 @@ The Journal View component allows you to view journal entries for specific dates
 - Open the calendar tab to select a specific date.
 - View and edit journal entries for the selected date.
 
-![CalendarComponentImage]()
-
 ## 2. Calendar Component
+
+![CalendarComponentImage](source/assets/calendarDoc.png)
 
 The Calendar Component displays dates of the month and enables easy navigation and selection of specific dates.
 
@@ -24,9 +31,9 @@ The Calendar Component displays dates of the month and enables easy navigation a
 - Select a specific date to view associated journal entries.
 
 
-![FileExplorerComponent]()
-
 ## 3. File Explorer Component
+
+![FileExplorerComponent](source/assets/fileViewDoc.png)
 
 The File Explorer Component provides an intuitive interface for navigating through files and directories within the file system.
 
@@ -36,10 +43,9 @@ The File Explorer Component provides an intuitive interface for navigating throu
 - Drag and drop files to nest them within directories of your choice! 
 - Enter "delete mode" to delete files with a single click, or drag and drop into trash. 
 
-
-![MarkdownEditorComponent]()
-
 ## 4. Markdown Editor Component
+
+![MarkdownEditorComponent](source/assets/markdownDoc.png)
 
 The Markdown Editor Component allows you to edit markdown files with ease. It provides syntax highlighting and supports unwrapping markdown blocks into plain text view. A cool feature of our markdown editor is that you can drag and drop pictures from our download folder and display it in your journal. 
 
