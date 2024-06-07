@@ -56,6 +56,6 @@ document.getElementById("purple").addEventListener("click", function() {
 const colorIcons = document.getElementsByClassName("colorIcons");
 for (let i = 0; i < colorIcons.length; i++) {
   colorIcons[i].addEventListener("mouseover", function() {
-      this.style.cursor = "pointer";
+    this.style.cursor = "pointer";
   });
 }
