@@ -66,15 +66,16 @@ window.addEventListener('load', function () {
 
   /* Sound effects Logic */
   let isMuted = false;
+  const defaultVolume = 0.4;
   console.log('isMuted', isMuted);
   // Function to toggle mute state
   function toggleMute() {
     isMuted = !isMuted;
     const muteButton = document.getElementById('audioIcon');
     if(isMuted) {
-        muteButton.src = 'assets/mute.svg';
+      muteButton.src = 'assets/mute.svg';
     } else {
-        muteButton.src = 'assets/audioOn.svg';
+      muteButton.src = 'assets/audioOn.svg';
     }
     console.log('isMuted', isMuted);
 
@@ -83,17 +84,11 @@ window.addEventListener('load', function () {
   
   swiper.on('slideChangeTransitionStart', function () {
     if (!isMuted) {
-        const cardShuffleSound = new Audio('assets/soundEffects/cardShuffle.mp3');
-        cardShuffleSound.volume = 0.40;
-        cardShuffleSound.play();
+      const cardShuffleSound = new Audio('assets/soundEffects/cardShuffle.mp3');
+      cardShuffleSound.volume = defaultVolume;
+      cardShuffleSound.play();
     }
-});
-  
-    /* // General Click SoundEffect function
-    function playSoundEffect(audioFilePath) {
-      const clickSound = new Audio(audioFilePath);
-      clickSound.play();
-    } */
+  });
 });
 document.getElementById("default").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#FEF9EC');
