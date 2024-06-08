@@ -1,41 +1,38 @@
-
 .nav_bar {
-  width: 120px;       
-  height: 100vh;     
-  position: fixed;   
-  top: 0;             
-  left: 0;            
-  background-color:  darkgray;
+  width: 120px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: darkgray;
 }
-.nav_bar_journal{
-  width: 50px;       
-  height: 50px;     
+.nav_bar_journal {
+  width: 50px;
+  height: 50px;
   position: inline-block;
   padding: 10px 10px 10px 10px;
   margin-left: 15px;
   margin-top: 10px;
-  background-color:  cyan;
+  background-color: cyan;
 }
 
-.nav_bar_file_explorer{
-  width: 50px;       
-  height: 50px;     
-  position: inline-block;  
+.nav_bar_file_explorer {
+  width: 50px;
+  height: 50px;
+  position: inline-block;
   padding: 10px 10px 10px 10px;
   margin-left: 15px;
   margin-top: 10px;
-  background-color:  cyan;
+  background-color: cyan;
 }
-.content{
- 
+.content {
   margin-left: 120px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   position: fixed;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100vw;
   /*background-color: aqua;*/
-  
 }
 #calendar-tab {
   width: 500px; /* Set a smaller width */
@@ -44,19 +41,14 @@
 #sidebar {
   width: 200px; /* Set the width of the sidebar */
   height: 100vh; /* Full height */
-  position: fixed; 
+  position: fixed;
   left: 0;
   top: 0;
-  background-color: #f3ab3c; 
-  padding: 1rem; 
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+  background-color: #f3ab3c;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
-#markdown-editor {
-  border: #f3ab3c;
-  border-style: solid;
-  height: 500px;
-  width: 500px;
-}
+
 #journal-page {
   margin-left: 300px;
 }
@@ -79,15 +71,13 @@ main {
   gap: 1.25rem; /* 20px */
 }
 
-@media (max-width: 800px) {
-  html {
-    font-size: 13px;
-  }
+html {
+  font-size: 13px;
+}
 
-  .container {
-    max-width: 25rem; /* 400px */
-    flex-direction: column;
-  }
+.container {
+  max-width: 25rem; /* 400px */
+  flex-direction: column;
 }
 
 .calendar {
@@ -128,8 +118,8 @@ main {
 
 .button {
   cursor: pointer;
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
 }
 
 .heading_title {
@@ -156,7 +146,7 @@ main {
 
 .calendar_content {
   padding-right: 1.25rem; /* 20px */
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 300;
 }
 
@@ -167,8 +157,9 @@ main {
 }
 .calendar_weekday div {
   text-align: center;
-  padding: 0.625rem; /* 10px */
+  padding: 0.26rem;
   width: 2.5rem; /* 40px */
+  margin-left: 0.3rem;
 }
 
 .calendar_buttons img {
@@ -185,20 +176,22 @@ main {
   user-select: none;
   cursor: pointer;
   width: 2.5rem; /* 40px */
-  padding: 0.625rem 0.3125rem; /* 10px 5px */
-  margin: 0.1875rem 0.25rem; /* 3px 4px */
+  padding: 0.6rem 0.3125rem;
+  margin: 0.25rem 0.1rem;
+  margin-left: 0.6rem;
   text-align: center;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
 }
 
 .calendar_row div:hover {
-  background: #ffd580;
+  background-color: #FFC300;
+  filter: brightness(0.95);
   transition: 0.2s;
 }
 
 .calendar_grayed {
-  color: lightgray;
+  color: rgb(150, 148, 148);
 }
 
 .calendar_today {
@@ -206,7 +199,7 @@ main {
 }
 
 .calendar_selected {
-  background: #fbe4b4;
+  background-color: #FFC300;
 }
 
 .prev_button {

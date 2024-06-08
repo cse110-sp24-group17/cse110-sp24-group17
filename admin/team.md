@@ -88,7 +88,3 @@ I’ve been really passionate about programming since when I was in elementary s
 Besides work, I love playing chess and tetris. I’ve also started cooking most of my meal since last year and it has become a sort of hobby. The best food I can make is spicy stir-fried fork. I try to jog every single day, so you might find me running across campus at random hours.
 
 https://sunho.io/cse110/
-
-### Trent
-
-Coming soon!

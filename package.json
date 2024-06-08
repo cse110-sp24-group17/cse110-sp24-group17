@@ -12,7 +12,7 @@
     "puppeteer": "^22.7.1"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
   },
   "type": "module",
   "jest": {
