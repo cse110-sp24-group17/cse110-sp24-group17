@@ -65,6 +65,7 @@ class FileExplorerComponent extends HTMLElement {
 
                     const newEntry = new TextFileEntry(inputValue + ".txt","");
                     App.get_file_store().root.add_child_file(newEntry);
+                    this.shadowRoot.getElementById("new-file-name").value = "";
                     formName.hidden = true;
                     this.render();                    
                 });
@@ -93,6 +94,7 @@ class FileExplorerComponent extends HTMLElement {
                     }
                     const newEntry = new DirectoryFileEntry(inputValue,"");
                     App.get_file_store().root.add_child_file(newEntry);
+                    this.shadowRoot.getElementById("new-folder-name").value = "";
                     formName.hidden = true;
                     this.render();                    
                 });

@@ -70,7 +70,6 @@ describe('Basic user flow for Website', () => {
         expect(Object.keys(childrenFiles).length).toBe(Object.keys(ogChildren).length + 1);
       }, 50000);
 
-    // FIXME
     // Check to make sure that a element in the directory can be deleted
     it('Deleting from File Explorer', async () => {
         console.log('Deleting an element from file explorer...');
@@ -80,7 +79,7 @@ describe('Basic user flow for Website', () => {
         const shadow = await fileExplorer.getProperty("shadowRoot");
 
         // Record children files and folders from the beginning
-        let children = await shadow.$("#file");
+        let children = await shadow.$eval("#file", el=>el.children);
         const numChildren = Object.keys(children).length;
 
         // Query the button to delete elements
@@ -91,7 +90,7 @@ describe('Basic user flow for Website', () => {
         const childToDelete =await shadow.$(".file-entry");
         await childToDelete.click();
     
-        let newChildren = await shadow.$("#file");
+        let newChildren = await shadow.$eval("#file", el =>el.children);
         expect(numChildren - 1).toBe(Object.keys(newChildren).length);
 
       }, 50000);
