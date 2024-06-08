@@ -9,7 +9,8 @@
     "jest-puppeteer": "^10.0.1",
     "jsdoc": "^4.0.3",
     "jsdom": "^24.1.0",
-    "puppeteer": "^22.10.0"
+    "puppeteer": "^22.10.0",
+    "jest-environment-puppeteer": "^6.0.0"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
