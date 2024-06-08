@@ -8,7 +8,7 @@
 
 WebScribe is a free developer journal and file repository. Log your accomplishments and keep track of your work using our Daily Journal! Organize project documents in our File Explorer, fully functional with folder creation and markdown editing! WebScribe provides a local-first environment to keep track of your journey as a software developer, anywhere, anytime.
 
-New around here? Access the application at https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main.html. The journal is fully accessible on the web using this link, but can also be downloaded as an application! [(instructions to download and to use product)](specs/UserDocV1.md).
+New around here? Access the application at https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main.html. The journal is fully accessible on the web using this link, but can also be downloaded as an application! [(instructions to download and to use product)](WebscribeUserDoc.md).
 
 ----
 
