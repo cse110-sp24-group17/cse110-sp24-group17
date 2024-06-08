@@ -122,7 +122,7 @@ describe('Basic user flow for Website', () => {
     }, 50000); 
 
     // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
-    it('Switching from file explorer view to project view', async () => {
+    /*it('Switching from file explorer view to project view', async () => {
       console.log('Switching view...');
 
       const scratchPad = await page.$('#scratchPadInput');
@@ -132,6 +132,6 @@ describe('Basic user flow for Website', () => {
       const calendar = await page.$("#calendar");
       await calendar.click();
       expect(newNote).toBe("I am writing a note that is very important!");
-    }, 50000); 
+    }, 50000); */
   
   });
