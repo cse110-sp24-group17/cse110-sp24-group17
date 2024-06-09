@@ -11,7 +11,4 @@ export default {
         useESM: true
       }
     },
-    coverageDirectory: './coverage/unit',
-    collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.js'],
   };
