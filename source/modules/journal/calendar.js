@@ -15,7 +15,7 @@ class CalendarView extends HTMLElement {
       .then((x) => x.text())
       .then((x) => {
         this.shadowRoot.innerHTML = x;
-        console.log(x);
+        //console.log(x);
         this.init();
       });
   }

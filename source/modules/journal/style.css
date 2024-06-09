@@ -44,7 +44,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: #f3ab3c;
+  background-color: var(--accent-color);
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
@@ -52,9 +52,7 @@
 #journal-page {
   margin-left: 300px;
 }
-body {
-  font-family: sans-serif;
-}
+
 
 main {
   margin-left: 200px; /* Same width as the sidebar */
@@ -89,7 +87,7 @@ html {
 }
 
 .heading_bar {
-  background: #f3ab3c;
+  background: var(--accent-color);
   width: 0.25rem; /* 4px */
   margin-right: 0.5rem; /* 8px */
 }
@@ -120,9 +118,6 @@ html {
   cursor: pointer;
   width: 2.2rem;
   height: 2.2rem;
-}
-
-.heading_title {
 }
 
 .heading_content {
@@ -164,8 +159,8 @@ html {
 
 .calendar_buttons img {
   max-width: 100%;
-  height: 2.1875rem; /* 35px */
-}
+  height: 2.1875rem;
+ } /* 35px */
 
 .calendar_row {
   display: flex;
@@ -185,21 +180,22 @@ html {
 }
 
 .calendar_row div:hover {
-  background-color: #FFC300;
-  filter: brightness(0.95);
+  background-color: var(--accent-color);
+  opacity: 0.2;
+  
   transition: 0.2s;
 }
 
 .calendar_grayed {
-  color: rgb(150, 148, 148);
+  color: rgb(120, 120, 120);
 }
 
 .calendar_today {
-  border: solid orange;
+  border: solid var(--accent-color);
 }
 
 .calendar_selected {
-  background-color: #FFC300;
+  background-color: var(--accent-color)
 }
 
 .prev_button {
@@ -214,7 +210,7 @@ html {
 }
 
 .holiday {
-  border: solid #f3ab3c;
+  border: solid var(--accent-color);
   padding: 0.4375rem 0.625rem; /* 7px 10px */
   border-width: 0.1875rem; /* 3px */
   border-radius: 0.1875rem; /* 3px */
@@ -228,7 +224,7 @@ html {
 }
 
 .holiday_place {
-  color: #f3ab3c;
+  color:var(--accent-color);
   font-weight: 500;
 }
 
@@ -269,7 +265,7 @@ ul li:before {
   position: absolute;
   width: 1.6875rem; /* 27px */
   height: 1.6875rem; /* 27px */
-  background: #fbe4b4;
+  background: var(--accent-color);
   cursor: pointer;
   right: 50%;
 }
@@ -280,7 +276,7 @@ ul li:before {
   transform: translate(-50%, -50%);
   height: 0.1875rem; /* 3px */
   width: 70%;
-  background: #f3ab3c;
+  background: var(--accent-color);
   top: 50%;
   left: 50%;
 }
@@ -291,7 +287,7 @@ ul li:before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #f3ab3c;
+  background: var(--accent-color);
   height: 70%;
   width: 0.1875rem; /* 3px */
 }
@@ -303,7 +299,7 @@ ul li:before {
 }
 
 .button_plus:hover {
-  background-color: #f3ab3c;
+  background-color: var(--accent-color);
   transition: 0.2s;
 }
 
@@ -314,4 +310,9 @@ ul li:before {
 
 .tab-hidden {
   visibility: hidden;
+}
+
+#Polygon4, #Polygon5 {
+  fill: var(--accent-color);
+  stroke: var(--accent-color);
 }
