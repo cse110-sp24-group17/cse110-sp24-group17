@@ -23,23 +23,41 @@ class MarkdownEditorComponent extends HTMLElement {
       <style>
         .markdown-container {
           display: flex;
-          height: 100%;
-          width: 100%;
-          padding:10px;
+          height: calc(100% - 40px);
+          width: calc(100% - 40px);
+          padding: 20px;
         }
+
+        .markdown-divide {
+          width: 1px;
+          height: 100%;
+          background-color: #ccc;
+        }
+
         .markdown-section {
           flex: 1;
+          padding: 10px;
           overflow: hidden;
-          height: 100%;
+          height: calc(100% - 20px);
         }
 
         #editor {
           display: block;
           width: 100%;
           height: 100%;
-          overflow: auto;
-          white-space: pre;
+          overflow-x: hidden;
+          overflow-y: auto;
+          white-space: pre-wrap;
           font-size: 1.5em;
+
+          border: none;
+          outline: none;
+
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+
+          resize: none;
         }
 
         #editor:focus {
@@ -87,8 +105,9 @@ class MarkdownEditorComponent extends HTMLElement {
       </style>
       <div class="markdown-container">
         <div class="markdown-section">
-          <div id="editor" contenteditable="true"></div>
+          <textarea id="editor"></textarea>
         </div>
+        <div class="markdown-divide"></div>
         <div class="markdown-section">
           <div id="preview"></div>
         </div>
@@ -108,7 +127,7 @@ class MarkdownEditorComponent extends HTMLElement {
     if (file) {
       this._loaded = true;
       this.file = file;
-      this.editor.innerText = this.file.get_content();
+      this.editor.value = this.file.get_content();
       this.preview.innerHTML = '';
       this.parse(this.preview, this.file.get_content(), false);
     } else {
@@ -207,7 +226,7 @@ class MarkdownEditorComponent extends HTMLElement {
         this._loaded = true;
         this.file = App.get_file_store().create_file(this._filename);
       }
-      let input = this.editor.innerText;
+      let input = this.editor.value;
       // const pos = this.getCurPos(this.editor);
       // this.setInput(input, pos);
       this.preview.innerHTML = '';
@@ -222,68 +241,11 @@ class MarkdownEditorComponent extends HTMLElement {
     window.gotoMarkdown = (path) => {
       const file = App.store.get_file(path);
       if (file) {
-        this.file = file;
+        App.openFile(path);
       }
     }
 
     this.setupDragAndDrop(editor);
-
-    // editor.addEventListener("keydown", (e) => {
-    //   if (e.which === 13) {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //
-    //     let pos = this.getCurPos(editor);
-    //     let cur = 0;
-    //     let ptr = 0;
-    //     let found;
-    //     for (const node of editor.childNodes) {
-    //       console.log(node.textContent, cur, pos);
-    //       if (cur + node.textContent.length >= pos)  {
-    //         pos -= cur;
-    //         found = node;
-    //         break;
-    //       }
-    //       cur += node.textContent.length;
-    //       ptr++;
-    //     }
-    //     let blocks = parse_markdown(editor.innerText);
-    //     if (found.innerText.length === pos) {
-    //       blocks.splice(ptr+1, 0, new ParagraphNode([]));
-    //       editor.innerHTML = '';
-    //       lower_to_dom(editor, blocks, true);
-    //
-    //       const range = document.createRange();
-    //       range.setStart(editor.childNodes[ptr+1], 0);
-    //       range.collapse(true);
-    //       const sel = window.getSelection();
-    //       sel.removeAllRanges();
-    //       sel.addRange(range);
-    //     } else {
-    //       const text = found.innerText;
-    //       const left = text.slice(0, pos);
-    //       const right = text.slice(pos);
-    //       blocks[ptr] = new ParagraphNode([new TextInlineNode(null, left)]);
-    //       blocks.splice(ptr+1, 0, new ParagraphNode([new TextInlineNode(null, right)]));
-    //       editor.innerHTML = '';
-    //       lower_to_dom(editor, blocks, true);
-    //       let newTree = parse_markdown(editor.innerText);
-    //       editor.innerHTML = '';
-    //       lower_to_dom(editor, newTree, true);
-    //       const range = document.createRange();
-    //       range.setStart(editor.childNodes[ptr+1], 0);
-    //       range.collapse(true);
-    //       const sel = window.getSelection();
-    //       sel.removeAllRanges();
-    //       sel.addRange(range);
-    //     }
-    //
-    //     // const input = editor.innerText;
-    //     // const text = input.slice(0, pos) + '\n' + input.slice(pos);
-    //     // this.setInput(text, pos);
-    //     // editor.innerText = text;
-    //   }
-    // });
   }
   
   setupDragAndDrop(editor) {
@@ -291,19 +253,15 @@ class MarkdownEditorComponent extends HTMLElement {
       event.preventDefault();
     });
 
-    editor.addEventListener("drop", (event) => {
+    editor.addEventListener("drop", async (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
       if (files.length > 0) {
         const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const content = e.target.result;
-          const img = App.store.create_file(file.name);
-          img.set_content(content);
-          document.execCommand("insertText", false, "![image](" + img.get_path() + ")");
-        };
-        reader.readAsDataURL(file);
+        const content = await App.compressImage(file, 800);
+        const img = App.store.create_file(file.name);
+        img.set_content(content);
+        document.execCommand("insertText", false, "![image](" + img.get_path() + ")");
       }
     });
   }

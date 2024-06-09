@@ -5,39 +5,45 @@
 }
 
 body {
-    overflow-x: hidden;
-    /* overflow-y: hidden; */
-    background-color: var(--background-color);
-    font-family: 'Nunito', sans-serif;
-    transition: background-color 0.7s ease;
+  margin: 0;
+  background-color: var(--background-color);
+  font-family: 'Nunito', sans-serif;
+  transition: background-color 0.7s ease;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
 }
 
 #main {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  flex-direction: row;
+  height: calc(100% - 20px);
+  width: calc(100% - 50px);
+  overflow: hidden;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 30px;
 }
 
 
 #FeatureSide {
-    position: relative;
-    padding: 60px;
-    width: 300px;
-    height: 100vh;
-    top: -60px;
+  flex: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 100%;
+  width: 300px;
+  user-select: none;
 }
 
-
 #ContentSide {
-    position: relative;
-    width: calc(100vw - 300px);
-    height: 100vh;
+  flex: 1;
+  height: 95vh;
+  margin-left: 50px;
 }
 
 .ContentWindow {
-    width: 98%; 
-    min-height: 98%;
+    width: 100%; 
+    height: 100%;
     background: linear-gradient(119deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%); 
     box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20); 
     border-radius: 25px; 
@@ -50,40 +56,39 @@ body {
     grid-row-gap: 0px;  
 }
 
-.tabContainer { 
+.tabContainerContainer {
     grid-area: 1 / 1 / 2 / 3; 
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tabContainer { 
     padding-left: 15px;
     padding-top: 15px;
-
     
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    width: 100%;
 
-    
+    height: 40px;
 
-    overflow: auto;
 }
 
 .sampleTab {
-    width: max-content;
-    height: 35px;
-    flex-shrink: 0;
-    border-radius: 25px;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.20);
-    background: white;
-    box-shadow: 0px 4px 5px -1px rgba(0, 0, 0, 0.20);
-    margin-right: 5px;
-    
-    text-align: left;
-    display: flex;
-    align-items: center;
-
-    flex-grow: 1;
-
-    cursor: pointer;
-    
+  height: 35px;
+  width: 200px;
+    white-space: nowrap;
+  border-radius: 25px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  background: white;
+  box-shadow: 0px 4px 5px -1px rgba(0, 0, 0, 0.20);
+  margin-right: 5px;
+  cursor: pointer; 
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .tabTitles{
@@ -106,6 +111,7 @@ body {
     box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
     margin-bottom: 15px;
     margin-left: 15px;
+    overflow: hidden;
 }
 .sideBarMenu { 
     grid-area: 1 / 3 / 3 / 4; 
@@ -120,21 +126,27 @@ body {
     cursor: pointer;
 }
 
-#JournalView{
-    position: relative;
-
+.swiper-wrapper{
+  width: 350px;
+  height: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
-#ProjectView{
-    position: relative;
-    display: flex;
-    justify-content: top;
-    flex-direction: column;
+.swiper-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  transition: transform 0.3s, opacity 0.3s, z-index 0.3s;
+  transform-origin: center;
+  height: 95vh;
+  width: 300px;
 }
 
 #JournalView, #ProjectView {
-    height: 90%;
-
     border-radius: 25px;
     background: linear-gradient(169deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%);
     box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
@@ -153,18 +165,18 @@ body {
 }
 
 #scratchPadInput {
-    margin-top: 15px;
-    margin-left: 15px;
-    width: 270px;
-    height: 260px;
-    background-color: #ffefb7;
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 15px;
-    font-family: Nunito;
-    font-weight: 700;
-    word-wrap: break-word; /* Removed the quotes around break-word */
-    border: none;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15); /* Example shadow */
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 270px;
+  height: 260px;
+  background-color: #ffefb7;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 15px;
+  font-family: Nunito;
+  font-weight: 700;
+  word-wrap: break-word; /* Removed the quotes around break-word */
+  border: none;
+  resize: none;
 }
 
 .toolbar{
@@ -195,14 +207,6 @@ body {
     position:absolute;
     bottom: 0;
     left: -4px;
-}
-
-.swiper_wrapper{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .delete-mode-on{
