@@ -13,9 +13,10 @@
     "jest-environment-puppeteer": "^6.0.0"
   },
   "scripts": {
-    "jest": "^29.7.0",
-    "jest-puppeteer": "^10.0.1",
-    "babel-jest": "^29.7.0",
+    "unit": "jest --config jest.config.unit.js --coverage",
+    "E2E": "jest --config jest.config.e2e.js --coverage",
+    "merge": "jest --coverage --coverageDirectory=./coverage --collectCoverageFrom=['src/**/*.js'] --reporters='default'",
+    "report": "jest --coverage --coverageDirectory=./coverage --reporters='text-summary' --reporters='html'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
   },
   "type": "module",
