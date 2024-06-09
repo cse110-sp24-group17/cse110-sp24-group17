@@ -149,7 +149,7 @@ describe('Basic user flow for Website', () => {
         return null;
       });
 
-      expect(zIndex).toBe("2");
+      expect(zIndex).toBe("20");
     }, 50000); 
 
     // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
