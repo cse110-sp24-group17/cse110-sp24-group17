@@ -5,7 +5,6 @@ export default {
     transform: {
       "^.+\\.js$": "babel-jest"
     },
-    extensionsToTreatAsEsm: [".js"],
     globals: {
       "babel-jest": {
         useESM: true

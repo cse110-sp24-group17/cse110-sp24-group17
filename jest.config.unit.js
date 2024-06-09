@@ -6,7 +6,6 @@ export default {
     },
     //use jsdom for unit test environment
     testEnvironment: "jsdom",
-    extensionsToTreatAsEsm: [".js"],
     globals: {
       "babel-jest": {
         useESM: true
