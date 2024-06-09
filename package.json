@@ -15,7 +15,7 @@
   },
   "scripts": {
     "unit": "jest --config jest.config.unit.js --coverage",
-    "E2E": "jest --config jest.config.E2E.js --coverage",
+    "E2E": "jest --config jest.config.E2E.js",
     "merge": "jest --coverage --coverageDirectory=./coverage --collectCoverageFrom=['src/**/*.js'] --reporters='default'",
     "report": "jest --coverage --coverageDirectory=./coverage --reporters='text-summary' --reporters='html'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"

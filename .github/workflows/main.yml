@@ -13,10 +13,10 @@ jobs: # the things being executed
         run: npm run unit
       - name: Run E2E tests
         run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" npm run E2E
-      - name: Merge coverage reports from Unit and E2E tests
-        run: npm run merge
-      - name: Generate coverage report
-        run: npm run report
+      #- name: Merge coverage reports from Unit and E2E tests
+      #  run: npm run merge
+      #- name: Generate coverage report
+      #  run: npm run report
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
