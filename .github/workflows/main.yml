@@ -9,10 +9,14 @@ jobs: # the things being executed
       - uses: actions/checkout@v4 # using version 4 of Actions
       - name: Install Dependencies
         run: npm install
-      - name: Install JSDoc
-        run: npm install -g jsdoc
-      - name: Run tests with coverage report generation
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" npm test -- --coverage
+      - name: Run unit tests
+        run: npm run jest --config jest.config.unit.js --coverage
+      - name: Run E2E tests
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" npm run jest --config jest.config.e2e.js --coverage
+      - name: Merge coverage reports from Unit and E2E tests
+        run: npm run jest --coverage --coverageDirectory=./coverage --collectCoverageFrom=['src/**/*.js'] --reporters='default'
+      - name: Generate coverage report
+        run: npm run jest --coverage --coverageDirectory=./coverage --reporters='text-summary' --reporters='html'
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:

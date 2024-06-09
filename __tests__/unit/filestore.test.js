@@ -1,4 +1,4 @@
-import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry, FileEntry } from './fileStore.js';
+import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry, FileEntry } from '../../source/modules/models/fileStore.js';
 
 describe('FileStore System', () => {
     let store;

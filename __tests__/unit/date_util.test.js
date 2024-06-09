@@ -5,7 +5,7 @@ import {
   isLeapYear,
   getDaysOfMonth,
   isSameDay,
-} from "./date_util.js";
+} from "../../source/modules/journal/date_util.js";
 /**
  * checks if the provided year and month represent a valid month of a valid year.
  */

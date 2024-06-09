@@ -1,5 +1,5 @@
-import CalendarComponent from "./calendar_component.js";
-import { isSameDay, getDaysOfMonth, monthIndexToString, weekdayOfFirstDay } from './date_util.js';
+import CalendarComponent from "../../source/modules/journal/calendar_component.js";
+import { isSameDay, getDaysOfMonth, monthIndexToString, weekdayOfFirstDay } from '../../source/modules/journal/date_util.js';
 
 // Now you can use the document object as if you were in a browser environment
 //const CalendarComponent = require('./calendar_component.js');
