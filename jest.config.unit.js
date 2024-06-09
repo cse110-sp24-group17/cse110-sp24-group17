@@ -5,7 +5,7 @@ export default {
       "^.+\\.js$": "babel-jest"
     },
     //use jsdom for unit test environment
-    testEnvironment: "jsdom",
+    testEnvironment: "jest-environment-jsdom",
     globals: {
       "babel-jest": {
         useESM: true
