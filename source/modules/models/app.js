@@ -16,6 +16,10 @@ class App extends EventTarget {
     return this.tabs;
   }
 
+  closeFile(path) {
+    this.tabs.splice(this.tabs.indexOf(path), 1);
+  }
+
   openFile(path) {
     if (this.tabs.includes(path)) {
       this.tabs.splice(this.tabs.indexOf(path), 1);
