@@ -27,7 +27,31 @@ class CalendarView extends HTMLElement {
     const calendarDays = this.shadowRoot.getElementById("calendar_days");
     const preMonth = this.shadowRoot.getElementById("prev_month");
     const nextMonth = this.shadowRoot.getElementById("next_month");
-
+    const prevSvg = this.shadowRoot.getElementById("prev_svg");
+    const nextSvg = this.shadowRoot.getElementById("next_svg");
+    //console.log(prevSvg)
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+    //console.log(accentColor)
+    if (accentColor === '#8B4513') {
+      prevSvg.src = "./modules/journal/white_next.svg";
+      nextSvg.src = "./modules/journal/white_next.svg";
+    }
+    if (accentColor === '#FFA800') {
+      prevSvg.src = "./modules/journal/next.svg";
+      nextSvg.src = "./modules/journal/next.svg";
+    }
+    if (accentColor === '#606060') {
+      prevSvg.src = "./modules/journal/dark_next.svg";
+      nextSvg.src = "./modules/journal/dark_next.svg";
+    }
+    if (accentColor === '#5E94FF') {
+      prevSvg.src = "./modules/journal/blue_next.svg";
+      nextSvg.src = "./modules/journal/blue_next.svg";
+    }
+    if (accentColor === '#b86fdc') {
+      prevSvg.src = "./modules/journal/purple_next.svg";
+      nextSvg.src = "./modules/journal/purple_next.svg";
+    }
     const calendarCom = new CalendarComponent(
       curMonth,
       calendarDays,
