@@ -131,7 +131,7 @@ class MarkdownEditorComponent extends HTMLElement {
       this.preview.innerHTML = '';
       this.parse(this.preview, this.file.get_content(), false);
     } else {
-      this.editor.innerText = '';
+      this.editor.value = '';
       this.preview.innerHTML = '';
     }
   }
