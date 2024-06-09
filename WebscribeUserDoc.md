@@ -1,6 +1,6 @@
 # User Guide: Web App Overview
 
-Welcome to WebScribe! Our application provides a comprehensive platform for managing journals, editing markdown files, exploring files, and more. This guide will walk you through the various features and components of our app.
+Welcome to **WebScribe!** Our application provides a comprehensive platform for managing journals, editing markdown files, exploring files, and more. This guide will walk you through the various features and components of our app.
 
 # Progrssive Web App Download Instructions
 
