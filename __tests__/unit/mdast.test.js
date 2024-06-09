@@ -1,4 +1,4 @@
-import { BlockLinkInlineNode, LinkInlineNode, ParagraphNode, parse_inline_expression } from "./mdast";
+import { BlockLinkInlineNode, LinkInlineNode, ParagraphNode, parse_inline_expression } from "../../source/modules/models/mdast";
 
 test('parses plain text correctly', () => {
   const parent = {};

@@ -6,13 +6,18 @@
     "@open-wc/testing-helpers": "^3.0.1",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-puppeteer": "^6.0.0",
     "jest-puppeteer": "^10.0.1",
     "jsdoc": "^4.0.3",
     "jsdom": "^24.1.0",
-    "puppeteer": "^22.10.0",
-    "jest-environment-puppeteer": "^6.0.0"
+    "puppeteer": "^22.10.0"
   },
   "scripts": {
+    "unit": "jest --config jest.config.unit.js --coverage",
+    "E2E": "jest --config jest.config.E2E.js",
+    "merge": "jest --coverage --coverageDirectory=./coverage --collectCoverageFrom=['src/**/*.js'] --reporters='default'",
+    "report": "jest --coverage --coverageDirectory=./coverage --reporters='text-summary' --reporters='html'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
   },
   "type": "module",

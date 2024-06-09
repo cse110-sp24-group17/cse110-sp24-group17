@@ -1,6 +1,6 @@
 import {
     dummy
-  } from '../functions.js';
+  } from '../../functions.js';
 
   
   
