@@ -391,6 +391,9 @@ class FileExplorerComponent extends HTMLElement {
 
             // Remove the source file from the source directory
             draggedFile.parent.remove_child_file(draggedFile);
+            if (this.onDeleteFile) {
+                this.onDeleteFile(draggedFile);
+            }
 
             // Add the source file to the root
             App.get_file_store().root.add_child_file(draggedFile);
@@ -437,6 +440,10 @@ class FileExplorerComponent extends HTMLElement {
 
             // Remove the source file from the source directory
             draggedFile.parent.remove_child_file(draggedFile);
+            if (this.onDeleteFile) {
+                this.onDeleteFile(draggedFile);
+            }
+              
 
             // Add the source file to the root
             App.get_file_store().root.add_child_file(draggedFile);
@@ -521,6 +528,9 @@ class FileExplorerComponent extends HTMLElement {
     handle_file_click(file) {
         if (this.deleteMode) {
             file.parent.remove_child_file(file)
+            if (this.onDeleteFile) {
+                this.onDeleteFile(file);
+            }
             this.render();
         } 
         else {
@@ -538,6 +548,9 @@ class FileExplorerComponent extends HTMLElement {
 
         if (this.deleteMode) {
             directory.parent.remove_child_file(directory);
+            if (this.onDeleteFile) {
+                this.onDeleteFile(directory);
+            }
             this.render();
             return;
         } else {

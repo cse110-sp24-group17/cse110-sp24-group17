@@ -88,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
   ele.onFileMouseLeave = () => {
     activateSwiper();
   };
+  ele.onDeleteFile = (file) => {
+    deactivateSwiper();
+    activateSwiper();
+  };
 
   const markdown_editor = document.getElementById('markdown-editor');
   markdown_editor.onSave = () => {
