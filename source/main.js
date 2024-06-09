@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const tabContainer = document.getElementById("tabContainer");
-  App.addEventListener('tab-open', (e) => {
+  function rerenderTabs() {
     tabContainer.innerHTML = '';
     App.getCurrentTabs().forEach((path) => {
       const tab = createTabElement(path);
@@ -157,10 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       tab.querySelector('.closeIcon').addEventListener('click', (e) => {
         e.stopPropagation();
-        tab.remove();
+        App.closeFile(path);
+        rerenderTabs();
       });
       tabContainer.appendChild(tab);
     });
+  }
+
+  App.addEventListener('tab-open', (e) => {
+    rerenderTabs();
   });
   
   let isMuted = false;
