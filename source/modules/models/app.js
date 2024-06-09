@@ -5,7 +5,13 @@ class App extends EventTarget {
     super();
     this.store = new FileStore(new FileStoreProvider(window.localStorage));
     this.tabs = [];
-    this.store.load();
+    if (!this.store.load()) {
+      (async () => {
+        const resp = await fetch("assets/data.json");
+        const content = await resp.text();
+        this.store._loadFromJSON(content);
+      })();
+    }
   }
 
   get_file_store() {

@@ -228,7 +228,9 @@ class FileStore {
         const json = this.provider.load();
         if (json) {
             this._loadFromJSON(json);
+            return true;
         }
+        return false;
     }
 
     /**
