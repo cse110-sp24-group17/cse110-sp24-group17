@@ -192,25 +192,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
+const calendarComponent = document.getElementById("calendar");
 document.getElementById("default").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#E3DAC9');
   document.documentElement.style.setProperty('--accent-color', '#8B4513');
+  calendarComponent.init();
 });
 document.getElementById("darkMode").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#606060');
   document.documentElement.style.setProperty('--accent-color', '#606060');
+  calendarComponent.init();
 });
 document.getElementById("yellow").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#FFD15A');
   document.documentElement.style.setProperty('--accent-color', '#FFA800');
+  calendarComponent.init();
 });
 document.getElementById("blue").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#5E94FF');
   document.documentElement.style.setProperty('--accent-color', '#5E94FF');
+  calendarComponent.init();
 });
 document.getElementById("purple").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#b86fdc');
   document.documentElement.style.setProperty('--accent-color', '#b86fdc');
-
+  calendarComponent.init();
 });
