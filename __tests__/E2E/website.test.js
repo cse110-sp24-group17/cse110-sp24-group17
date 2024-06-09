@@ -18,6 +18,12 @@ describe('Basic user flow for Website', () => {
     // Check to make sure that a file can be added
     it('Adding to File Explorer', async () => {
         console.log('Adding files...');
+        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
+        await page.mouse.down();
+        await page.mouse.move(500,0, {delay: 20000});
+        await page.mouse.up();
+        await setTimeout(999);
 
         const addFileButton = await page.$('#addFile'); // Query the addFile button
         await addFileButton.click();
@@ -44,6 +50,12 @@ describe('Basic user flow for Website', () => {
     // Check to make sure that a folder is added correctly
     it('Adding to Folder Explorer', async () => {
         console.log('Adding folder...');
+        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
+        await page.mouse.down();
+        await page.mouse.move(500,0, {delay: 20000});
+        await page.mouse.up();
+        await setTimeout(999);
 
         const addFolderButton = await page.$('#addFolder');
         await addFolderButton.click();
@@ -70,6 +82,12 @@ describe('Basic user flow for Website', () => {
     // Check to make sure that a element in the directory can be deleted
     it('Deleting from File Explorer', async () => {
         console.log('Deleting an element from file explorer...');
+        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
+        await page.mouse.down();
+        await page.mouse.move(500,0, {delay: 20000});
+        await page.mouse.up();
+        await setTimeout(999);
 
         const fileExplorer = await page.$('file-explorer');
         const shadow = await fileExplorer.getProperty("shadowRoot");
@@ -90,6 +108,12 @@ describe('Basic user flow for Website', () => {
     // Check to make sure that information in the file explorer stays on reload
     it('Reloading the page', async () => {
       console.log('Reloading the page...');
+      const addFileButton = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+      let rect1 = await addFileButton.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
+      await page.mouse.down();
+      await page.mouse.move(500,0, {delay: 20000});
+      await page.mouse.up();
+      await setTimeout(999);
 
       const fileExplorer = await page.$('file-explorer'); 
       const shadow = await fileExplorer.getProperty("shadowRoot");
@@ -109,7 +133,7 @@ describe('Basic user flow for Website', () => {
     it('Switching from file explorer view to project view', async () => {
       console.log('Switching view...');
 
-      const addFileButton = await page.$('#addFile'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+      const addFileButton = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
       let rect1 = await addFileButton.boundingBox();
       await page.mouse.move(rect1.x, rect1.y);
       await page.mouse.down();
@@ -117,8 +141,15 @@ describe('Basic user flow for Website', () => {
       await page.mouse.up();
       await setTimeout(999);
 
-      let journalStatus = await page.$eval("#JournalView", el => el.getAttribute("class"));
-      expect(journalStatus).toBe("swiper-slide swiper-slide-visible swiper-slide-active");
+      const zIndex = await page.evaluate(() => {
+        const element = document.querySelector('#ProjectView');
+        if (element) {
+          return element.style.zIndex;
+        }
+        return null;
+      });
+
+      expect(zIndex).toBe("2");
     }, 50000); 
 
     // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
