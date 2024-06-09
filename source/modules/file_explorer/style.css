@@ -44,20 +44,23 @@
 }
 
 .directory-name:hover{
-    background-color: lightgray;
+    background-color: var(--accent-color);
+    opacity: 0.2;
 }
 
 .text-file:hover{
-    background-color: lightgray;
+    background-color:var(--accent-color);
+    opacity: 0.2;
 }
 
 .selected{
-  background-color: #FFC300;
+  background-color: var(--accent-color);
+  opacity: 0.8;
 }
 
 .selected:hover{
-  filter: brightness(0.95);
-  background-color: #FFC300;
+  background-color:var(--accent-color);
+  opacity: 0.5;
 }
 
 .root {
