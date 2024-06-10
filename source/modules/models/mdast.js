@@ -81,12 +81,6 @@ export class InlineNode {
   }
 }
 
-function createSpanElement(text) {
-  const node = document.createElement("span");
-  node.textContent = text;
-  return node;
-}
-
 export class TextInlineNode extends InlineNode {
   constructor(parent, text) {
     super(parent);
@@ -130,11 +124,9 @@ export class DecorationInlineNode extends InlineNode {
 
   lowerToDom(protocol, syntax) {
     const node = document.createElement("b");
-    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
       node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
@@ -172,11 +164,9 @@ export class BoldInlineNode extends DecorationInlineNode {
 
   lowerToDom(protocol, syntax) {
     const node = document.createElement("b");
-    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
       node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
@@ -191,11 +181,9 @@ export class ItalicInlineNode extends DecorationInlineNode {
 
   lowerToDom(protocol, syntax) {
     const node = document.createElement("i");
-    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
       node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
@@ -246,14 +234,12 @@ export class LinkInlineNode extends InlineNode {
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
     node.href = this.url;
-    if (syntax) node.appendChild(createSpanElement("["));
     const node2 = document.createElement("a");
     node2.href = this.url;
     for (const child of this.children) {
       node2.appendChild(child.lowerToDom(protocol, syntax));
     }
     node.appendChild(node2);
-    if (syntax) node.appendChild(createSpanElement(`](${this.url})`));
     return node;
   }
 }
@@ -280,14 +266,12 @@ export class ImageInlineNode extends InlineNode {
 
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
-    if (syntax) node.appendChild(createSpanElement("!["));
     const node2 = document.createElement("img");
     const content = protocol.getContent(this.url);
     if (content) {
       node2.src = content;
     }
     node.appendChild(node2);
-    if (syntax) node.appendChild(createSpanElement(`](${this.url})`));
     return node;
   }
 }
