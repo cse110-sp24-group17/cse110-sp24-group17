@@ -105,6 +105,20 @@ describe('Basic user flow for Website', () => {
         expect(newFolders.length).toBe(folders.length + 2);
       }, 50000);
 
+    // Check to make sure a file can be openned
+    it('Openning a file', async () => {
+      console.log('Openning a file...');
+
+      const fileExplorer = await page.$('file-explorer');  // Get the shadow root of the file explorer
+      const shadow = await fileExplorer.getProperty("shadowRoot");
+      const files = (await shadow.$$(".text-file")); // get a scratch file
+      await files[1].click()
+      const className = await shadow.$$eval(".text-file", els => els[1].className);
+      expect(className).toBe("file-entry text-file selected");
+    }, 50000);
+
+    
+
     // Check to make sure that a element in the directory can be deleted
     it('Deleting from File Explorer', async () => {
         console.log('Deleting an element from file explorer...');
