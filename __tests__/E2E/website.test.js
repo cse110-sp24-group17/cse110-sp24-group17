@@ -3,6 +3,10 @@ import {setTimeout} from "node:timers/promises";
 describe('Basic user flow for Website', () => {
     beforeAll(async () => {
         await page.goto('https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main');
+        await page.evaluate(() => {
+          localStorage.setItem('filestore', `{"name":"","type":"directory","content":"","children":[]}`);
+        });
+        await page.reload();
     });
   
     // Check to make sure that the file starts off with a root directory
