@@ -153,6 +153,8 @@ This is a *test* paragraph with **bold** text and a [link](https://example.com).
 \`\`\`
 Code block
 \`\`\`
+(parenthesis)
+[parenthesis 2]
 `;
     const parsedBlocks = parseMarkdown(markdownText);
     const parentElement = document.createElement('div');
@@ -167,5 +169,5 @@ Code block
     +'<div><span></span><span><img src=\"mocked image content\"></span></div>'
     +'<div><span></span><a href=\"#\"><span>BlockLink</span></a></div>'
     +'<code-highlighter></code-highlighter>'
-    +'<div><span></span></div>');
+    +'<div><span></span><span><span>(</span><span>parenthesis</span><span>)</span></span></div><div><span></span><span><span>[</span><span>parenthesis 2</span><span>]</span></span></div><div><span></span></div>');
   });
