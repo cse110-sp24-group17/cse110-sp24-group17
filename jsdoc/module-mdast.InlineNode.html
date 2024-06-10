@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: TextFileEntry</title>
+    <title>JSDoc: Class: InlineNode</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: TextFileEntry</h1>
+    <h1 class="page-title">Class: InlineNode</h1>
 
     
 
@@ -28,7 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>TextFileEntry<span class="signature">(name, content<span class="signature-attributes">opt</span>, parent<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-mdast.html">mdast</a>.</span>InlineNode<span class="signature">(parent)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Base class for inline nodes in the Markdown syntax tree.</div>
         
     
 </header>
@@ -39,9 +42,11 @@
         
 
     
+    <h2>Constructor</h2>
+    
 
     
-    <h4 class="name" id="TextFileEntry"><span class="type-signature"></span>new TextFileEntry<span class="signature">(name, content<span class="signature-attributes">opt</span>, parent<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="InlineNode"><span class="type-signature"></span>new InlineNode<span class="signature">(parent)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +54,7 @@
 
 
 <div class="description">
-    Represents a TextFileEntry.
+    Creates a new InlineNode.
 </div>
 
 
@@ -73,11 +78,7 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -89,113 +90,23 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">The name of the text file.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    ''
-                
-                </td>
-            
-
-            <td class="description last">The content of the text file.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>parent</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="DirectoryFileEntry.html">DirectoryFileEntry</a></span>
+<span class="param-type">BlockNode</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
 
-            <td class="description last">The parent directory.</td>
+            <td class="description last">The parent block node.</td>
         </tr>
 
     
@@ -236,7 +147,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_fileStore.js.html">models/fileStore.js</a>, <a href="models_fileStore.js.html#line138">line 138</a>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -292,7 +203,7 @@
     
 
     
-    <h4 class="name" id="getContent"><span class="type-signature"></span>getContent<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="cursorContained"><span class="type-signature"></span>cursorContained<span class="signature">(cur, offset)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -300,227 +211,7 @@
 
 
 <div class="description">
-    Get the content of the text file.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_fileStore.js.html">models/fileStore.js</a>, <a href="models_fileStore.js.html#line155">line 155</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The content of the text file.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getType"><span class="type-signature"></span>getType<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Get type of the file entry.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_fileStore.js.html">models/fileStore.js</a>, <a href="models_fileStore.js.html#line147">line 147</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    The type of the file entry ('text').
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="setContent"><span class="type-signature"></span>setContent<span class="signature">(content)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Set the content of the text file.
+    Checks if the cursor is contained within the inline node.
 </div>
 
 
@@ -556,13 +247,13 @@
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>cur</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
             
@@ -572,7 +263,30 @@
 
             
 
-            <td class="description last">The new content of the text file.</td>
+            <td class="description last">The current cursor position.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>offset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The offset position.</td>
         </tr>
 
     
@@ -613,7 +327,365 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_fileStore.js.html">models/fileStore.js</a>, <a href="models_fileStore.js.html#line163">line 163</a>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the cursor is contained, false otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getRawContent"><span class="type-signature"></span>getRawContent<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the raw content of the inline node.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line110">line 110</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getType"><span class="type-signature"></span>getType<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the type of the inline node.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="lowerToDom"><span class="type-signature"></span>lowerToDom<span class="signature">(protocol, syntax)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Lowers the inline node to a DOM element.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>protocol</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">EditorProtocol</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The protocol to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>syntax</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The syntax to use.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line137">line 137</a>
     </li></ul></dd>
     
 

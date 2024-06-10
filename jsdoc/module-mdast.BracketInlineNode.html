@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: exports</title>
+    <title>JSDoc: Class: BracketInlineNode</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: exports</h1>
+    <h1 class="page-title">Class: BracketInlineNode</h1>
 
     
 
@@ -28,9 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>exports<span class="signature">(curMonthElement, contentElement, prevButtonElement, nextButtonElement, onDatePicked)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-mdast.html">mdast</a>.</span>BracketInlineNode<span class="signature">(parent, children)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">CalendarComponent is a calendar widget component that lets users pick a date and execute a callback function.</div>
+            <div class="class-description">Class representing a bracket inline node.</div>
         
     
 </header>
@@ -45,7 +46,7 @@
     
 
     
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">(curMonthElement, contentElement, prevButtonElement, nextButtonElement, onDatePicked)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="BracketInlineNode"><span class="type-signature"></span>new BracketInlineNode<span class="signature">(parent, children)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +54,7 @@
 
 
 <div class="description">
-    Creates an instance of CalendarComponent.
+    Creates a new BracketInlineNode.
 </div>
 
 
@@ -89,13 +90,13 @@
 
         <tr>
             
-                <td class="name"><code>curMonthElement</code></td>
+                <td class="name"><code>parent</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type">BlockNode</span>
 
 
             
@@ -105,20 +106,20 @@
 
             
 
-            <td class="description last">The HTML element displaying the current month.</td>
+            <td class="description last">The parent block node.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>contentElement</code></td>
+                <td class="name"><code>children</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type">Array.&lt;InlineNode></span>
 
 
             
@@ -128,76 +129,7 @@
 
             
 
-            <td class="description last">The HTML element that will contain the calendar grid.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>prevButtonElement</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The button to navigate to the previous month.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nextButtonElement</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The button to navigate to the next month.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>onDatePicked</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The callback function to run when a date is picked.</td>
+            <td class="description last">The child inline nodes.</td>
         </tr>
 
     
@@ -238,7 +170,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="journal_calendarComponent.js.html">journal/calendarComponent.js</a>, <a href="journal_calendarComponent.js.html#line14">line 14</a>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line247">line 247</a>
     </li></ul></dd>
     
 
@@ -272,6 +204,15 @@
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>DecorationInlineNode</li>
+    </ul>
+
 
     
 
@@ -285,6 +226,304 @@
 
     
 
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getType"><span class="type-signature"></span>getType<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the type of the bracket inline node.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line261">line 261</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The type "bracket".
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="lowerToDom"><span class="type-signature"></span>lowerToDom<span class="signature">(protocol, syntax)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Lowers the bracket inline node to a DOM element.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>protocol</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">EditorProtocol</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The protocol to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>syntax</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The syntax to use.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_mdast.js.html">models/mdast.js</a>, <a href="models_mdast.js.html#line271">line 271</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The DOM element.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTMLElement</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
