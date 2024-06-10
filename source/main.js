@@ -28,57 +28,57 @@ document.addEventListener('DOMContentLoaded', () => {
     isDragging = false;
   }
 
-    function swapCards() {
-      [activeCard, hiddenCard] = [hiddenCard, activeCard];
-      hiddenCard.style.transform = 'translateX(30px) translateY(20px) scale(0.95) rotateZ(1deg)';
-      activeCard.style.transform = 'translateX(0px) scale(1.0) rotateZ(0deg)';
+  function swapCards() {
+    [activeCard, hiddenCard] = [hiddenCard, activeCard];
+    hiddenCard.style.transform = 'translateX(30px) translateY(20px) scale(0.95) rotateZ(1deg)';
+    activeCard.style.transform = 'translateX(0px) scale(1.0) rotateZ(0deg)';
 
-      activeCard.addEventListener('mousedown', onDragStart);
-      document.addEventListener('mousemove', onDragMove);
-      document.addEventListener('mouseup', onDragEnd);
-    }
+    activeCard.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+  }
 
-    function onDragStart(e) {
-      isDragging = true;
-      startX = e.pageX;
-      activeCard.style.cursor = 'grabbing';
-      hiddenCard.classList.remove('hidden');
-    }
+  function onDragStart(e) {
+    isDragging = true;
+    startX = e.pageX;
+    activeCard.style.cursor = 'grabbing';
+    hiddenCard.classList.remove('hidden');
+  }
 
-    function onDragMove(e) {
-      if (e.clientY === 0) return
-      if (!isDragging) return;
-      currentX = e.pageX - startX;
-      if (Math.abs(currentX) < 10) return;
-      const rotation = currentX / 10;
-      const scale = 1 - Math.abs(currentX) / 1000;
-      activeCard.style.transform = `translateX(${currentX}px) rotateZ(${rotation}deg) scale(${scale})`;
-      hiddenCard.style.transform = `translateX(${30+0.2*scale*30}px) translateY(20px) scale(${0.95 + (Math.abs(currentX) / 1000) * 0.2}) rotateZ(${1-(rotation/10)}deg)`;
-    }
+  function onDragMove(e) {
+    if (e.clientY === 0) return
+    if (!isDragging) return;
+    currentX = e.pageX - startX;
+    if (Math.abs(currentX) < 10) return;
+    const rotation = currentX / 10;
+    const scale = 1 - Math.abs(currentX) / 1000;
+    activeCard.style.transform = `translateX(${currentX}px) rotateZ(${rotation}deg) scale(${scale})`;
+    hiddenCard.style.transform = `translateX(${30+0.2*scale*30}px) translateY(20px) scale(${0.95 + (Math.abs(currentX) / 1000) * 0.2}) rotateZ(${1-(rotation/10)}deg)`;
+  }
 
-    function onDragEnd(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      activeCard.style.cursor = 'grab';
-      currentX = e.pageX - startX;
-      if (Math.abs(currentX) > threshold) {
-        activeCard.style.transform = `translateX(${Math.sign(currentX) * 150}px) rotateZ(${Math.sign(currentX) * 10}deg) scale(0.5)`;
-        activeCard.removeEventListener('mousedown', onDragStart);
-        document.removeEventListener('mousemove', onDragMove);
-        document.removeEventListener('mouseup', onDragEnd);
-        activeCard.style.zIndex = '10';
-        hiddenCard.style.zIndex = '20';
-        setTimeout(swapCards, 200);
-        if (!isMuted) {
-          const cardShuffleSound = new Audio('assets/soundEffects/cardShuffle.mp3');
-          cardShuffleSound.volume = defaultVolume;
-          cardShuffleSound.play();
-        }
-      } else {
-        activeCard.style.transform = 'translateX(0px) rotateY(0deg) scale(1)';
-        hiddenCard.style.transform = 'translateX(30px) translateY(20px) scale(0.95) rotateZ(1deg)';
+  function onDragEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    activeCard.style.cursor = 'grab';
+    currentX = e.pageX - startX;
+    if (Math.abs(currentX) > threshold) {
+      activeCard.style.transform = `translateX(${Math.sign(currentX) * 150}px) rotateZ(${Math.sign(currentX) * 10}deg) scale(0.5)`;
+      activeCard.removeEventListener('mousedown', onDragStart);
+      document.removeEventListener('mousemove', onDragMove);
+      document.removeEventListener('mouseup', onDragEnd);
+      activeCard.style.zIndex = '10';
+      hiddenCard.style.zIndex = '20';
+      setTimeout(swapCards, 200);
+      if (!isMuted) {
+        const cardShuffleSound = new Audio('assets/soundEffects/cardShuffle.mp3');
+        cardShuffleSound.volume = defaultVolume;
+        cardShuffleSound.play();
       }
+    } else {
+      activeCard.style.transform = 'translateX(0px) rotateY(0deg) scale(1)';
+      hiddenCard.style.transform = 'translateX(30px) translateY(20px) scale(0.95) rotateZ(1deg)';
     }
+  }
   activateSwiper();
 
   const ele = document.getElementById('file-explorer');
@@ -88,20 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
   ele.onFileMouseLeave = () => {
     activateSwiper();
   };
-  ele.onDeleteFile = (file) => {
+  ele.onDeleteFile = (/*file*/) => {
     deactivateSwiper();
     activateSwiper();
   };
 
-  const markdown_editor = document.getElementById('markdown-editor');
-  markdown_editor.onSave = () => {
+  const markdownEditor = document.getElementById('markdown-editor');
+  markdownEditor.onSave = () => {
     ele.render();
   }
   ele.onFileOpen = (file) => {
     App.openFile(file.get_path());
   };
   App.addEventListener('tab-open', (e) => {
-    markdown_editor.filename = e.detail.path;
+    markdownEditor.filename = e.detail.path;
   });
 
   function formatDate(date) {
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  App.addEventListener('tab-open', (e) => {
+  App.addEventListener('tab-open', (/*e*/) => {
     rerenderTabs();
   });
   
