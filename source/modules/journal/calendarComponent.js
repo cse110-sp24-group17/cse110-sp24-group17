@@ -122,7 +122,7 @@ export default class CalendarComponent {
    */
   prevMonth() {
     this.curMonth--;
-    if (this.curMonth == -1) {
+    if (this.curMonth === -1) {
       this.curYear--;
       this.curMonth = 11;
     }
@@ -133,7 +133,7 @@ export default class CalendarComponent {
   // switch to next month
   nextMonth() {
     this.curMonth++;
-    if (this.curMonth == 12) {
+    if (this.curMonth === 12) {
       this.curYear++;
       this.curMonth = 0;
     }

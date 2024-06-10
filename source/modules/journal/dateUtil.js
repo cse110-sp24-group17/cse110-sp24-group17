@@ -49,7 +49,7 @@ export function getDaysOfMonth(year, month) {
     throw new Error("Invalid year or month specified");
   const daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   // Handle leap year case for February
-  if (isLeapYear(year) && month == 1) {
+  if (isLeapYear(year) && month === 1) {
     return 29;
   }
   return daysInMonths[month];

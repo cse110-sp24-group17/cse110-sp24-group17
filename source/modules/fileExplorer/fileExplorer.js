@@ -194,7 +194,7 @@ class FileExplorerComponent extends HTMLElement {
     const loadTree = (element, node) => {
       if (node.getType() === "directory") {
         const children = node.getChildren();
-        if (children.length == 0) {
+        if (children.length === 0) {
           return;
         }
 
@@ -380,12 +380,12 @@ class FileExplorerComponent extends HTMLElement {
 
     textElement.addEventListener("mouseenter", () => {
       if (this.onFileMouseEnter) {
-        this.onFileMouseEnter(draggedFile);
+        this.onFileMouseEnter(null);
       }
     });
     textElement.addEventListener("mouseleave", () => {
       if (this.onFileMouseLeave) {
-        this.onFileMouseLeave(draggedFile);
+        this.onFileMouseLeave(null);
       }
     });
 

@@ -1,8 +1,6 @@
 import {
   FileStore,
   FileStoreProvider,
-  DirectoryFileEntry,
-  TextFileEntry,
 } from "./fileStore.js";
 
 class App extends EventTarget {

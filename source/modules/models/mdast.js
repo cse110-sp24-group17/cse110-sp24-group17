@@ -454,21 +454,12 @@ export function parseInlineExpression(parent, text) {
 }
 
 export class EmptyLineNode extends BlockNode {
-  constructor() {
-    super();
-  }
-
   getRawContent() {
     return "\n";
   }
 
   lowerToDom(protocol, syntax) {
-    if (syntax) {
-      const ret = create_fake_br();
-      return ret;
-    } else {
-      return document.createElement("span");
-    }
+    return document.createElement("span");
   }
 }
 
@@ -504,7 +495,7 @@ export class CodeBlockNode extends BlockNode {
   }
 
   getRawContent() {
-    return content;
+    return this.content;
   }
 
   lowerToDom(protocol, syntax) {

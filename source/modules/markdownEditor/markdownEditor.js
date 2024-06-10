@@ -1,9 +1,6 @@
 import {
   EditorProtocol,
-  ParagraphNode,
-  TextInlineNode,
   lowerToDom,
-  parseInlineExpression,
   parseMarkdown,
 } from "../models/mdast.js";
 import App from "../models/app.js";
@@ -147,7 +144,7 @@ class MarkdownEditorComponent extends HTMLElement {
     if (stat.done) return stat;
 
     let currentNode = null;
-    if (parent.childNodes.length == 0) {
+    if (parent.childNodes.length === 0) {
       stat.pos += parent.textContent.length;
     } else {
       for (let i = 0; i < parent.childNodes.length && !stat.done; i++) {
@@ -228,7 +225,7 @@ class MarkdownEditorComponent extends HTMLElement {
     const preview = document.querySelector("#preview");
     this.preview = preview;
 
-    editor.addEventListener("input", (e) => {
+    editor.addEventListener("input", () => {
       if (!this._loaded) {
         this._loaded = true;
         this.file = App.getFileStore().createFile(this._filename);
