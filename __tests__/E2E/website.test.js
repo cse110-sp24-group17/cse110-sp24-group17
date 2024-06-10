@@ -22,11 +22,11 @@ describe('Basic user flow for Website', () => {
     it('Switching from file explorer view to project view', async () => {
       console.log('Switching view...');
 
-      const addFileButton = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+      const addFileButton = await page.$('#addFile'); // Grab an element from the file explorer that can be dragged to flip to Journal View
       let rect1 = await addFileButton.boundingBox();
       await page.mouse.move(rect1.x, rect1.y);
       await page.mouse.down();
-      await page.mouse.move(500,0, {delay: 20000});
+      await page.mouse.move(500,0);
       await page.mouse.up();
       await setTimeout(999);
 
@@ -53,54 +53,38 @@ describe('Basic user flow for Website', () => {
       expect(root).not.toBeNull(); // Check if the root exists
     }, 50000);
 
-    // Check to make sure that a file can be added
-    it('Adding to File Explorer', async () => {
-        console.log('Adding files...');
-        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
-        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
-        await page.mouse.down();
-        await page.mouse.move(500,0, {delay: 20000});
-        await page.mouse.up();
-        await setTimeout(999);
+    // Check to make sure a file can be openned
+    it('Openning a file', async () => {
+      console.log('Openning a file...');
 
-        const addFileButton = await page.$('#addFile'); // Query the addFile button
-        await addFileButton.click();
+      const addFileButton = await page.$('#addFile'); // Query the addFile button
+      await addFileButton.click();
 
-        const fileExplorer = await page.$('file-explorer');  // Get the shadow root of the file explorer
-        const shadow = await fileExplorer.getProperty("shadowRoot");
-        const ogChildren = await shadow.$eval("#file", el => el.children);
+      const fileExplorer = await page.$('file-explorer');  // Get the shadow root of the file explorer
+      const shadow = await fileExplorer.getProperty("shadowRoot");
 
-        const form = await shadow.$("#add-file"); // Submit the new file name 
-        await form.click();
-        await page.keyboard.type("ThisIsANewFile");
-        const submit = await form.$('input[type=submit]')
-        await submit.click();
+      const form = await shadow.$("#add-file"); // Submit the new file name 
+      await form.click();
+      await page.keyboard.type("ThisIsANewFile");
+      const submit = await form.$('input[type=submit]')
+      await submit.click();
 
-        await addFileButton.click();
-         await form.click();
-         await page.keyboard.type("Another file");
-         await submit.click();
-
-        const childrenFiles = await shadow.$eval("#file", el => el.children);
-        expect(Object.keys(childrenFiles).length).toBe(Object.keys(ogChildren).length + 2);
-      }, 50000);
+      const file = (await shadow.$$(".text-file")); // get a file
+      await file[file.length-1].click();
+      const className = await shadow.$$eval(".text-file", els => els[els.length - 1].className);
+      expect(className).toBe("file-entry text-file selected");
+    }, 50000);
     
     // Check to make sure that a folder is added correctly
     it('Adding to Folder Explorer', async () => {
         console.log('Adding folder...');
-        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
-        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
-        await page.mouse.down();
-        await page.mouse.move(500,0, {delay: 20000});
-        await page.mouse.up();
-        await setTimeout(999);
-
+  
         const addFolderButton = await page.$('#addFolder');
         await addFolderButton.click();
 
         const fileExplorer = await page.$('file-explorer');
         const shadow = await fileExplorer.getProperty("shadowRoot");
-        const ogChildren = await shadow.$eval("#file", el => el.children);
+        const directories = await shadow.$$(".directory");
 
         const form = await shadow.$("#add-folder"); // Submit the new folder name 
         await form.click();
@@ -113,32 +97,26 @@ describe('Basic user flow for Website', () => {
         await page.keyboard.type("ThisIsAnotherFolder");
         await submit.click();
 
-        const childrenFiles = await shadow.$eval("#file", el => el.children);
-        expect(Object.keys(childrenFiles).length).toBe(Object.keys(ogChildren).length + 2);
+        const newDirectories = await shadow.$$(".directory");
+        expect(Object.keys(newDirectories).length).toBe(Object.keys(directories).length + 2);
       }, 50000);
 
     // Check to make sure that a element in the directory can be deleted
     it('Deleting from File Explorer', async () => {
         console.log('Deleting an element from file explorer...');
-        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
-        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
-        await page.mouse.down();
-        await page.mouse.move(500,0, {delay: 20000});
-        await page.mouse.up();
-        await setTimeout(999);
 
         const fileExplorer = await page.$('file-explorer');
         const shadow = await fileExplorer.getProperty("shadowRoot");
-        let children = await shadow.$eval("#file", el=>el.children);
+        let children = await shadow.$$(".file-entry.text-file");
         const numChildren = Object.keys(children).length;
 
         const deleteButton = await page.$('#trashIcon'); // Query the button to delete elements
         await deleteButton.click();
 
-        const childToDelete =await shadow.$(".file-entry"); // Get the first text file and delete it  
+        const childToDelete =await shadow.$(".file-entry.text-file"); // Get the first text file and delete it  
         await childToDelete.click();
     
-        let newChildren = await shadow.$eval("#file", el =>el.children);
+        let newChildren = await shadow.$$(".file-entry.text-file");
         expect(numChildren - 1).toBe(Object.keys(newChildren).length);
 
       }, 50000);
