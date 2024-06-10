@@ -17,7 +17,7 @@ jobs: # the things being executed
       - name: Build JSDocs
         run: |
           rm -rf ./jsdoc
-          jsdoc -r ./source/modules/journal source/modules/file_explorer source/modules/models -d ./jsdoc
+          jsdoc -r ./source/modules/journal source/modules/fileExplorer source/modules/models -d ./jsdoc
       - name: Create Pull Request for update JSDoc
         uses: peter-evans/create-pull-request@v3
         with:
