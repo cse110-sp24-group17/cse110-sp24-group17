@@ -190,7 +190,7 @@ File store is a virtual file system class which can be used to save / load / sea
 - `sync() -> void`: Syncs all file contents in the file store to the actual disk using the FileStoreProvider.
 - `_save_to_JSON() -> string`: Serialize the root directory node to JSON string.
 - `_load_from_JSON(json: string):` Load the root directory node from JSON string.
-- `move_file(sourceFile, destinationDirectory) -> void`: move file from its parent to another directory.
+- `moveFile(sourceFile, destinationDirectory) -> void`: move file from its parent to another directory.
 - `sortFiles() -> void`: sort files in natural order and have directories appear before actual text files.
 
 For simplicity, we are going to naively implement the file system using an explicit tree where directory nodes contains their children directories or files. FileStore will only hold the instance of "root" directory file entry node.

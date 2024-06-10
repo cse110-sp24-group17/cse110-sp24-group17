@@ -67,7 +67,7 @@ export class InlineNode {
     throw new Error("Unimplemented raw content");
   }
 
-  cursor_contained(cur, offset) {
+  cursorContained(cur, offset) {
     const len = this.getRawContent().length;
     return offset >= cur && offset <= cur + len;
   }

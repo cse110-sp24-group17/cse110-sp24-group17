@@ -355,7 +355,7 @@ class FileExplorerComponent extends HTMLElement {
       console.log("sus", draggedFilePath);
       const draggedFile = App.getFileStore().getFile(draggedFilePath);
       console.log(draggedFile);
-      App.getFileStore().move_file(draggedFile, file); // Move the file to the new location. Called from fileStore.
+      App.getFileStore().moveFile(draggedFile, file); // Move the file to the new location. Called from fileStore.
 
       this.render();
     });

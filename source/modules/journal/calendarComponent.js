@@ -58,7 +58,7 @@ export default class CalendarComponent {
     this.contentElement.replaceChildren();
     this.fillDateGrid();
 
-    const create_row = (days) => {
+    const createRow = (days) => {
       const row = document.createElement("div");
       row.classList.add("calendar_row");
       days.forEach((day) => {
@@ -85,7 +85,7 @@ export default class CalendarComponent {
     };
 
     for (let i = 0; i < this.days.length; i += 7) {
-      this.contentElement.appendChild(create_row(this.days.slice(i, i + 7)));
+      this.contentElement.appendChild(createRow(this.days.slice(i, i + 7)));
     }
   }
 

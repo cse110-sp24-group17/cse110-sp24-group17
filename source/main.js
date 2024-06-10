@@ -98,15 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
     activateSwiper();
   };
 
-  const markdown_editor = document.getElementById("markdown-editor");
-  markdown_editor.onSave = () => {
+  const makrdownEditor = document.getElementById("markdown-editor");
+  makrdownEditor.onSave = () => {
     ele.render();
   };
   ele.onFileOpen = (file) => {
     App.openFile(file.getPath());
   };
   App.addEventListener("tab-open", (e) => {
-    markdown_editor.filename = e.detail.path;
+    makrdownEditor.filename = e.detail.path;
   });
 
   function formatDate(date) {

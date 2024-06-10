@@ -104,7 +104,7 @@ describe("FileStore System", () => {
     expect(results2).not.toContain(file1);
   });
 
-  test("FileStore move_file", () => {
+  test("FileStore moveFile", () => {
     // Create initial directories and files
     const sourceDir = store.createDirectory("source");
     const destDir = store.createDirectory("dest");
@@ -115,7 +115,7 @@ describe("FileStore System", () => {
     expect(file).toBeDefined();
 
     // Move the file from 'source' to 'dest'
-    const moved = store.move_file(file, destDir);
+    const moved = store.moveFile(file, destDir);
 
     // Check if the move was successful
     expect(moved).toBe(true);

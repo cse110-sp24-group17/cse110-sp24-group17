@@ -69,5 +69,5 @@ class App extends EventTarget {
   }
 }
 
-const app_instance = new App();
-export default app_instance;
+const appInstance = new App();
+export default appInstance;

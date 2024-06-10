@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.58% </span>
+                <span class="strong">38.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>109/290</span>
+                <span class='fraction'>109/286</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.66% </span>
+                <span class="strong">43.83% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>32/75</span>
+                <span class='fraction'>32/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.29% </span>
+                <span class="strong">40.9% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>27/67</span>
+                <span class='fraction'>27/66</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.13% </span>
+                <span class="strong">39.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>108/276</span>
+                <span class='fraction'>108/272</span>
             </div>
         
             
@@ -659,16 +659,7 @@
 <a name='L594'></a><a href='#L594'>594</a>
 <a name='L595'></a><a href='#L595'>595</a>
 <a name='L596'></a><a href='#L596'>596</a>
-<a name='L597'></a><a href='#L597'>597</a>
-<a name='L598'></a><a href='#L598'>598</a>
-<a name='L599'></a><a href='#L599'>599</a>
-<a name='L600'></a><a href='#L600'>600</a>
-<a name='L601'></a><a href='#L601'>601</a>
-<a name='L602'></a><a href='#L602'>602</a>
-<a name='L603'></a><a href='#L603'>603</a>
-<a name='L604'></a><a href='#L604'>604</a>
-<a name='L605'></a><a href='#L605'>605</a>
-<a name='L606'></a><a href='#L606'>606</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L597'></a><a href='#L597'>597</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1130,15 +1121,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1729,21 +1711,12 @@ export function parseInlineExpression(parent, text) {
 }
 &nbsp;
 export class EmptyLineNode extends BlockNode {
-<span class="fstat-no" title="function not covered" >  co</span>nstructor() {
-<span class="cstat-no" title="statement not covered" >    super();</span>
-  }
-&nbsp;
 <span class="fstat-no" title="function not covered" >  ge</span>tRawContent() {
 <span class="cstat-no" title="statement not covered" >    return "\n";</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>werToDom(protocol, syntax) {
-<span class="cstat-no" title="statement not covered" >    if (syntax) {</span>
-      const ret = <span class="cstat-no" title="statement not covered" >create_fake_br();</span>
-<span class="cstat-no" title="statement not covered" >      return ret;</span>
-    } else {
-<span class="cstat-no" title="statement not covered" >      return document.createElement("span");</span>
-    }
+<span class="cstat-no" title="statement not covered" >    return document.createElement("span");</span>
   }
 }
 &nbsp;
@@ -1779,7 +1752,7 @@ export class CodeBlockNode extends BlockNode {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  ge</span>tRawContent() {
-<span class="cstat-no" title="statement not covered" >    return content;</span>
+<span class="cstat-no" title="statement not covered" >    return this.content;</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>werToDom(protocol, syntax) {
@@ -1885,7 +1858,7 @@ export function <span class="fstat-no" title="function not covered" >lowerToDom(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-10T03:42:33.593Z
+                at 2024-06-10T03:56:33.495Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

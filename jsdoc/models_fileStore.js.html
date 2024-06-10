@@ -400,7 +400,7 @@ class FileStore {
    * @param {DirectoryFileEntry} destinationDirectory - The destination directory.
    * @returns {boolean} True if the file was moved successfully, false otherwise.
    */
-  move_file(sourceFile, destinationDirectory) {
+  moveFile(sourceFile, destinationDirectory) {
     if (!sourceFile || !sourceFile.parent) {
       return false; // Source file doesn't exist or is the root directory
     }
