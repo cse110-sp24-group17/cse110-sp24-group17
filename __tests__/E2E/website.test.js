@@ -183,4 +183,24 @@ describe("Basic user flow for Website", () => {
 
     expect(zIndex).toBe("20");
   }, 50000);
+
+  it("Edit markdown using editor", async () => {
+    console.log("Editing markdown...");
+
+    const fileExplorer = await page.$("file-explorer"); // Get the shadow root of the file explorer
+    const shadow = await fileExplorer.getProperty("shadowRoot");
+    const files = await shadow.$$(".text-file"); // get a scratch file
+    await files[0].click();
+
+    const markdown = await page.$("#editor");
+    await markdown.click();
+    await page.keyboard.type(`# Hello World!
+    [[asdf.txt]]
+    [link](https://google.com)
+    ![image](scratch.txt)`);
+    const newMarkdown = await page.$eval("#preview", (el) => el.innerHTML);
+    expect(newMarkdown).toBe(
+      `<h1><span> Hello World!</span></h1><div><span>    </span><a href="#"><span>asdf.txt</span></a></div><div><span>    </span><span><a href="https://google.com"><span>link</span></a></span></div><div><span>    </span><span><img src="I am writing a note that is very important!"></span></div>`
+    )
+  }, 50000);
 });
