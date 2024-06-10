@@ -4,6 +4,44 @@ describe('Basic user flow for Website', () => {
     beforeAll(async () => {
         await page.goto('https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main');
     });
+
+    // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
+    it('Making a new note on the scratch pad', async () => {
+      console.log('Writing on scratch pad...');
+
+      const scratchPad = await page.$('#scratchPadInput');
+      await scratchPad.click()
+      await page.keyboard.type("I am writing a note that is very important!");
+      const newNote = await page.$eval("#scratchPadInput", el => el.value);
+      const calendar = await page.$("#calendar");
+      await calendar.click();
+      expect(newNote).toBe("I am writing a note that is very important!");
+    }, 50000); 
+
+    // Switch from file explorer view to project view
+    it('Switching from file explorer view to project view', async () => {
+      console.log('Switching view...');
+
+      const addFileButton = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+      let rect1 = await addFileButton.boundingBox();
+      await page.mouse.move(rect1.x, rect1.y);
+      await page.mouse.down();
+      await page.mouse.move(500,0, {delay: 20000});
+      await page.mouse.up();
+      await setTimeout(999);
+
+      const zIndex = await page.evaluate(() => {
+        const element = document.querySelector('#ProjectView');
+        if (element) {
+          return element.style.zIndex;
+        }
+        return null;
+      });
+
+      expect(zIndex).toBe("20");
+    }, 50000); 
+
+
   
     // Check to make sure that the file starts off with a root directory
     it('Initial File Explorer - it is empty ', async () => {
@@ -128,41 +166,5 @@ describe('Basic user flow for Website', () => {
 
       expect(numChildren).toBe(Object.keys(newChildren).length);
     }, 50000);
-
-    // Switch from file explorer view to project view
-    it('Switching from file explorer view to project view', async () => {
-      console.log('Switching view...');
-
-      const addFileButton = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
-      let rect1 = await addFileButton.boundingBox();
-      await page.mouse.move(rect1.x, rect1.y);
-      await page.mouse.down();
-      await page.mouse.move(500,0, {delay: 20000});
-      await page.mouse.up();
-      await setTimeout(999);
-
-      const zIndex = await page.evaluate(() => {
-        const element = document.querySelector('#ProjectView');
-        if (element) {
-          return element.style.zIndex;
-        }
-        return null;
-      });
-
-      expect(zIndex).toBe("20");
-    }, 50000); 
-
-    // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
-    /*it('Switching from file explorer view to project view', async () => {
-      console.log('Switching view...');
-
-      const scratchPad = await page.$('#scratchPadInput');
-      await scratchPad.click()
-      await page.keyboard.type("I am writing a note that is very important!");
-      const newNote = await page.$eval("#scratchPadInput", el => el.innerHTML)
-      const calendar = await page.$("#calendar");
-      await calendar.click();
-      expect(newNote).toBe("I am writing a note that is very important!");
-    }, 50000); */
   
   });
