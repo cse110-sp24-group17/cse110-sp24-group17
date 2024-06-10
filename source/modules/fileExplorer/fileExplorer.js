@@ -28,7 +28,7 @@ class FileExplorerComponent extends HTMLElement {
     /**
      * Fetches the file explorer html and sets the shadow root to the html
      */
-    fetch("./modules/file_explorer/file_explorer.html")
+    fetch("./modules/fileExplorer/fileExplorer.html")
       .then((x) => x.text())
       .then((x) => {
         this.shadowRoot.innerHTML = x;
