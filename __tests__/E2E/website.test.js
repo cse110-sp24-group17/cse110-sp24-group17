@@ -200,7 +200,7 @@ describe("Basic user flow for Website", () => {
     ![image](scratch.txt)`);
     const newMarkdown = await page.$eval("#preview", (el) => el.innerHTML);
     expect(newMarkdown).toBe(
-      `<h1><span> Hello World!</span></h1><div><span>    </span><a href="#"><span>asdf.txt</span></a></div><div><span>    </span><span><a href="https://google.com"><span>link</span></a></span></div><div><span>    </span><span><img src="I am writing a note that is very important!"></span></div>`
-    )
+      `<h1><span> Hello World!</span></h1><div><span>    </span><a href="#"><span>asdf.txt</span></a></div><div><span>    </span><span><a href="https://google.com"><span>link</span></a></span></div><div><span>    </span><span><img src="I am writing a note that is very important!"></span></div>`,
+    );
   }, 50000);
 });

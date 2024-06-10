@@ -1,7 +1,5 @@
 import CalendarComponent from "../../source/modules/journal/calendarComponent.js";
-import {
-  isSameDay,
-} from "../../source/modules/journal/dateUtil.js";
+import { isSameDay } from "../../source/modules/journal/dateUtil.js";
 
 // Now you can use the document object as if you were in a browser environment
 //const CalendarComponent = require('./calendar_component.js');

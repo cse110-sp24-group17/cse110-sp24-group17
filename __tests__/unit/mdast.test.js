@@ -139,12 +139,12 @@ test("Block link node", () => {
 
 class MockEditorProtocol extends EditorProtocol {
   getContent(url) {
-    return 'mocked image content'; // mock the content for images
+    return "mocked image content"; // mock the content for images
   }
 }
 
-test('Convert parsed markdown to DOM with innerHTML', () => {
-    const markdownText = `
+test("Convert parsed markdown to DOM with innerHTML", () => {
+  const markdownText = `
 # Heading 1
 ## Heading 2
 This is a *test* paragraph with **bold** text and a [link](https://example.com).
@@ -156,18 +156,20 @@ Code block
 (parenthesis)
 [parenthesis 2]
 `;
-    const parsedBlocks = parseMarkdown(markdownText);
-    const parentElement = document.createElement('div');
-    const protocol = new MockEditorProtocol();
+  const parsedBlocks = parseMarkdown(markdownText);
+  const parentElement = document.createElement("div");
+  const protocol = new MockEditorProtocol();
 
-    lowerToDom(parentElement, parsedBlocks, protocol, false);
+  lowerToDom(parentElement, parsedBlocks, protocol, false);
 
-    expect(parentElement.innerHTML).toBe('<div><span></span></div>'
-    +'<h1><span> Heading 1</span></h1>'
-    +'<h2><span> Heading 2</span></h2>'
-    +'<div><span>This is a </span><i><span>test</span></i><span> paragraph with </span><b><span>bold</span></b><span> text and a </span><span><a href=\"https://example.com\"><span>link</span></a></span><span>.</span></div>'
-    +'<div><span></span><span><img src=\"mocked image content\"></span></div>'
-    +'<div><span></span><a href=\"#\"><span>BlockLink</span></a></div>'
-    +'<code-highlighter></code-highlighter>'
-    +'<div><span></span><span><span>(</span><span>parenthesis</span><span>)</span></span></div><div><span></span><span><span>[</span><span>parenthesis 2</span><span>]</span></span></div><div><span></span></div>');
-  });
+  expect(parentElement.innerHTML).toBe(
+    "<div><span></span></div>" +
+      "<h1><span> Heading 1</span></h1>" +
+      "<h2><span> Heading 2</span></h2>" +
+      '<div><span>This is a </span><i><span>test</span></i><span> paragraph with </span><b><span>bold</span></b><span> text and a </span><span><a href="https://example.com"><span>link</span></a></span><span>.</span></div>' +
+      '<div><span></span><span><img src="mocked image content"></span></div>' +
+      '<div><span></span><a href="#"><span>BlockLink</span></a></div>' +
+      "<code-highlighter></code-highlighter>" +
+      "<div><span></span><span><span>(</span><span>parenthesis</span><span>)</span></span></div><div><span></span><span><span>[</span><span>parenthesis 2</span><span>]</span></span></div><div><span></span></div>",
+  );
+});

@@ -19,4 +19,3 @@ Our [Codacy Dashboard](https://app.codacy.com/organizations/gh/cse110-sp24-group
 ---
 
 Learn more about our amazing team of ten at our [Team Page](admin/team.md)!
-

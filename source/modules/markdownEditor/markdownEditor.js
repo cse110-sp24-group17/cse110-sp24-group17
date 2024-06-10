@@ -1,8 +1,4 @@
-import {
-  EditorProtocol,
-  lowerToDom,
-  parseMarkdown,
-} from "../models/mdast.js";
+import { EditorProtocol, lowerToDom, parseMarkdown } from "../models/mdast.js";
 import App from "../models/app.js";
 
 class MarkdownEditorProtocol extends EditorProtocol {

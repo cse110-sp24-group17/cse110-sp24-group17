@@ -1,7 +1,4 @@
-import {
-  FileStore,
-  FileStoreProvider,
-} from "./fileStore.js";
+import { FileStore, FileStoreProvider } from "./fileStore.js";
 
 class App extends EventTarget {
   constructor() {

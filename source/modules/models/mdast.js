@@ -21,35 +21,68 @@
  * @module mdast
  */
 
+/**
+ * Base class representing a protocol for an editor.
+ * @class
+ */
 export class EditorProtocol {
   constructor() {
     this.dom = document.createElement("div");
   }
 
+  /**
+   * Gets the content of a file.
+   * @param {string} filename - The name of the file.
+   */
   getContent(filename) {
     throw new Error("Unimplemented get content");
   }
 }
 
+/**
+ * Base class for block nodes in the Markdown syntax tree.
+ * @class
+ */
 class BlockNode {
   constructor() {
     this.children = [];
   }
 
+  /**
+   * Gets the raw content of the block node.
+   */
   getRawContent() {
     throw new Error("Unimplemented raw content");
   }
 
+  /**
+   * Gets the type of the block node.
+   */
   getType() {
     throw new Error("Unimplemented type");
   }
 
+  /**
+   * Lowers the block node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   */
   lowerToDom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
 
+/**
+ * Class representing a list item node.
+ * @class
+ * @extends BlockNode
+ */
 export class ListItemNode extends BlockNode {
+  /**
+   * Creates a new ListItemNode.
+   * @param {string} type - The type of the list item.
+   * @param {number} level - The level of the list item.
+   */
   constructor(type, level) {
     super();
     this.type = type;
@@ -57,44 +90,93 @@ export class ListItemNode extends BlockNode {
   }
 }
 
+/**
+ * Base class for inline nodes in the Markdown syntax tree.
+ * @class
+ */
 export class InlineNode {
+  /**
+   * Creates a new InlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   */
   constructor(parent) {
     this.parent = parent;
     this.children = [];
   }
 
+  /**
+   * Gets the raw content of the inline node.
+   */
   getRawContent() {
     throw new Error("Unimplemented raw content");
   }
 
+  /**
+   * Checks if the cursor is contained within the inline node.
+   * @param {number} cur - The current cursor position.
+   * @param {number} offset - The offset position.
+   * @returns {boolean} True if the cursor is contained, false otherwise.
+   */
   cursorContained(cur, offset) {
     const len = this.getRawContent().length;
     return offset >= cur && offset <= cur + len;
   }
 
+  /**
+   * Gets the type of the inline node.
+   */
   getType() {
     throw new Error("Unimplemented type");
   }
 
+  /**
+   * Lowers the inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   */
   lowerToDom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
 
+/**
+ * Class representing a text inline node.
+ * @class
+ * @extends InlineNode
+ */
 export class TextInlineNode extends InlineNode {
+  /**
+   * Creates a new TextInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {string} text - The text content.
+   */
   constructor(parent, text) {
     super(parent);
     this.text = text;
   }
 
+  /**
+   * Gets the raw content of the text inline node.
+   * @returns {string} The text content.
+   */
   getRawContent() {
     return this.text;
   }
 
+  /**
+   * Gets the type of the text inline node.
+   * @returns {string} The type "text".
+   */
   getType() {
     return "text";
   }
 
+  /**
+   * Lowers the text inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
     node.textContent = this.text;
@@ -102,13 +184,28 @@ export class TextInlineNode extends InlineNode {
   }
 }
 
+/**
+ * Class representing a decoration inline node.
+ * @class
+ * @extends InlineNode
+ */
 export class DecorationInlineNode extends InlineNode {
+  /**
+   * Creates a new DecorationInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {string[]} paren - The opening and closing characters.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, paren, children) {
     super(parent);
     this.paren = paren;
     this.children = children;
   }
 
+  /**
+   * Gets the raw content of the decoration inline node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     let res = this.paren[0];
     for (const child of this.children) {
@@ -118,10 +215,20 @@ export class DecorationInlineNode extends InlineNode {
     return res;
   }
 
+  /**
+   * Gets the type of the decoration inline node.
+   * @returns {string} The type "bold".
+   */
   getType() {
     return "bold";
   }
 
+  /**
+   * Lowers the decoration inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("b");
     for (const child of this.children) {
@@ -131,14 +238,36 @@ export class DecorationInlineNode extends InlineNode {
   }
 }
 
+/**
+ * Class representing a bracket inline node.
+ * @class
+ * @extends DecorationInlineNode
+ */
+
 export class BracketInlineNode extends DecorationInlineNode {
+  /**
+   * Creates a new BracketInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, children) {
     super(parent, ["[", "]"], children);
   }
+
+  /**
+   * Gets the type of the bracket inline node.
+   * @returns {string} The type "bracket".
+   */
   getType() {
     return "bracket";
   }
 
+  /**
+   * Lowers the bracket inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
     const left = document.createElement("span");
@@ -154,14 +283,35 @@ export class BracketInlineNode extends DecorationInlineNode {
   }
 }
 
+/**
+ * Class representing a bold inline node.
+ * @class
+ * @extends DecorationInlineNode
+ */
 export class BoldInlineNode extends DecorationInlineNode {
+  /**
+   * Creates a new BoldInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, children) {
     super(parent, ["**", "**"], children);
   }
+
+  /**
+   * Gets the type of the bold inline node.
+   * @returns {string} The type "bold".
+   */
   getType() {
     return "bold";
   }
 
+  /**
+   * Lowers the bold inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("b");
     for (const child of this.children) {
@@ -171,14 +321,34 @@ export class BoldInlineNode extends DecorationInlineNode {
   }
 }
 
+/**
+ * Class representing an italic inline node.
+ * @class
+ * @extends DecorationInlineNode
+ */
 export class ItalicInlineNode extends DecorationInlineNode {
+  /**
+   * Creates a new ItalicInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, children) {
     super(parent, ["*", "*"], children);
   }
+  /**
+   * Gets the type of the italic inline node.
+   * @returns {string} The type "italic".
+   */
   getType() {
     return "italic";
   }
 
+  /**
+   * Lowers the italic inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("i");
     for (const child of this.children) {
@@ -188,14 +358,35 @@ export class ItalicInlineNode extends DecorationInlineNode {
   }
 }
 
+/**
+ * Class representing a parenthesis inline node.
+ * @class
+ * @extends DecorationInlineNode
+ */
 export class ParenInlineNode extends DecorationInlineNode {
+  /**
+   * Creates a new ParenInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, children) {
     super(parent, ["(", ")"], children);
   }
+
+  /**
+   * Gets the type of the parenthesis inline node.
+   * @returns {string} The type "paren".
+   */
   getType() {
     return "paren";
   }
 
+  /**
+   * Lowers the parenthesis inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocl, syntax) {
     const node = document.createElement("span");
     const left = document.createElement("span");
@@ -211,13 +402,28 @@ export class ParenInlineNode extends DecorationInlineNode {
   }
 }
 
+/**
+ * Class representing a link inline node.
+ * @class
+ * @extends InlineNode
+ */
 export class LinkInlineNode extends InlineNode {
+  /**
+   * Creates a new LinkInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   * @param {string} url - The URL of the link.
+   */
   constructor(parent, children, url) {
     super(parent);
     this.children = children;
     this.url = url;
   }
 
+  /**
+   * Gets the raw content of the link inline node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     let res = "[";
     for (const child of this.children) {
@@ -227,10 +433,20 @@ export class LinkInlineNode extends InlineNode {
     return res;
   }
 
+  /**
+   * Gets the type of the link inline node.
+   * @returns {string} The type "link".
+   */
   getType() {
     return "link";
   }
 
+  /**
+   * Lowers the link inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
     node.href = this.url;
@@ -244,13 +460,28 @@ export class LinkInlineNode extends InlineNode {
   }
 }
 
+/**
+ * Class representing an image inline node.
+ * @class
+ * @extends InlineNode
+ */
 export class ImageInlineNode extends InlineNode {
+  /**
+   * Creates a new ImageInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   * @param {string} url - The URL of the image.
+   */
   constructor(parent, children, url) {
     super(parent);
     this.children = children;
     this.url = url;
   }
 
+  /**
+   * Gets the raw content of the image inline node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     let res = "![";
     for (const child of this.children) {
@@ -260,10 +491,20 @@ export class ImageInlineNode extends InlineNode {
     return res;
   }
 
+  /**
+   * Gets the type of the image inline node.
+   * @returns {string} The type "link".
+   */
   getType() {
     return "link";
   }
 
+  /**
+   * Lowers the image inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("span");
     const node2 = document.createElement("img");
@@ -276,15 +517,35 @@ export class ImageInlineNode extends InlineNode {
   }
 }
 
+/**
+ * Class representing a block link inline node.
+ * @class
+ * @extends DecorationInlineNode
+ */
 export class BlockLinkInlineNode extends DecorationInlineNode {
+  /**
+   * Creates a new BlockLinkInlineNode.
+   * @param {BlockNode} parent - The parent block node.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(parent, children) {
     super(parent, ["[[", "]]"], children);
   }
 
+  /**
+   * Gets the type of the block link inline node.
+   * @returns {string} The type "block_link".
+   */
   getType() {
     return "block_link";
   }
 
+  /**
+   * Lowers the block link inline node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("a");
     node.href = "#";
@@ -299,6 +560,12 @@ export class BlockLinkInlineNode extends DecorationInlineNode {
   }
 }
 
+/**
+ * Parses an inline expression into a list of inline nodes.
+ * @param {BlockNode} parent - The parent block node.
+ * @param {string} text - The text to parse.
+ * @returns {InlineNode[]} The list of inline nodes.
+ */
 export function parseInlineExpression(parent, text) {
   let stack = [[new TextInlineNode(parent, ""), false]];
   let parenBuilders = [
@@ -437,23 +704,52 @@ export function parseInlineExpression(parent, text) {
   return stack.map((x) => x[0]);
 }
 
+/**
+ * Class representing an empty line node.
+ * @class
+ * @extends BlockNode
+ */
 export class EmptyLineNode extends BlockNode {
+  /**
+   * Gets the raw content of the empty line node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     return "\n";
   }
 
+  /**
+   * Lowers the empty line node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     return document.createElement("span");
   }
 }
 
+/**
+ * Class representing a header node.
+ * @class
+ * @extends BlockNode
+ */
 export class HeaderNode extends BlockNode {
+  /**
+   * Creates a new HeaderNode.
+   * @param {number} level - The level of the header.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(level, children) {
     super();
     this.level = level;
     this.children = children;
   }
 
+  /**
+   * Gets the raw content of the header node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     let res = "";
     for (const child of this.children) {
@@ -462,6 +758,12 @@ export class HeaderNode extends BlockNode {
     return res;
   }
 
+  /**
+   * Lowers the header node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("h" + this.level);
     for (let i = 0; i < this.children.length; i++) {
@@ -472,16 +774,35 @@ export class HeaderNode extends BlockNode {
   }
 }
 
+/**
+ * Class representing a code block node.
+ * @class
+ * @extends BlockNode
+ */
 export class CodeBlockNode extends BlockNode {
+  /**
+   * Creates a new CodeBlockNode.
+   * @param {string} content - The content of the code block.
+   */
   constructor(content) {
     super();
     this.content = content;
   }
 
+  /**
+   * Gets the raw content of the code block node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     return this.content;
   }
 
+  /**
+   * Lowers the code block node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("code-highlighter");
     node.code = this.content;
@@ -489,12 +810,25 @@ export class CodeBlockNode extends BlockNode {
   }
 }
 
+/**
+ * Class representing a paragraph node.
+ * @class
+ * @extends BlockNode
+ */
 export class ParagraphNode extends BlockNode {
+  /**
+   * Creates a new ParagraphNode.
+   * @param {InlineNode[]} children - The child inline nodes.
+   */
   constructor(children) {
     super();
     this.children = children;
   }
 
+  /**
+   * Gets the raw content of the paragraph node.
+   * @returns {string} The raw content.
+   */
   getRawContent() {
     let res = "";
     for (const child of this.children) {
@@ -503,6 +837,12 @@ export class ParagraphNode extends BlockNode {
     return res;
   }
 
+  /**
+   * Lowers the paragraph node to a DOM element.
+   * @param {EditorProtocol} protocol - The protocol to use.
+   * @param {Object} syntax - The syntax to use.
+   * @returns {HTMLElement} The DOM element.
+   */
   lowerToDom(protocol, syntax) {
     const node = document.createElement("div");
     for (let i = 0; i < this.children.length; i++) {
@@ -513,6 +853,11 @@ export class ParagraphNode extends BlockNode {
   }
 }
 
+/**
+ * Parses a block of text into a block node.
+ * @param {string} text - The text to parse.
+ * @returns {BlockNode} The block node.
+ */
 export function parseBlock(text) {
   let cur = 0;
   const tryConsumeCombo = (char, limit) => {
@@ -541,6 +886,11 @@ export function parseBlock(text) {
   return new ParagraphNode(parseInlineExpression(null, text));
 }
 
+/**
+ * Parses a Markdown document into a list of block nodes.
+ * @param {string} text - The Markdown text to parse.
+ * @returns {BlockNode[]} The list of block nodes.
+ */
 export function parseMarkdown(text) {
   const blocks = [];
   const lines = text.split("\n"); // split by \r\n or \n
@@ -570,6 +920,13 @@ export function parseMarkdown(text) {
   return blocks;
 }
 
+/**
+ * Lowers a list of block nodes to DOM elements and appends them to a parent element.
+ * @param {HTMLElement} parent - The parent DOM element.
+ * @param {BlockNode[]} blocks - The list of block nodes.
+ * @param {EditorProtocol} protocol - The protocol to use.
+ * @param {Object} syntax - The syntax to use.
+ */
 export function lowerToDom(parent, blocks, protocol, syntax) {
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i];
