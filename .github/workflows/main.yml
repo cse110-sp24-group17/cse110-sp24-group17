@@ -13,6 +13,10 @@ jobs: # the things being executed
         run: npm run unit
       - name: Run E2E tests
         run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" npm run E2E
+      - name: Merge Reports
+        run: npm run merge
+      - name: Generate Final Coverage Report
+        run: npx nyc report --reporter=html --reporter=text-summary --report-dir=coverage/final
       #- name: Merge coverage reports from Unit and E2E tests
       #  run: npm run merge
       #- name: Generate coverage report

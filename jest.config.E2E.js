@@ -10,4 +10,7 @@ export default {
       useESM: true,
     },
   },
+  collectCoverage: true,
+  coverageDirectory: "coverage/e2e",
+  coverageReporters: ["json", "lcov", "text", "clover"],
 };
