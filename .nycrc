@@ -1,5 +1,5 @@
 {
-  "all": false,
+  "all": true,
   "include": ["src/**/website.test.js"],
   "reporter": ["html", "text-summary"],
   "report-dir": "coverage/final"
