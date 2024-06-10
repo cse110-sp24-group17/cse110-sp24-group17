@@ -8,7 +8,6 @@ Welcome to **WebScribe!** Our application provides a comprehensive platform for 
 
 To download our web app, simply travel to our [Webscribe url](https://cse110-sp24-group17.github.io/cse110-sp24-group17/source/main.html) and click the download button to the right of the url.
 
-
 ## 1. Journal View
 
 ![Image](source/assets/journalDoc.png)
@@ -16,6 +15,7 @@ To download our web app, simply travel to our [Webscribe url](https://cse110-sp2
 The Journal View component allows you to view journal entries for specific dates. You can navigate between dates, open a calendar to select a date, and switch between different journal entries effortlessly.
 
 **Key Features:**
+
 - Navigate between dates using the previous and next buttons.
 - Open the calendar tab to select a specific date.
 - View and edit journal entries for the selected date.
@@ -27,9 +27,9 @@ The Journal View component allows you to view journal entries for specific dates
 The Calendar Component displays dates of the month and enables easy navigation and selection of specific dates.
 
 **Key Features:**
+
 - Display the dates of the month.
 - Select a specific date to view associated journal entries.
-
 
 ## 3. File Explorer Component
 
@@ -38,18 +38,20 @@ The Calendar Component displays dates of the month and enables easy navigation a
 The File Explorer Component provides an intuitive interface for navigating through files and directories within the file system.
 
 **Key Features:**
+
 - View markdown files and directories.
 - Create, delete, and manage files and directories.
-- Drag and drop files to nest them within directories of your choice! 
-- Enter "delete mode" to delete files with a single click, or drag and drop into trash. 
+- Drag and drop files to nest them within directories of your choice!
+- Enter "delete mode" to delete files with a single click, or drag and drop into trash.
 
 ## 4. Markdown Editor Component
 
 ![Image](source/assets/markdownDoc.png)
 
-The Markdown Editor Component allows you to edit markdown files with ease. It provides syntax highlighting and supports unwrapping markdown blocks into plain text view. A cool feature of our markdown editor is that you can drag and drop pictures from our download folder and display it in your journal. 
+The Markdown Editor Component allows you to edit markdown files with ease. It provides syntax highlighting and supports unwrapping markdown blocks into plain text view. A cool feature of our markdown editor is that you can drag and drop pictures from our download folder and display it in your journal.
 
 **Key Features:**
+
 - Edit markdown files with syntax highlighting.
 - Unwrap markdown blocks into plain text view for easier editing.
 

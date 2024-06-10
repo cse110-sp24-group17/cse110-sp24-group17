@@ -25,7 +25,7 @@ export default class CalendarComponent {
     contentElement,
     prevButtonElement,
     nextButtonElement,
-    onDatePicked
+    onDatePicked,
   ) {
     this.curMonthElement = curMonthElement;
     this.contentElement = contentElement;

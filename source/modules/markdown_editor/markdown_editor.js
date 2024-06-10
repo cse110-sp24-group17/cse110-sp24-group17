@@ -1,4 +1,11 @@
-import { EditorProtocol, ParagraphNode, TextInlineNode, lower_to_dom, parse_inline_expression, parse_markdown } from "../models/mdast.js";
+import {
+  EditorProtocol,
+  ParagraphNode,
+  TextInlineNode,
+  lowerToDom,
+  parseInlineExpression,
+  parseMarkdown,
+} from "../models/mdast.js";
 import App from "../models/app.js";
 
 class MarkdownEditorProtocol extends EditorProtocol {
@@ -8,10 +15,10 @@ class MarkdownEditorProtocol extends EditorProtocol {
     this._loaded = false;
   }
 
-  get_content(filename) {
-    const file = App.store.get_file(filename);
+  getContent(filename) {
+    const file = App.store.getFile(filename);
     if (file) {
-      return file.get_content();
+      return file.getContent();
     }
     return undefined;
   }
@@ -123,16 +130,16 @@ class MarkdownEditorComponent extends HTMLElement {
   set filename(value) {
     this._filename = value;
     this._loaded = false;
-    const file = App.get_file_store().get_file(value);
+    const file = App.getFileStore().getFile(value);
     if (file) {
       this._loaded = true;
       this.file = file;
-      this.editor.value = this.file.get_content();
-      this.preview.innerHTML = '';
-      this.parse(this.preview, this.file.get_content(), false);
+      this.editor.value = this.file.getContent();
+      this.preview.innerHTML = "";
+      this.parse(this.preview, this.file.getContent(), false);
     } else {
-      this.editor.value = '';
-      this.preview.innerHTML = '';
+      this.editor.value = "";
+      this.preview.innerHTML = "";
     }
   }
 
@@ -160,7 +167,7 @@ class MarkdownEditorComponent extends HTMLElement {
 
     if (parent.childNodes.length === 0) {
       if (parent.textContent.length >= stat.pos) {
-        if (parent.textContent.includes('\u200B')) {
+        if (parent.textContent.includes("\u200B")) {
           range.setStart(parent, Math.ceil(stat.pos));
         } else {
           range.setStart(parent, Math.floor(stat.pos));
@@ -192,10 +199,10 @@ class MarkdownEditorComponent extends HTMLElement {
   setInput(input, pos) {
     let sel = window.getSelection();
 
-    this.preview.innerHTML = '';
+    this.preview.innerHTML = "";
     this.parse(this.preview, input, false);
 
-    this.editor.innerHTML = '';
+    this.editor.innerHTML = "";
     this.parse(this.editor, input, true);
 
     sel.removeAllRanges();
@@ -209,9 +216,9 @@ class MarkdownEditorComponent extends HTMLElement {
   }
 
   parse(parent, text, syntax) {
-    const node = parse_markdown(text);
+    const node = parseMarkdown(text);
     const protocol = new MarkdownEditorProtocol();
-    lower_to_dom(parent, node, protocol, syntax);
+    lowerToDom(parent, node, protocol, syntax);
   }
 
   setup() {
@@ -224,14 +231,14 @@ class MarkdownEditorComponent extends HTMLElement {
     editor.addEventListener("input", (e) => {
       if (!this._loaded) {
         this._loaded = true;
-        this.file = App.get_file_store().create_file(this._filename);
+        this.file = App.getFileStore().createFile(this._filename);
       }
       let input = this.editor.value;
       // const pos = this.getCurPos(this.editor);
       // this.setInput(input, pos);
-      this.preview.innerHTML = '';
+      this.preview.innerHTML = "";
       this.parse(this.preview, input, false);
-      this.file.set_content(input);
+      this.file.setContent(input);
       App.store.sync();
       if (this.onSave) {
         this.onSave();
@@ -239,15 +246,15 @@ class MarkdownEditorComponent extends HTMLElement {
     });
 
     window.gotoMarkdown = (path) => {
-      const file = App.store.get_file(path);
+      const file = App.store.getFile(path);
       if (file) {
         App.openFile(path);
       }
-    }
+    };
 
     this.setupDragAndDrop(editor);
   }
-  
+
   setupDragAndDrop(editor) {
     editor.addEventListener("dragover", (event) => {
       event.preventDefault();
@@ -259,9 +266,13 @@ class MarkdownEditorComponent extends HTMLElement {
       if (files.length > 0) {
         const file = files[0];
         const content = await App.compressImage(file, 800);
-        const img = App.store.create_file(file.name);
-        img.set_content(content);
-        document.execCommand("insertText", false, "![image](" + img.get_path() + ")");
+        const img = App.store.createFile(file.name);
+        img.setContent(content);
+        document.execCommand(
+          "insertText",
+          false,
+          "![image](" + img.getPath() + ")",
+        );
       }
     });
   }

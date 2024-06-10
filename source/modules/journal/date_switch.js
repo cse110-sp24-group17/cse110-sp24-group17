@@ -9,7 +9,7 @@ class JournalView extends HTMLElement {
         this.init();
       });
   }
-  init(){
+  init() {
     // Get references to DOM elements
     const prevDateBtn = this.shadowRoot.getElementById("prev-date-btn");
     const openCalendarBtn = this.shadowRoot.getElementById("open-calendar-btn");
@@ -65,7 +65,6 @@ class JournalView extends HTMLElement {
       calendar.set_calendar_date(currentDate);
     }
   }
-  
 }
 
 customElements.define("date-switch", JournalView);

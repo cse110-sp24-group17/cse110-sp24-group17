@@ -53,7 +53,6 @@
   margin-left: 300px;
 }
 
-
 main {
   margin-left: 200px; /* Same width as the sidebar */
   padding: 1rem;
@@ -160,7 +159,7 @@ html {
 .calendar_buttons img {
   max-width: 100%;
   height: 2.1875rem;
- } /* 35px */
+} /* 35px */
 
 .calendar_row {
   display: flex;
@@ -182,7 +181,7 @@ html {
 .calendar_row div:hover {
   background-color: var(--accent-color);
   opacity: 0.7;
-  
+
   transition: 0.2s;
 }
 
@@ -195,7 +194,7 @@ html {
 }
 
 .calendar_selected {
-  background-color: var(--accent-color)
+  background-color: var(--accent-color);
 }
 
 .prev_button {
@@ -224,7 +223,7 @@ html {
 }
 
 .holiday_place {
-  color:var(--accent-color);
+  color: var(--accent-color);
   font-weight: 500;
 }
 
@@ -312,7 +311,8 @@ ul li:before {
   visibility: hidden;
 }
 
-#Polygon4, #Polygon5 {
+#Polygon4,
+#Polygon5 {
   fill: var(--accent-color);
   stroke: var(--accent-color);
 }

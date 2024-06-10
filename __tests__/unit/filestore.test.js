@@ -1,137 +1,155 @@
-import { FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry, FileEntry } from '../../source/modules/models/fileStore.js';
+import {
+  FileStore,
+  FileStoreProvider,
+  DirectoryFileEntry,
+  TextFileEntry,
+  FileEntry,
+} from "../../source/modules/models/fileStore.js";
 
-describe('FileStore System', () => {
-    let store;
-    let provider;
+describe("FileStore System", () => {
+  let store;
+  let provider;
 
-    beforeEach(() => {
-        // Mock localStorage
-        global.localStorage = {
-            storage: {},
-            setItem: function(key, value) {
-                this.storage[key] = value;
-            },
-            getItem: function(key) {
-                return this.storage[key] || null;
-            }
-        };
-        provider = new FileStoreProvider(global.localStorage);
-        store = new FileStore(provider);
+  beforeEach(() => {
+    // Mock localStorage
+    global.localStorage = {
+      storage: {},
+      setItem: function (key, value) {
+        this.storage[key] = value;
+      },
+      getItem: function (key) {
+        return this.storage[key] || null;
+      },
+    };
+    provider = new FileStoreProvider(global.localStorage);
+    store = new FileStore(provider);
+  });
+
+  test("FileStoreProvider save and load", () => {
+    const data = JSON.stringify({ key: "value" });
+    provider.save(data);
+    expect(provider.load()).toBe(data);
+  });
+
+  test("FileEntry methods", () => {
+    const fileEntry = new FileEntry("fileEntry");
+    expect(fileEntry.getName()).toBe("fileEntry");
+    expect(fileEntry.getPath()).toBe("fileEntry");
+    expect(fileEntry.getType()).toBe("file");
+  });
+
+  test("DirectoryFileEntry getChildFiles and getChildren", () => {
+    const dir = new DirectoryFileEntry("dir");
+    const file1 = new TextFileEntry("file1.txt", "data1");
+    const file2 = new TextFileEntry("file2.txt", "data2");
+    dir.addChildFile(file1);
+    dir.addChildFile(file2);
+    expect(dir.getChildFiles()).toEqual({
+      "file1.txt": file1,
+      "file2.txt": file2,
     });
+    expect(dir.getChildren()).toEqual([file1, file2]);
+  });
 
-    test('FileStoreProvider save and load', () => {
-        const data = JSON.stringify({ key: 'value' });
-        provider.save(data);
-        expect(provider.load()).toBe(data);
-    });
+  test("FileStore create and delete file", () => {
+    store.createDirectory("dir");
+    store.createFile("dir/file.txt");
+    const file = store.getFile("dir/file.txt");
+    expect(file).toBeDefined();
+    expect(file.getName()).toBe("file.txt");
+    store.deleteFile("dir/file.txt");
+    expect(store.getFile("dir/file.txt")).toBeNull();
+  });
 
-    test('FileEntry methods', () => {
-        const fileEntry = new FileEntry('fileEntry');
-        expect(fileEntry.get_name()).toBe('fileEntry');
-        expect(fileEntry.get_path()).toBe('fileEntry');
-        expect(fileEntry.get_type()).toBe('file');
-    });
+  test("FileStore create and get directory", () => {
+    const dir = store.createDirectory("dir");
+    expect(dir).toBeDefined();
+    expect(dir.getName()).toBe("dir");
+    const retrievedDir = store.getFile("dir");
+    expect(retrievedDir).toBeDefined();
+    expect(retrievedDir.getName()).toBe("dir");
+    expect(retrievedDir.getType()).toBe("directory");
+    expect(retrievedDir.getPath()).toBe("/dir"); // Adjusted to check the full path
+  });
 
-    test('DirectoryFileEntry get_child_files and get_children', () => {
-        const dir = new DirectoryFileEntry('dir');
-        const file1 = new TextFileEntry('file1.txt', 'data1');
-        const file2 = new TextFileEntry('file2.txt', 'data2');
-        dir.add_child_file(file1);
-        dir.add_child_file(file2);
-        expect(dir.get_child_files()).toEqual({ 'file1.txt': file1, 'file2.txt': file2 });
-        expect(dir.get_children()).toEqual([file1, file2]);
-    });
+  test("FileStore getFiles and getFilesInPath", () => {
+    const dir = store.createDirectory("dir");
+    const file1 = store.createFile("dir/file1.txt");
+    const file2 = store.createFile("dir/file2.txt");
 
-    test('FileStore create and delete file', () => {
-        store.create_directory('dir');
-        store.create_file('dir/file.txt');
-        const file = store.get_file('dir/file.txt');
-        expect(file).toBeDefined();
-        expect(file.get_name()).toBe('file.txt');
-        store.delete_file('dir/file.txt');
-        expect(store.get_file('dir/file.txt')).toBeNull();
-    });
+    const allFiles = store.getFiles();
+    expect(allFiles.length).toBe(4); // root, dir, file1, file2
+    expect(allFiles).toEqual(
+      expect.arrayContaining([store.root, dir, file1, file2]),
+    );
 
-    test('FileStore create and get directory', () => {
-        const dir = store.create_directory('dir');
-        expect(dir).toBeDefined();
-        expect(dir.get_name()).toBe('dir');
-        const retrievedDir = store.get_file('dir');
-        expect(retrievedDir).toBeDefined();
-        expect(retrievedDir.get_name()).toBe('dir');
-        expect(retrievedDir.get_type()).toBe('directory');
-        expect(retrievedDir.get_path()).toBe('/dir');  // Adjusted to check the full path
-    });
+    const filesInPath = store.getFilesInPath("dir");
+    expect(filesInPath.length).toBe(2); // file1, file2
+    expect(filesInPath).toEqual(expect.arrayContaining([file1, file2]));
+  });
 
-    test('FileStore get_files and get_files_in_path', () => {
-        const dir = store.create_directory('dir');
-        const file1 = store.create_file('dir/file1.txt');
-        const file2 = store.create_file('dir/file2.txt');
+  test("FileStore searchFiles", () => {
+    store.createDirectory("dir");
+    const file1 = store.createFile("dir/file1.txt");
+    file1.setContent("This is a test file.");
+    const file2 = store.createFile("dir/file2.txt");
+    file2.setContent("Another test file.");
 
-        const allFiles = store.get_files();
-        expect(allFiles.length).toBe(4); // root, dir, file1, file2
-        expect(allFiles).toEqual(expect.arrayContaining([store.root, dir, file1, file2]));
+    const results = store.searchFiles("test");
+    expect(results).toContain(file1);
+    expect(results).toContain(file2);
 
-        const filesInPath = store.get_files_in_path('dir');
-        expect(filesInPath.length).toBe(2); // file1, file2
-        expect(filesInPath).toEqual(expect.arrayContaining([file1, file2]));
-    });
+    const results2 = store.searchFiles("Another");
+    expect(results2).toContain(file2);
+    expect(results2).not.toContain(file1);
+  });
 
-    test('FileStore search_files', () => {
-        store.create_directory('dir');
-        const file1 = store.create_file('dir/file1.txt');
-        file1.set_content('This is a test file.');
-        const file2 = store.create_file('dir/file2.txt');
-        file2.set_content('Another test file.');
+  test("FileStore move_file", () => {
+    // Create initial directories and files
+    const sourceDir = store.createDirectory("source");
+    const destDir = store.createDirectory("dest");
+    const file = store.createFile("source/file.txt");
 
-        const results = store.search_files('test');
-        expect(results).toContain(file1);
-        expect(results).toContain(file2);
+    expect(sourceDir).toBeDefined();
+    expect(destDir).toBeDefined();
+    expect(file).toBeDefined();
 
-        const results2 = store.search_files('Another');
-        expect(results2).toContain(file2);
-        expect(results2).not.toContain(file1);
-    });
+    // Move the file from 'source' to 'dest'
+    const moved = store.move_file(file, destDir);
 
-    test('FileStore move_file', () => {
-        // Create initial directories and files
-        const sourceDir = store.create_directory('source');
-        const destDir = store.create_directory('dest');
-        const file = store.create_file('source/file.txt');
+    // Check if the move was successful
+    expect(moved).toBe(true);
+    expect(store.getFile("source/file.txt")).toBeNull();
+    expect(store.getFile("dest/file.txt")).toBeDefined();
+    expect(store.getFile("dest/file.txt").getName()).toBe("file.txt");
+    expect(store.getFile("dest/file.txt").parent).toBe(destDir);
+  });
 
-        expect(sourceDir).toBeDefined();
-        expect(destDir).toBeDefined();
-        expect(file).toBeDefined();
+  test("FileStore sortFiles natural order", () => {
+    const dir = store.createDirectory("dir");
+    const subdir1 = store.createDirectory("dir/subdir1");
+    const subdir2 = store.createDirectory("dir/subdir2");
+    const file1 = store.createFile("dir/file1.txt");
+    const file2 = store.createFile("dir/file2.txt");
+    const file10 = store.createFile("dir/file10.txt");
+    const file20 = store.createFile("dir/file20.txt");
 
-        // Move the file from 'source' to 'dest'
-        const moved = store.move_file(file, destDir);
+    store.sortFiles();
 
-        // Check if the move was successful
-        expect(moved).toBe(true);
-        expect(store.get_file('source/file.txt')).toBeNull();
-        expect(store.get_file('dest/file.txt')).toBeDefined();
-        expect(store.get_file('dest/file.txt').get_name()).toBe('file.txt');
-        expect(store.get_file('dest/file.txt').parent).toBe(destDir);
-    });
+    const filesInRoot = store.getFilesInPath("");
+    const filesInDir = store.getFilesInPath("dir");
 
-    test('FileStore sort_files natural order', () => {
-        const dir = store.create_directory('dir');
-        const subdir1 = store.create_directory('dir/subdir1');
-        const subdir2 = store.create_directory('dir/subdir2');
-        const file1 = store.create_file('dir/file1.txt');
-        const file2 = store.create_file('dir/file2.txt');
-        const file10 = store.create_file('dir/file10.txt');
-        const file20 = store.create_file('dir/file20.txt');
-    
-        store.sort_files();
-    
-        const filesInRoot = store.get_files_in_path('');
-        const filesInDir = store.get_files_in_path('dir');
-    
-        // Check sorting in root (should be: root -> dir)
-        expect(filesInRoot.map(file => file.get_name())).toEqual(['dir']);
-    
-        // Check sorting in 'dir' (should be: subdir1, subdir2, file1, file2, file10, file20)
-        expect(filesInDir.map(file => file.get_name())).toEqual(['subdir1', 'subdir2', 'file1.txt', 'file2.txt', 'file10.txt', 'file20.txt']);
-    });
+    // Check sorting in root (should be: root -> dir)
+    expect(filesInRoot.map((file) => file.getName())).toEqual(["dir"]);
+
+    // Check sorting in 'dir' (should be: subdir1, subdir2, file1, file2, file10, file20)
+    expect(filesInDir.map((file) => file.getName())).toEqual([
+      "subdir1",
+      "subdir2",
+      "file1.txt",
+      "file2.txt",
+      "file10.txt",
+      "file20.txt",
+    ]);
+  });
 });

@@ -34,7 +34,7 @@ describe("weekdayOfFirstDay", () => {
 
   test("should throw error for invalid year or month", () => {
     expect(() => weekdayOfFirstDay(2021, 12)).toThrow(
-      "Invalid year or month specified"
+      "Invalid year or month specified",
     );
   });
 });
@@ -75,7 +75,7 @@ describe("getDaysOfMonth", () => {
 
   test("should throw error for invalid month", () => {
     expect(() => getDaysOfMonth(2021, 12)).toThrow(
-      "Invalid year or month specified"
+      "Invalid year or month specified",
     );
   });
 });

@@ -1,4 +1,9 @@
-import {FileStore, FileStoreProvider, DirectoryFileEntry, TextFileEntry } from "./fileStore.js";
+import {
+  FileStore,
+  FileStoreProvider,
+  DirectoryFileEntry,
+  TextFileEntry,
+} from "./fileStore.js";
 
 class App extends EventTarget {
   constructor() {
@@ -14,7 +19,7 @@ class App extends EventTarget {
     }
   }
 
-  get_file_store() {
+  getFileStore() {
     return this.store;
   }
 
@@ -31,7 +36,7 @@ class App extends EventTarget {
       this.tabs.splice(this.tabs.indexOf(path), 1);
     }
     this.tabs = [path, ...this.tabs];
-    this.dispatchEvent(new CustomEvent('tab-open', {detail: {path: path}}));
+    this.dispatchEvent(new CustomEvent("tab-open", { detail: { path: path } }));
   }
 
   async compressImage(file, maxWidth) {
@@ -40,7 +45,7 @@ class App extends EventTarget {
       reader.onload = (event) => {
         const img = new Image();
         img.onload = () => {
-          const elem = document.createElement('canvas');
+          const elem = document.createElement("canvas");
           let width = img.width;
           let height = img.height;
           if (width > maxWidth) {
@@ -49,18 +54,18 @@ class App extends EventTarget {
           }
           elem.width = width;
           elem.height = height;
-          const ctx = elem.getContext('2d');
+          const ctx = elem.getContext("2d");
           ctx.drawImage(img, 0, 0, width, height);
-          resolve(ctx.canvas.toDataURL('image/jpeg', 0.7));
-        }
+          resolve(ctx.canvas.toDataURL("image/jpeg", 0.7));
+        };
         img.onerror = (e) => {
           reject(e);
-        }
+        };
         img.src = event.target.result;
-      }
+      };
       reader.onerror = (e) => {
         reject(e);
-      }
+      };
       reader.readAsDataURL(file);
     });
   }

@@ -29,28 +29,30 @@ class CalendarView extends HTMLElement {
     const nextMonth = this.shadowRoot.getElementById("next_month");
     const prevSvg = this.shadowRoot.getElementById("prev_svg");
     const nextSvg = this.shadowRoot.getElementById("next_svg");
-    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
-    if (accentColor === '#8B4513') {
+    const accentColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent-color")
+      .trim();
+    if (accentColor === "#8B4513") {
       prevSvg.src = "./modules/journal/white_next.svg";
       nextSvg.src = "./modules/journal/white_next.svg";
     }
-    if (accentColor === '#FFA800') {
+    if (accentColor === "#FFA800") {
       prevSvg.src = "./modules/journal/yellow_next.svg";
       nextSvg.src = "./modules/journal/yellow_next.svg";
     }
-    if (accentColor === '#606060') {
+    if (accentColor === "#606060") {
       prevSvg.src = "./modules/journal/dark_next.svg";
       nextSvg.src = "./modules/journal/dark_next.svg";
     }
-    if (accentColor === '#5E94FF') {
+    if (accentColor === "#5E94FF") {
       prevSvg.src = "./modules/journal/blue_next.svg";
       nextSvg.src = "./modules/journal/blue_next.svg";
     }
-    if (accentColor === '#b768a2') {
+    if (accentColor === "#b768a2") {
       prevSvg.src = "./modules/journal/purple_next.svg";
       nextSvg.src = "./modules/journal/purple_next.svg";
     }
-    if (accentColor === '#4F7942') {
+    if (accentColor === "#4F7942") {
       prevSvg.src = "./modules/journal/green_next.svg";
       nextSvg.src = "./modules/journal/green_next.svg";
     }
@@ -61,7 +63,7 @@ class CalendarView extends HTMLElement {
       nextMonth,
       (date) => {
         this.onDatePicked(date);
-      }
+      },
     );
     calendarCom.initialize();
   }

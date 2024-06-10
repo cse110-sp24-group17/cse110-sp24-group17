@@ -1,14 +1,13 @@
 @font-face {
-    font-family: "nunito";
-    src: url(https://fonts.gstatic.com/s/nunito/v26/XRXX3I6Li01BKofIMNaDRs7nczIH.woff2);
+  font-family: "nunito";
+  src: url(https://fonts.gstatic.com/s/nunito/v26/XRXX3I6Li01BKofIMNaDRs7nczIH.woff2);
 }
 
-
-#file_display {    
-    position: relative; 
-    height: 100%;   
-    width: 100%;   
-    font-family: 'nunito', Arial, Helvetica, sans-serif;
+#file_display {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-family: "nunito", Arial, Helvetica, sans-serif;
 }
 
 /*.file_display_header{
@@ -16,63 +15,61 @@
     font-weight: bold;
     padding: 10px 10px 10px 10px;
 }*/
-.text-file{
-    position: relative;
-    display: block;
-    margin-left: 10px;
-    margin-right: 5px;
-    padding: 5px 5px 5px 10px; 
-    margin-top: 5px;
-    border-radius: 10px;
+.text-file {
+  position: relative;
+  display: block;
+  margin-left: 10px;
+  margin-right: 5px;
+  padding: 5px 5px 5px 10px;
+  margin-top: 5px;
+  border-radius: 10px;
 }
 
-
-.directory{
-    position: relative;
-    display: block;
-    margin-left: 10px;
-    padding: 5px 5px 5px 0px; 
+.directory {
+  position: relative;
+  display: block;
+  margin-left: 10px;
+  padding: 5px 5px 5px 0px;
 }
 
-
-
-.directory-name{
-    display: block;
-    padding: 5px 5px 5px 10px;
-    font-weight: bold;
-    border-radius: 10px;
+.directory-name {
+  display: block;
+  padding: 5px 5px 5px 10px;
+  font-weight: bold;
+  border-radius: 10px;
 }
 
-.directory-name:hover{
-    background-color: var(--accent-color);
-    opacity: 0.7;
-    transition: 0.2s;
+.directory-name:hover {
+  background-color: var(--accent-color);
+  opacity: 0.7;
+  transition: 0.2s;
 }
 
-.text-file:hover{
-    background-color:var(--accent-color);
-    opacity: 0.7;
-    transition: 0.2s;
+.text-file:hover {
+  background-color: var(--accent-color);
+  opacity: 0.7;
+  transition: 0.2s;
 }
 
-.selected{
+.selected {
   background-color: var(--accent-color);
   opacity: 0.9;
   transition: 0.2s;
 }
 
-.selected:hover{
-  background-color:var(--accent-color);
+.selected:hover {
+  background-color: var(--accent-color);
   opacity: 0.7;
   transition: 0.2s;
 }
 
 .root {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-#add-file, #add-folder{
-    margin-left: 45px;
+#add-file,
+#add-folder {
+  margin-left: 45px;
 }

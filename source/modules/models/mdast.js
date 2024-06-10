@@ -4,7 +4,7 @@
  * Parse Markdown text into syntax tree so that it's easier to manipulate
  *
  * Only basic specifications are implemented as the time period for this
- * project is relatively short, but following we tried to implement the spec 
+ * project is relatively short, but following we tried to implement the spec
  * below as accurate as possible.
  *
  * https://spec.commonmark.org/0.31.2
@@ -13,21 +13,20 @@
  *  Block - equivalent to html block display
  *  Inline - equivalent to thml inline display
  *
- * Markdown document is sequence of blocks each block consisting of 
+ * Markdown document is sequence of blocks each block consisting of
  * some inline elements
  *
- * Each block node contains a 
+ * Each block node contains a
  *
  * @module mdast
  */
 
-
 export class EditorProtocol {
   constructor() {
-    this.dom = document.createElement('div');
+    this.dom = document.createElement("div");
   }
 
-  get_content(filename)  {
+  getContent(filename) {
     throw new Error("Unimplemented get content");
   }
 }
@@ -37,15 +36,15 @@ class BlockNode {
     this.children = [];
   }
 
-  get_raw_content() {
+  getRawContent() {
     throw new Error("Unimplemented raw content");
   }
 
-  get_type() {
+  getType() {
     throw new Error("Unimplemented type");
   }
 
-  lower_to_dom(protocol, syntax) {
+  lowerToDom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
@@ -61,29 +60,29 @@ export class ListItemNode extends BlockNode {
 export class InlineNode {
   constructor(parent) {
     this.parent = parent;
-    this.children = [];      
+    this.children = [];
   }
 
-  get_raw_content() {
+  getRawContent() {
     throw new Error("Unimplemented raw content");
   }
 
   cursor_contained(cur, offset) {
-    const len = this.get_raw_content().length;
+    const len = this.getRawContent().length;
     return offset >= cur && offset <= cur + len;
   }
 
-  get_type() {
+  getType() {
     throw new Error("Unimplemented type");
   }
 
-  lower_to_dom(protocol, syntax) {
+  lowerToDom(protocol, syntax) {
     throw new Error("Unimplemented lower to dom");
   }
 }
 
-function create_span_element(text) {
-  const node = document.createElement('span');
+function createSpanElement(text) {
+  const node = document.createElement("span");
   node.textContent = text;
   return node;
 }
@@ -94,16 +93,16 @@ export class TextInlineNode extends InlineNode {
     this.text = text;
   }
 
-  get_raw_content() {
+  getRawContent() {
     return this.text;
   }
-  
-  get_type() {
-    return 'text';
+
+  getType() {
+    return "text";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('span');
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("span");
     node.textContent = this.text;
     return node;
   }
@@ -116,50 +115,48 @@ export class DecorationInlineNode extends InlineNode {
     this.children = children;
   }
 
-  get_raw_content() {
+  getRawContent() {
     let res = this.paren[0];
     for (const child of this.children) {
-      res += child.get_raw_content();
+      res += child.getRawContent();
     }
     res += this.paren[1];
     return res;
   }
-  
-  get_type() {
-    return 'bold';
+
+  getType() {
+    return "bold";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('b');
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[0]));
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("b");
+    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[1]));
+    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
 
 export class BracketInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
-    super(parent, ['[',']'], children);
+    super(parent, ["[", "]"], children);
   }
-  get_type() {
-    return 'bracket';
+  getType() {
+    return "bracket";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('span');
-    const left = document.createElement('span');
-    left.textContent = '[';
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("span");
+    const left = document.createElement("span");
+    left.textContent = "[";
     node.appendChild(left);
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    const right = document.createElement('span');
-    right.textContent = ']';
+    const right = document.createElement("span");
+    right.textContent = "]";
     node.appendChild(right);
     return node;
   }
@@ -167,65 +164,60 @@ export class BracketInlineNode extends DecorationInlineNode {
 
 export class BoldInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
-    super(parent, ['**','**'], children);
+    super(parent, ["**", "**"], children);
   }
-  get_type() {
-    return 'bold';
+  getType() {
+    return "bold";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('b');
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[0]));
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("b");
+    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[1]));
+    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
 
-
 export class ItalicInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
-    super(parent, ['*','*'], children);
+    super(parent, ["*", "*"], children);
   }
-  get_type() {
-    return 'italic';
+  getType() {
+    return "italic";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('i');
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[0]));
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("i");
+    if (syntax) node.appendChild(createSpanElement(this.paren[0]));
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    if (syntax)
-      node.appendChild(create_span_element(this.paren[1]));
+    if (syntax) node.appendChild(createSpanElement(this.paren[1]));
     return node;
   }
 }
 
 export class ParenInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
-    super(parent, ['(',')'], children);
+    super(parent, ["(", ")"], children);
   }
-  get_type() {
-    return 'paren';
+  getType() {
+    return "paren";
   }
 
-  lower_to_dom(protocl, syntax) {
-    const node = document.createElement('span');
-    const left = document.createElement('span');
-    left.textContent = '(';
+  lowerToDom(protocl, syntax) {
+    const node = document.createElement("span");
+    const left = document.createElement("span");
+    left.textContent = "(";
     node.appendChild(left);
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocl, syntax));
+      node.appendChild(child.lowerToDom(protocl, syntax));
     }
-    const right = document.createElement('span');
-    right.textContent = ')';
+    const right = document.createElement("span");
+    right.textContent = ")";
     node.appendChild(right);
     return node;
   }
@@ -238,32 +230,30 @@ export class LinkInlineNode extends InlineNode {
     this.url = url;
   }
 
-  get_raw_content() {
-    let res = '[';
+  getRawContent() {
+    let res = "[";
     for (const child of this.children) {
-      res += child.get_raw_content();
+      res += child.getRawContent();
     }
-    res += '](' + this.url + ')';
+    res += "](" + this.url + ")";
     return res;
   }
 
-  get_type() {
-    return 'link';
+  getType() {
+    return "link";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('span');
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("span");
     node.href = this.url;
-    if (syntax)
-      node.appendChild(create_span_element('['));
-    const node2 = document.createElement('a');
+    if (syntax) node.appendChild(createSpanElement("["));
+    const node2 = document.createElement("a");
     node2.href = this.url;
     for (const child of this.children) {
-      node2.appendChild(child.lower_to_dom(protocol, syntax));
+      node2.appendChild(child.lowerToDom(protocol, syntax));
     }
     node.appendChild(node2);
-    if (syntax)
-      node.appendChild(create_span_element(`](${this.url})`));
+    if (syntax) node.appendChild(createSpanElement(`](${this.url})`));
     return node;
   }
 }
@@ -275,67 +265,64 @@ export class ImageInlineNode extends InlineNode {
     this.url = url;
   }
 
-  get_raw_content() {
-    let res = '![';
+  getRawContent() {
+    let res = "![";
     for (const child of this.children) {
-      res += child.get_raw_content();
+      res += child.getRawContent();
     }
-    res += '](' + this.url + ')';
+    res += "](" + this.url + ")";
     return res;
   }
 
-  get_type() {
-    return 'link';
+  getType() {
+    return "link";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('span');
-    if (syntax)
-      node.appendChild(create_span_element('!['));
-    const node2 = document.createElement('img');
-    const content = protocol.get_content(this.url);
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("span");
+    if (syntax) node.appendChild(createSpanElement("!["));
+    const node2 = document.createElement("img");
+    const content = protocol.getContent(this.url);
     if (content) {
       node2.src = content;
     }
     node.appendChild(node2);
-    if (syntax)
-      node.appendChild(create_span_element(`](${this.url})`));
+    if (syntax) node.appendChild(createSpanElement(`](${this.url})`));
     return node;
   }
 }
 
-
 export class BlockLinkInlineNode extends DecorationInlineNode {
   constructor(parent, children) {
-    super(parent, ['[[',']]'], children);
+    super(parent, ["[[", "]]"], children);
   }
 
-  get_type() {
-    return 'block_link';
+  getType() {
+    return "block_link";
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('a');
-    node.href = '#';
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("a");
+    node.href = "#";
     for (const child of this.children) {
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    node.addEventListener('click', (e) => {
+    node.addEventListener("click", (e) => {
       e.preventDefault();
-      window.gotoMarkdown(this.children[0].get_raw_content());
+      window.gotoMarkdown(this.children[0].getRawContent());
     });
     return node;
   }
 }
 
-export function parse_inline_expression(parent, text) {
-  let stack = [[new TextInlineNode(parent, ''),false]];
+export function parseInlineExpression(parent, text) {
+  let stack = [[new TextInlineNode(parent, ""), false]];
   let parenBuilders = [
-    ['**', '**', BoldInlineNode],
-    ['*', '*', ItalicInlineNode],
-    ['[[', ']]', BlockLinkInlineNode],
-    ['[', ']', BracketInlineNode],
-    ['(', ')', ParenInlineNode],
+    ["**", "**", BoldInlineNode],
+    ["*", "*", ItalicInlineNode],
+    ["[[", "]]", BlockLinkInlineNode],
+    ["[", "]", BracketInlineNode],
+    ["(", ")", ParenInlineNode],
   ];
   const countMap = {};
   for (const x of parenBuilders) {
@@ -359,14 +346,19 @@ export function parse_inline_expression(parent, text) {
     return cnt;
   };
   const compareTextNode = (node, text) => {
-    return node.get_type() === 'text' && node.get_raw_content() === text;
+    return node.getType() === "text" && node.getRawContent() === text;
   };
   const collapseStack = (paren) => {
     let res = [];
-    while (!(stack[stack.length-1][1] && compareTextNode(stack[stack.length-1][0], paren))) {
-      const item = stack[stack.length-1];
+    while (
+      !(
+        stack[stack.length - 1][1] &&
+        compareTextNode(stack[stack.length - 1][0], paren)
+      )
+    ) {
+      const item = stack[stack.length - 1];
       if (item[1]) {
-        countMap[item[0].get_raw_content()]--;
+        countMap[item[0].getRawContent()]--;
       }
       res.push(stack[stack.length - 1][0]);
       stack.pop();
@@ -395,7 +387,7 @@ export function parse_inline_expression(parent, text) {
       if (cnt === open.length) {
         countMap[open]++;
         stack.push([new TextInlineNode(parent, open), true]);
-        stack.push([new TextInlineNode(parent, ''), false]);
+        stack.push([new TextInlineNode(parent, ""), false]);
         cur += cnt;
         matched = true;
         break;
@@ -404,35 +396,61 @@ export function parse_inline_expression(parent, text) {
     if (matched) {
       // pasrse link expresiosn
       // [children](text url)
-      if (stack[stack.length-1][0].get_type() === 'paren' && stack.length >= 2){
-        const last = stack[stack.length-1][0];
-        const secondLast = stack[stack.length-2][0];
-        if (secondLast.get_type() === 'bracket' 
-          && last.children.length === 1 && last.children[0].get_type() === 'text') {
+      if (
+        stack[stack.length - 1][0].getType() === "paren" &&
+        stack.length >= 2
+      ) {
+        const last = stack[stack.length - 1][0];
+        const secondLast = stack[stack.length - 2][0];
+        if (
+          secondLast.getType() === "bracket" &&
+          last.children.length === 1 &&
+          last.children[0].getType() === "text"
+        ) {
           if (stack.length >= 3) {
-            const thirdLast = stack[stack.length-3][0];
-            if (thirdLast.get_type() === 'text' && thirdLast.text[thirdLast.text.length-1] === '!') {
-              thirdLast.text = thirdLast.text.substring(0, thirdLast.text.length-1);
+            const thirdLast = stack[stack.length - 3][0];
+            if (
+              thirdLast.getType() === "text" &&
+              thirdLast.text[thirdLast.text.length - 1] === "!"
+            ) {
+              thirdLast.text = thirdLast.text.substring(
+                0,
+                thirdLast.text.length - 1,
+              );
               stack.pop();
               stack.pop();
-              stack.push([new ImageInlineNode(parent, secondLast.children, last.children[0].get_raw_content()), false]);
+              stack.push([
+                new ImageInlineNode(
+                  parent,
+                  secondLast.children,
+                  last.children[0].getRawContent(),
+                ),
+                false,
+              ]);
               continue;
             }
-          } 
+          }
           stack.pop();
           stack.pop();
-          stack.push([new LinkInlineNode(parent, secondLast.children, last.children[0].get_raw_content()), false]);
+          stack.push([
+            new LinkInlineNode(
+              parent,
+              secondLast.children,
+              last.children[0].getRawContent(),
+            ),
+            false,
+          ]);
         }
       }
       continue;
     }
-    if (stack[stack.length-1][0].get_type() !== 'text') {
-      stack.push([new TextInlineNode(parent, ''), false]);
+    if (stack[stack.length - 1][0].getType() !== "text") {
+      stack.push([new TextInlineNode(parent, ""), false]);
     }
-    stack[stack.length-1][0].text += text[cur];
-    cur ++;
+    stack[stack.length - 1][0].text += text[cur];
+    cur++;
   }
-  return stack.map(x => x[0]);
+  return stack.map((x) => x[0]);
 }
 
 export class EmptyLineNode extends BlockNode {
@@ -440,16 +458,16 @@ export class EmptyLineNode extends BlockNode {
     super();
   }
 
-  get_raw_content() {
-    return '\n';
+  getRawContent() {
+    return "\n";
   }
 
-  lower_to_dom(protocol, syntax) {
+  lowerToDom(protocol, syntax) {
     if (syntax) {
       const ret = create_fake_br();
       return ret;
     } else {
-      return document.createElement('span');
+      return document.createElement("span");
     }
   }
 }
@@ -461,19 +479,19 @@ export class HeaderNode extends BlockNode {
     this.children = children;
   }
 
-  get_raw_content() {
-    let res = '';
+  getRawContent() {
+    let res = "";
     for (const child of this.children) {
-      res += child.get_raw_content();
+      res += child.getRawContent();
     }
     return res;
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('h' + this.level);
-    for (let i=0; i<this.children.length; i++) {
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("h" + this.level);
+    for (let i = 0; i < this.children.length; i++) {
       const child = this.children[i];
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
     return node;
   }
@@ -485,17 +503,16 @@ export class CodeBlockNode extends BlockNode {
     this.content = content;
   }
 
-  get_raw_content() {
+  getRawContent() {
     return content;
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('code-highlighter');
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("code-highlighter");
     node.code = this.content;
     return node;
   }
 }
-
 
 export class ParagraphNode extends BlockNode {
   constructor(children) {
@@ -503,32 +520,25 @@ export class ParagraphNode extends BlockNode {
     this.children = children;
   }
 
-  get_raw_content() {
-    let res = '';
+  getRawContent() {
+    let res = "";
     for (const child of this.children) {
-      res += child.get_raw_content();
+      res += child.getRawContent();
     }
     return res;
   }
 
-  lower_to_dom(protocol, syntax) {
-    const node = document.createElement('div');
-    // if (this.get_raw_content() === '') {
-    //   node.appendChild(document.createElement('br'));
-    //   return node;
-    // }
-    for (let i=0; i<this.children.length; i++) {
+  lowerToDom(protocol, syntax) {
+    const node = document.createElement("div");
+    for (let i = 0; i < this.children.length; i++) {
       const child = this.children[i];
-      node.appendChild(child.lower_to_dom(protocol, syntax));
+      node.appendChild(child.lowerToDom(protocol, syntax));
     }
-    // if (!last) {
-    //   node.appendChild(document.createElement('br'));
-    // }
     return node;
   }
 }
 
-export function parse_block(text) {
+export function parseBlock(text) {
   let cur = 0;
   const tryConsumeCombo = (char, limit) => {
     let last = cur;
@@ -546,46 +556,50 @@ export function parse_block(text) {
     cur = last;
     return cnt;
   };
-  const cnt = tryConsumeCombo('#', -1);
+  const cnt = tryConsumeCombo("#", -1);
   if (cnt > 0) {
-    return new HeaderNode(cnt, parse_inline_expression(null, text.substring(cnt)));
+    return new HeaderNode(
+      cnt,
+      parseInlineExpression(null, text.substring(cnt)),
+    );
   }
-  return new ParagraphNode(parse_inline_expression(null, text));
+  return new ParagraphNode(parseInlineExpression(null, text));
 }
 
-export function parse_markdown(text) {
+export function parseMarkdown(text) {
   const blocks = [];
-  const lines = text.split('\n'); // split by \r\n or \n
+  const lines = text.split("\n"); // split by \r\n or \n
   let inCodeBlock = false;
-  let curCodeBlock = '';
+  let curCodeBlock = "";
   for (const line of lines) {
     if (line === "```") {
       if (inCodeBlock) {
         blocks.push(new CodeBlockNode(curCodeBlock));
-        curCodeBlock = '';
-      } 
+        curCodeBlock = "";
+      }
       inCodeBlock = !inCodeBlock;
       continue;
     }
     if (inCodeBlock) {
-      curCodeBlock += line + '\n\n';
+      curCodeBlock += line + "\n\n";
       continue;
     }
-    blocks.push(parse_block(line));
+    blocks.push(parseBlock(line));
   }
-  if (curCodeBlock !== '') {
-    blocks.push(new ParagraphNode(parse_inline_expression(null, '```')));
-    curCodeBlock.split('\n').forEach((line, index) => {
-      blocks.push(parse_block(line));
+  if (curCodeBlock !== "") {
+    blocks.push(new ParagraphNode(parseInlineExpression(null, "```")));
+    curCodeBlock.split("\n").forEach((line, index) => {
+      blocks.push(parseBlock(line));
     });
   }
   return blocks;
 }
 
-export function lower_to_dom(parent, blocks, protocol, syntax) {
-  for (let i=0; i<blocks.length; i++) {
+export function lowerToDom(parent, blocks, protocol, syntax) {
+  for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i];
-    parent.appendChild(block.lower_to_dom(protocol, syntax, i === blocks.length - 1));
+    parent.appendChild(
+      block.lowerToDom(protocol, syntax, i === blocks.length - 1),
+    );
   }
 }
-

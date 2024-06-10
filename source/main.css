@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 :root {
-    --background-color: #606060; /* Define the variable */
-    --accent-color: #606060;
+  --background-color: #606060; /* Define the variable */
+  --accent-color: #606060;
 }
 
 body {
   margin: 0;
   background-color: var(--background-color);
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   transition: background-color 0.7s ease;
   width: 100vw;
   height: 100vh;
@@ -26,7 +26,6 @@ body {
   padding-right: 30px;
 }
 
-
 #FeatureSide {
   flex: 0 auto;
   padding-left: 10px;
@@ -43,91 +42,96 @@ body {
 }
 
 .ContentWindow {
-    width: 100%; 
-    height: 100%;
-    background: linear-gradient(119deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%); 
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20); 
-    border-radius: 25px; 
-    backdrop-filter: blur(40px);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    119deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+  backdrop-filter: blur(40px);
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) 60px;
-    grid-template-rows: 60px 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;  
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 60px;
+  grid-template-rows: 60px 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 .tabContainerContainer {
-    grid-area: 1 / 1 / 2 / 3; 
-    overflow-x: auto;
-    overflow-y: hidden;
+  grid-area: 1 / 1 / 2 / 3;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-.tabContainer { 
-    padding-left: 15px;
-    padding-top: 15px;
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 100%;
+.tabContainer {
+  padding-left: 15px;
+  padding-top: 15px;
 
-    height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
 
+  height: 40px;
 }
 
 .sampleTab {
   height: 35px;
   width: 200px;
-    white-space: nowrap;
+  white-space: nowrap;
   border-radius: 25px;
   background: white;
-  border: 1px solid rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   background: white;
-  box-shadow: 0px 4px 5px -1px rgba(0, 0, 0, 0.20);
+  box-shadow: 0px 4px 5px -1px rgba(0, 0, 0, 0.2);
   margin-right: 5px;
-  cursor: pointer; 
+  cursor: pointer;
   text-align: left;
   display: flex;
   align-items: center;
 }
 
-.tabTitles{
-    font-size: 16px;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-right: 15px;
+.tabTitles {
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.closeIcon{
-    padding-right: 15px;
-    margin-left: auto;
+.closeIcon {
+  padding-right: 15px;
+  margin-left: auto;
 }
 
-.markdownContainer { 
-    grid-area: 2 / 1 / 3 / 3; 
-    border-radius: 25px;
-    border: 1px solid rgba(0, 0, 0, 0.20);
-    background: white;
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
-    margin-bottom: 15px;
-    margin-left: 15px;
-    overflow: hidden;
+.markdownContainer {
+  grid-area: 2 / 1 / 3 / 3;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white;
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  margin-left: 15px;
+  overflow: hidden;
 }
-.sideBarMenu { 
-    grid-area: 1 / 3 / 3 / 4; 
-    display: flex;
-    justify-content: top;
-    align-items: center;
-    flex-direction: column;
-}
-
-#infoIcon, #searchIcon, .colorIcons{
-    margin-top: 15px;
-    cursor: pointer;
+.sideBarMenu {
+  grid-area: 1 / 3 / 3 / 4;
+  display: flex;
+  justify-content: top;
+  align-items: center;
+  flex-direction: column;
 }
 
-.swiper-wrapper{
+#infoIcon,
+#searchIcon,
+.colorIcons {
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.swiper-wrapper {
   width: 350px;
   height: 100%;
   display: flex;
@@ -141,27 +145,35 @@ body {
   top: 0;
   left: 0;
   cursor: grab;
-  transition: transform 0.3s, opacity 0.3s, z-index 0.3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s,
+    z-index 0.3s;
   transform-origin: center;
   height: 95vh;
   width: 300px;
 }
 
-#JournalView, #ProjectView {
-    border-radius: 25px;
-    background: linear-gradient(169deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%);
-    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(20px);
+#JournalView,
+#ProjectView {
+  border-radius: 25px;
+  background: linear-gradient(
+    169deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
 }
 
-.tabTitle{
-    padding: 15px;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
+.tabTitle {
+  padding: 15px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
 }
 
-#Calendar{
+#Calendar {
   padding: 10px;
 }
 
@@ -180,60 +192,60 @@ body {
   resize: none;
 }
 
-.toolbar{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    margin-left: 50px;
-    margin-right: 50px;
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
-.directoryContainer{
-    margin-top: 15px;
-    width: 100%;
-    height: 100%;
-    /* background-color: white; */
+.directoryContainer {
+  margin-top: 15px;
+  width: 100%;
+  height: 100%;
+  /* background-color: white; */
 }
 
-#trashIcon{
-    margin: 15px;
-    position:absolute;
-    bottom: 0;
-    
-    cursor:pointer;
+#trashIcon {
+  margin: 15px;
+  position: absolute;
+  bottom: 0;
+
+  cursor: pointer;
 }
 
-#trashIconOpen{
-    margin: 15px;
-    position:absolute;
-    bottom: 0;
-    left: -4px;
+#trashIconOpen {
+  margin: 15px;
+  position: absolute;
+  bottom: 0;
+  left: -4px;
 }
 
-.delete-mode-on{
-    background-color: #FF5733;
+.delete-mode-on {
+  background-color: #ff5733;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
 
-#audioIcon{
-    margin-bottom: 15px;
-    position: absolute;
-    bottom: 0;
-    cursor: pointer;
+#audioIcon {
+  margin-bottom: 15px;
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
 }
 
-#addFile, #addFolder{
-    cursor: pointer;
+#addFile,
+#addFolder {
+  cursor: pointer;
 }
 
-#addFile{
-    
-    margin-left: 20px;
+#addFile {
+  margin-left: 20px;
 }
 
-#addFolder{
-    margin-right: 20px;
+#addFolder {
+  margin-right: 20px;
 }

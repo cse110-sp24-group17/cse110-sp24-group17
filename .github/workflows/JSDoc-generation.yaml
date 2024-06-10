@@ -3,7 +3,7 @@ name: JSDoc generation
 on:
   push:
     branches:
-      - main  # Specifies that the workflow will only run on pushes to main
+      - main # Specifies that the workflow will only run on pushes to main
 
 jobs: # the things being executed
   tests: # the name of your status check, will become important when you do branch protection

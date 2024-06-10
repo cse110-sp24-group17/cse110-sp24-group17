@@ -3,13 +3,15 @@
 ![logo](./branding/Surfside_Software_Logo.png)
 
 ## Team Values
-  - Communication
-  - Teamwork
-  - Patience
-  - Respect
-  - Trust
+
+- Communication
+- Teamwork
+- Patience
+- Respect
+- Trust
 
 ## Our Team
+
 ### Jacob
 
 My name is Jacob Roner. I am a computer science major at UCSD. I grew up not too far from UCSD in a city called Escondido.
@@ -55,6 +57,7 @@ https://ryan-izad.github.io/LabWeek1/
 ### Ryan L.
 
 Hello! I'm Ryan, a second year Computer Science major here at UC San Diego in Revelle College. A few things I enjoy spending my free time doing:
+
 1. **Hanging out with friends**
    - Here's a [goofy picture](https://ryanliulwy.github.io/CSE110-Lab1/images/hatstack.png) they took of me and a mighty stack of hats a while back
 2. **Playing video games**
