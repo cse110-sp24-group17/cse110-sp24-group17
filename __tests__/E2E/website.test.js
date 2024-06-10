@@ -8,6 +8,43 @@ describe('Basic user flow for Website', () => {
         });
         await page.reload();
     });
+
+     // Add a note to the journal notepad 
+     it('Making a new note on the scratch pad', async () => {
+      console.log('Writing on scratch pad...');
+
+      const scratchPad = await page.$('#scratchPadInput');
+      await scratchPad.click()
+      await page.keyboard.type("I am writing a note that is very important!");
+      const newNote = await page.$eval("#scratchPadInput", el => el.value);
+      const calendar = await page.$("#calendar");
+      await calendar.click();
+      expect(newNote).toBe("I am writing a note that is very important!");
+    }, 50000); 
+
+     // Switch from file explorer view to project view
+     it('Switching from file explorer view to project view', async () => {
+      console.log('Switching view...');
+
+      const addFileButton = await page.$('#addFile'); // Grab an element from the file explorer that can be dragged to flip to Journal View
+      let rect1 = await addFileButton.boundingBox();
+      await page.mouse.move(rect1.x, rect1.y);
+      await page.mouse.down();
+      await page.mouse.move(500,0);
+      await page.mouse.up();
+      await setTimeout(999);
+
+      const zIndex = await page.evaluate(() => {
+        const element = document.querySelector('#ProjectView');
+        if (element) {
+          return element.style.zIndex;
+        }
+        return null;
+      });
+
+      expect(zIndex).toBe("20");
+    }, 50000); 
+
   
     // Check to make sure that the file starts off with a root directory
     it('Initial File Explorer - it is empty ', async () => {
@@ -22,19 +59,12 @@ describe('Basic user flow for Website', () => {
     // Check to make sure that a file can be added
     it('Adding to File Explorer', async () => {
         console.log('Adding files...');
-        const journalView = await page.$('#JournalView'); // Grab an element from the file explorer that can be dragged to flip to Journal View
-        let rect1 = await journalView.boundingBox(); await page.mouse.move(rect1.x, rect1.y);
-        await page.mouse.down();
-        await page.mouse.move(500,0, {delay: 20000});
-        await page.mouse.up();
-        await setTimeout(999);
 
         const addFileButton = await page.$('#addFile'); // Query the addFile button
         await addFileButton.click();
 
         const fileExplorer = await page.$('file-explorer');  // Get the shadow root of the file explorer
         const shadow = await fileExplorer.getProperty("shadowRoot");
-        const ogChildren = await shadow.$eval("#file", el => el.children);
 
         const form = await shadow.$("#add-file"); // Submit the new file name 
         await form.click();
@@ -47,8 +77,8 @@ describe('Basic user flow for Website', () => {
          await page.keyboard.type("Another file");
          await submit.click();
 
-        const childrenFiles = await shadow.$eval("#file", el => el.children);
-        expect(Object.keys(childrenFiles).length).toBe(Object.keys(ogChildren).length + 2);
+        const childrenFiles = await shadow.$$(".text-file");
+        expect(childrenFiles.length).toBe(3);
       }, 50000);
     
     // Check to make sure that a folder is added correctly
@@ -58,8 +88,8 @@ describe('Basic user flow for Website', () => {
         await addFolderButton.click();
 
         const fileExplorer = await page.$('file-explorer');
-        const shadow = await fileExplorer.getProperty("shadowRoot");
-        const ogChildren = await shadow.$eval("#file", el => el.children);
+        let shadow = await fileExplorer.getProperty("shadowRoot");
+        const folders = await shadow.$$(".directory");
 
         const form = await shadow.$("#add-folder"); // Submit the new folder name 
         await form.click();
@@ -71,9 +101,8 @@ describe('Basic user flow for Website', () => {
         await form.click();
         await page.keyboard.type("ThisIsAnotherFolder");
         await submit.click();
-
-        const childrenFiles = await shadow.$eval("#file", el => el.children);
-        expect(Object.keys(childrenFiles).length).toBe(Object.keys(ogChildren).length + 2);
+        const newFolders = await shadow.$$(".directory");
+        expect(newFolders.length).toBe(folders.length + 2);
       }, 50000);
 
     // Check to make sure that a element in the directory can be deleted
@@ -114,7 +143,7 @@ describe('Basic user flow for Website', () => {
       expect(numChildren).toBe(Object.keys(newChildren).length);
     }, 50000);
 
-    // Switch from file explorer view to project view
+    // Switch from file explorer view to project view 
     it('Switching from file explorer view to project view', async () => {
       console.log('Switching view...');
 
@@ -136,18 +165,5 @@ describe('Basic user flow for Website', () => {
 
       expect(zIndex).toBe("20");
     }, 50000); 
-
-    // Add a note to the journal notepad //CURRENTLY THIS FUNCTIONALITY HAS NOT BEEN ADDED - delete if it does not get completed
-    /*it('Switching from file explorer view to project view', async () => {
-      console.log('Switching view...');
-
-      const scratchPad = await page.$('#scratchPadInput');
-      await scratchPad.click()
-      await page.keyboard.type("I am writing a note that is very important!");
-      const newNote = await page.$eval("#scratchPadInput", el => el.innerHTML)
-      const calendar = await page.$("#calendar");
-      await calendar.click();
-      expect(newNote).toBe("I am writing a note that is very important!");
-    }, 50000); */
   
   });
