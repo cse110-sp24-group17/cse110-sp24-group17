@@ -181,7 +181,7 @@ html {
 
 .calendar_row div:hover {
   background-color: var(--accent-color);
-  opacity: 0.2;
+  opacity: 0.7;
   
   transition: 0.2s;
 }
