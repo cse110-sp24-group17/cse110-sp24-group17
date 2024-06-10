@@ -46,9 +46,13 @@ class CalendarView extends HTMLElement {
       prevSvg.src = "./modules/journal/blue_next.svg";
       nextSvg.src = "./modules/journal/blue_next.svg";
     }
-    if (accentColor === '#b86fdc') {
+    if (accentColor === '#b768a2') {
       prevSvg.src = "./modules/journal/purple_next.svg";
       nextSvg.src = "./modules/journal/purple_next.svg";
+    }
+    if (accentColor === '#4F7942') {
+      prevSvg.src = "./modules/journal/green_next.svg";
+      nextSvg.src = "./modules/journal/green_next.svg";
     }
     const calendarCom = new CalendarComponent(
       curMonth,

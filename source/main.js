@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 const calendarComponent = document.getElementById("calendar");
-document.getElementById("default").addEventListener("click", function() {
+document.getElementById("lightMode").addEventListener("click", function() {
   document.documentElement.style.setProperty('--background-color', '#E3DAC9');
   document.documentElement.style.setProperty('--accent-color', '#8B4513');
   calendarComponent.init();
@@ -214,7 +214,13 @@ document.getElementById("blue").addEventListener("click", function() {
   calendarComponent.init();
 });
 document.getElementById("purple").addEventListener("click", function() {
-  document.documentElement.style.setProperty('--background-color', '#b86fdc');
-  document.documentElement.style.setProperty('--accent-color', '#b86fdc');
+  document.documentElement.style.setProperty('--background-color', '#b768a2');
+  document.documentElement.style.setProperty('--accent-color', '#b768a2');
+  calendarComponent.init();
+});
+
+document.getElementById("green").addEventListener("click", function() {
+  document.documentElement.style.setProperty('--background-color', '#4F7942');
+  document.documentElement.style.setProperty('--accent-color', '#4F7942');
   calendarComponent.init();
 });
