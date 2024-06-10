@@ -3,7 +3,7 @@ import {
   getDaysOfMonth,
   monthIndexToString,
   weekdayOfFirstDay,
-} from "./date_util.js";
+} from "./dateUtil.js";
 
 // CalendarComponent is a convenient calendar widget component
 // that lets user pick date and run "onDatePicked" callback function

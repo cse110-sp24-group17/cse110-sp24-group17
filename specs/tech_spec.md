@@ -98,15 +98,15 @@ _attributes_
 _methods_
 
 - `render_file_to_dom(file: FileEntry) -> DOMElement:` Render file entry into DOM element.
-- `render_directory_to_dom(directory_file: DirectoryFileEntry) -> DOMElement:` Render directory file entry into DOM element.
-- `render_text_file_to_dom(file: TextFileEntry) -> DOMElement:`Render text file entry into DOM element.
+- `renderDirectoryToDom(directory_file: DirectoryFileEntry) -> DOMElement:` Render directory file entry into DOM element.
+- `renderTextFileToDom(file: TextFileEntry) -> DOMElement:`Render text file entry into DOM element.
 - `render() -> void:` Redraw the filer explorer part by using render_file_to_dom.
-- `enter_delete_mode() -> void` Enter "delete mode" where clicking file on explorer tab will delete the file.
-- `exit_delete_mode() -> void` Exit "delete mode" where clicking file on explorer tab will delete the file.
+- `enterDeleteMode() -> void` Enter "delete mode" where clicking file on explorer tab will delete the file.
+- `exitDeleteMode() -> void` Exit "delete mode" where clicking file on explorer tab will delete the file.
 - `open_createFile_dialog(path: string) -> void:` Open create file dialog that will create file at destination path.
 - `close_createFile_dialog() -> void:` Close create file dialog.
-- `get_current_open_file() -> TextFileEntry?:` Return the currently opened file.
-- `set_current_open_file(file: TextFileEntry) -> void:` Set the currently opened file. Set filename attribute of markdown-editor to switch the file.
+- `getCurrentOpenFile() -> TextFileEntry?:` Return the currently opened file.
+- `setCurrentOpenFile(file: TextFileEntry) -> void:` Set the currently opened file. Set filename attribute of markdown-editor to switch the file.
 
 _file exploring logic implementation note_
 
@@ -114,16 +114,16 @@ Note that in order to render directory structure within file system clearly, we 
 
 - render_file_to_dom(file: FileEntry)
   - if file is directory
-    - return render_directory_to_dom(file)
+    - return renderDirectoryToDom(file)
   - else
-    - return render_text_file_to_dom(file)
-- render_directory_to_dom(directory_file: DirectoryFileEntry)
+    - return renderTextFileToDom(file)
+- renderDirectoryToDom(directory_file: DirectoryFileEntry)
   - rendered_element = create div element with CSS class "directory_node"
   - set rendered_element text to directory_file.getName()
   - for each child file of directory_file
     - rendered_element.append_child(render_file_to_dom(child file))
   - return rendered_element
-- render_text_file_to_dom(file: TextFileEntry)
+- renderTextFileToDom(file: TextFileEntry)
   - rendered_element = create div element with CSS class "file_node"
   - add click event listener to rendered_element that will switch markdown file
   - set rendered_element text to file.getName()

@@ -21,7 +21,7 @@ class FileExplorerComponent extends HTMLElement {
       event.dataTransfer.dropEffect = "move";
     });
 
-    window.addEventListener("drop", (event) => {
+    window.addEventListener("drop", () => {
       this.render();
     });
 
@@ -110,17 +110,17 @@ class FileExplorerComponent extends HTMLElement {
          */
         deleteButton.addEventListener("click", () => {
           if (this.deleteMode) {
-            this.exit_delete_mode();
+            this.exitDeleteMode();
           } else {
-            this.enter_delete_mode();
+            this.enterDeleteMode();
           }
         });
 
         deleteButtonOpen.addEventListener("click", () => {
           if (this.deleteMode) {
-            this.exit_delete_mode();
+            this.exitDeleteMode();
           } else {
-            this.enter_delete_mode();
+            this.enterDeleteMode();
           }
         });
 
@@ -207,9 +207,9 @@ class FileExplorerComponent extends HTMLElement {
            * If the child is neither, throw an error
            */
           if (child.getType() === "directory") {
-            childElement = this.render_directory_to_dom(child);
+            childElement = this.renderDirectoryToDom(child);
           } else if (child.getType() === "text") {
-            childElement = this.render_text_file_to_dom(child);
+            childElement = this.renderTextFileToDom(child);
           } else {
             throw new Error("Unknown file type");
           }
@@ -223,7 +223,7 @@ class FileExplorerComponent extends HTMLElement {
       }
     };
 
-    let rootDiv = this.render_root_div_to_dom();
+    let rootDiv = this.renderRootDivToDom();
     rootElement.appendChild(rootDiv);
     loadTree(rootElement, treeRoot); // Load the tree starting from the root
 
@@ -235,7 +235,7 @@ class FileExplorerComponent extends HTMLElement {
    * @param {any} file - the entry from fileStore
    * @returns the text-file element
    */
-  render_text_file_to_dom(file) {
+  renderTextFileToDom(file) {
     const fileElement = document.createElement("div"); //create div element
     fileElement.className = "file-entry text-file"; //assign two classes -> 'file-entry' and 'text-file'
     fileElement.draggable = true;
@@ -246,7 +246,7 @@ class FileExplorerComponent extends HTMLElement {
 
     fileElement.innerText = file.getName(); // assign file name
     fileElement.id = file.getPath();
-    fileElement.addEventListener("click", () => this.handle_file_click(file)); // When the div is clicked, call function to implement render functionality
+    fileElement.addEventListener("click", () => this.handleFileClick(file)); // When the div is clicked, call function to implement render functionality
     fileElement.addEventListener("mouseenter", () => {
       if (this.onFileMouseEnter) {
         this.onFileMouseEnter(file);
@@ -288,7 +288,7 @@ class FileExplorerComponent extends HTMLElement {
    * @param {any} file - the folder from fileStore
    * @returns the directory element
    */
-  render_directory_to_dom(file) {
+  renderDirectoryToDom(file) {
     const fileElement = document.createElement("div"); //create div element
     fileElement.className = "file-entry directory"; //assign two classes -> 'file-entry' and 'text-file'
     const textElement = document.createElement("div"); //create div element
@@ -299,7 +299,7 @@ class FileExplorerComponent extends HTMLElement {
 
     textElement.id = file.getPath();
     textElement.addEventListener("click", () =>
-      this.handle_directory_click(file),
+      this.handleDirectoryClick(file),
     ); // When the div is clicked, call function to implement render functionality
 
     // Drag functionality
@@ -347,7 +347,7 @@ class FileExplorerComponent extends HTMLElement {
     return fileElement;
   }
 
-  render_root_div_to_dom() {
+  renderRootDivToDom() {
     const fileElement = document.createElement("div"); //create div element
     fileElement.className = "root"; //assign two classes -> 'file-entry' and 'text-file'
     const textElement = document.createElement("div"); //create div element
@@ -380,12 +380,12 @@ class FileExplorerComponent extends HTMLElement {
 
     textElement.addEventListener("mouseenter", () => {
       if (this.onFileMouseEnter) {
-        this.onFileMouseEnter(file);
+        this.onFileMouseEnter(draggedFile);
       }
     });
     textElement.addEventListener("mouseleave", () => {
       if (this.onFileMouseLeave) {
-        this.onFileMouseLeave(file);
+        this.onFileMouseLeave(draggedFile);
       }
     });
 
@@ -393,43 +393,10 @@ class FileExplorerComponent extends HTMLElement {
     return fileElement;
   }
 
-  render_root_div_to_dom() {
-    const fileElement = document.createElement("div"); //create div element
-    fileElement.className = "root";
-
-    // Drag over functionality
-    fileElement.addEventListener("dragover", (event) => {
-      event.preventDefault();
-      event.dataTransfer.dropEffect = "move";
-    });
-
-    // Drop functionality
-    fileElement.addEventListener("drop", (event) => {
-      event.preventDefault();
-      const draggedFilePath = event.dataTransfer.getData("text/plain");
-      console.log(draggedFilePath);
-      const draggedFile = App.getFileStore().getFile(draggedFilePath);
-      console.log(draggedFile);
-
-      // Remove the source file from the source directory
-      draggedFile.parent.removeChildFile(draggedFile);
-      if (this.onDeleteFile) {
-        this.onDeleteFile(draggedFile);
-      }
-
-      // Add the source file to the root
-      App.getFileStore().root.addChildFile(draggedFile);
-
-      this.render();
-    });
-
-    return fileElement;
-  }
-
   /**
    * Sets delete mode to true which means clicking on file deletes it.
    */
-  enter_delete_mode() {
+  enterDeleteMode() {
     this.deleteMode = true;
     let deleteButton = document.getElementById("trashIcon"); // Get the delete button
     let deleteButtonOpen = document.getElementById("trashIconOpen"); // Get the delete button
@@ -441,7 +408,7 @@ class FileExplorerComponent extends HTMLElement {
   /**
    * Sets delete mode to false which means clicking on file opens it.
    */
-  exit_delete_mode() {
+  exitDeleteMode() {
     this.deleteMode = false;
     let deleteButton = document.getElementById("trashIcon"); // Get the delete button
     let deleteButtonOpen = document.getElementById("trashIconOpen"); // Get the delete button
@@ -454,7 +421,7 @@ class FileExplorerComponent extends HTMLElement {
    * Returns the file currently open.
    * @returns the currently opened file.
    */
-  get_current_open_file() {
+  getCurrentOpenFile() {
     return this.currentOpenFile;
   }
 
@@ -462,7 +429,7 @@ class FileExplorerComponent extends HTMLElement {
    * Set the currently opened file
    * @param {*} file
    */
-  set_current_open_file(file) {
+  setCurrentOpenFile(file) {
     this.currentOpenFile = file;
     if (this.onFileOpen) {
       this.onFileOpen(file);
@@ -473,7 +440,7 @@ class FileExplorerComponent extends HTMLElement {
    * Returns the folder currently open.
    * @returns FolderFileEntry? - the currently opened file
    */
-  get_current_open_folder() {
+  getCurrentOpenFolder() {
     return this.currentOpenFolder;
   }
 
@@ -481,7 +448,7 @@ class FileExplorerComponent extends HTMLElement {
    * Set the currently opened folder
    * @param {*} file - the folder to set as the current open folder
    */
-  set_current_open_folder(folder) {
+  setCurrentOpenFolder(folder) {
     this.currentOpenFolder = folder;
   }
 
@@ -489,7 +456,7 @@ class FileExplorerComponent extends HTMLElement {
    * When a file is clicked, it is either openned or deleted depending on the mode
    * @param {*} file - the file being picked
    */
-  handle_file_click(file) {
+  handleFileClick(file) {
     if (this.deleteMode) {
       file.parent.removeChildFile(file);
       if (this.onDeleteFile) {
@@ -497,7 +464,7 @@ class FileExplorerComponent extends HTMLElement {
       }
       this.render();
     } else {
-      this.set_current_open_file(file);
+      this.setCurrentOpenFile(file);
       this.render();
     }
   }
@@ -506,7 +473,7 @@ class FileExplorerComponent extends HTMLElement {
    * When a folder is clicked, it is either openned or deleted (including it's children) depending on the mode
    * @param {*} directory - the directory being picked
    */
-  handle_directory_click(directory) {
+  handleDirectoryClick(directory) {
     console.log(directory);
 
     if (this.deleteMode) {
@@ -521,7 +488,7 @@ class FileExplorerComponent extends HTMLElement {
 
     if (this.hiddenFiles.includes(directory)) {
       this.hiddenFiles = this.hiddenFiles.filter((item) => item !== directory);
-      this.set_current_open_folder(directory);
+      this.setCurrentOpenFolder(directory);
       this.render();
       return;
     }

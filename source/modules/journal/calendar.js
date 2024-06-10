@@ -1,4 +1,4 @@
-import CalendarComponent from "./calendar_component.js";
+import CalendarComponent from "./calendarComponent.js";
 /**
  * CalendarView extends HTMLElement and is a web component for a calendar.
  * It loads HTML content dynamically and initializes a CalendarComponent for interactive use.

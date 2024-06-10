@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ele.onFileMouseLeave = () => {
     activateSwiper();
   };
-  ele.onDeleteFile = (file) => {
+  ele.onDeleteFile = () => {
     deactivateSwiper();
     activateSwiper();
   };
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  App.addEventListener("tab-open", (e) => {
+  App.addEventListener("tab-open", () => {
     rerenderTabs();
   });
 
