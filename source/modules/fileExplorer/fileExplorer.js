@@ -483,7 +483,6 @@ class FileExplorerComponent extends HTMLElement {
       }
       this.render();
       return;
-    } else {
     }
 
     if (this.hiddenFiles.includes(directory)) {
