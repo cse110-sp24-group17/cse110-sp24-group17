@@ -1,7 +1,15 @@
 ## Positive Cases
-All basic functionality works as expected (also see demo video):
+All basic functionality works as expected (see demo video for positive results):
 - Tested File and Folder creation
-- Tested 
+- Tested file and folder deletion
+- Tested file and folder drag-and-drop reorganization
+- Tested text and markdown editing
+- Tested document co-linking by reference
+- Tested external URL linking
+- Tested journal calendar switching
+- Tested code block highlighting
+- Tested tab switching
+- Tested image uploads
 - Tested color changing
 
 ## Negative Cases
