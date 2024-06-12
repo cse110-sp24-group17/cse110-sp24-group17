@@ -35,6 +35,7 @@ Follow the coding standards configured on Codacy, including:
 
 - No trailing whitespaces
 - Using camelCase for variable names
-- Follow consistent indentation patterns, currently (to be added after tidying up code indentations)
+- Follow consistent indentation patterns set on Codacy
 - No empty block statement, such as empty if-else block
-- Other general best practice rules, such as using absolute equate (===) over (==)
+- No redundant variables (defined but not used)
+- Other general best practice rules outlined in the configured Codacy code standards, such as using absolute comparators (===) over (==)
