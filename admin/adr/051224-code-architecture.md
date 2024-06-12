@@ -9,4 +9,4 @@ File structure and general decomposition architecture of the code.
 
 ## Details
 
-Refer to [tech spec document](../specs/tech_spec.md) for details
+Refer to [tech spec document](../../specs/tech_spec.md) for details
